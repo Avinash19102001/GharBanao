@@ -9,7 +9,7 @@ const Login = () => {
       id: "houseowner",
       title: "House Owner",
       icon: "🏠",
-      description: "Manage your dream home project",
+      description: "Manage your dream home-project",
     },
     {
       id: "contractor",
