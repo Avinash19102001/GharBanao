@@ -12,7 +12,6 @@ const AuthRoutes=[
             const { default: Register } = await import("../components/auth/Register");
             return { Component: Register };
         },
-    }
+    },
 ]
-
 export default  AuthRoutes

@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import HouseOwnerRegister from "./HouseOwnerRegister";
 import ContractorRegister from "./ContractorRegister";
 import SupplierRegister from "./SupplierRegister";
-
+import Equipment from "./Equipment";
 const Register = () => {
   const [selectedRole, setSelectedRole] = useState("houseowner");
-
   const roles = [
     {
       id: "houseowner",
@@ -27,8 +26,13 @@ const Register = () => {
       icon: "🚚",
       description: "Supply construction materials",
     },
+    {
+      id: "equipment",
+      title: "Equipment",
+      icon: "🛠️",
+      description: "Register equipment providers",
+    },
   ];
-
   return (
     <div className="min-h-screen flex bg-slate-100">
       {/* LEFT SIDE */}
@@ -48,23 +52,19 @@ const Register = () => {
             <br />
             GharBanao
           </h1>
-
           <p className="mt-6 text-lg text-slate-200 max-w-lg">
             Connect homeowners, contractors, and suppliers
             on one powerful platform.
           </p>
-
           <div className="mt-10 flex gap-8">
             <div>
               <h3 className="text-3xl font-bold">500+</h3>
               <p>Projects</p>
             </div>
-
             <div>
               <h3 className="text-3xl font-bold">300+</h3>
               <p>Contractors</p>
             </div>
-
             <div>
               <h3 className="text-3xl font-bold">150+</h3>
               <p>Suppliers</p>
@@ -72,10 +72,7 @@ const Register = () => {
           </div>
         </div>
       </div>
-
-      {/* RIGHT SIDE */}
-
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
+     <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
         <div
           className="
             w-full
@@ -99,7 +96,6 @@ const Register = () => {
             </p>
           </div>
 
-          {/* ROLE SELECTION */}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
             {roles.map((role) => (
@@ -146,6 +142,10 @@ const Register = () => {
 
             {selectedRole === "supplier" && (
               <SupplierRegister />
+            )}
+
+            {selectedRole === "equipment" && (
+              <Equipment />
             )}
           </div>
 
