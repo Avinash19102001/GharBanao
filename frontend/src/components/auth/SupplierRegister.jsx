@@ -3,6 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { supplierSchema } from "./schemas/supplierSchema";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+
+
 
 const PasswordInput = ({ id, placeholder, register, name, disabled, onChange }) => {
   const [show, setShow] = useState(false);
@@ -172,14 +176,14 @@ const SuccessScreen = ({ data, onReset, navigate }) => (
   </div>
 );
 const SupplierRegister = () => {
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [currentStep,    setCurrentStep]    = useState(0);
-  const [completedSteps, setCompletedSteps] = useState([]);
-  const [pwValue,        setPwValue]        = useState("");
-  const [submitted,      setSubmitted]      = useState(false);
-  const [submittedData,  setSubmittedData]  = useState(null);
-  const [isSubmitting,   setIsSubmitting]   = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+
+  const [passwordStrength, setPasswordStrength] = useState("");
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -191,185 +195,185 @@ const SupplierRegister = () => {
     mode: "onChange",
   });
 
-  const STEPS = ["Full Name", "Email", "Password", "Confirm", "Company"];
+  const checkPasswordStrength = (password) => {
+    if (password.length < 6) {
+      setPasswordStrength("Weak");
+    } else if (
+      password.length >= 6 &&
+      /[A-Za-z]/.test(password) &&
+      /\d/.test(password)
+    ) {
+      setPasswordStrength("Average");
+    }
+
+    if (
+      password.length >= 8 &&
+      /[a-z]/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /\d/.test(password) &&
+      /[!@#$%^&*]/.test(password)
+    ) {
+      setPasswordStrength("Strong");
+    }
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+
+    navigate("/complete-profile");
+  };
+
+  const handleGoogleSignIn = () => {
+    window.open("https://accounts.google.com/signin", "_blank");
+  };
 
   const isLocked = (step) => step > currentStep;
 
-  const handleNext = async (fields, next) => {
-    const valid = await trigger(fields);
-    if (!valid) return;
-    setCompletedSteps((prev) => [...new Set([...prev, currentStep])]);
-    setCurrentStep(next);
-  };
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid md:grid-cols-2 gap-5"
+      >
+        <div>
+          <input
+            {...register("FullName")}
+            placeholder="Full Name"
+            className="w-full border p-3 rounded-xl"
+          />
+          <p className="text-red-500 text-sm">
+            {errors.FullName?.message}
+          </p>
+        </div>
 
-  const onSubmit = async (data) => {
-    setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setSubmittedData(data);
-    setSubmitted(true);
-    setIsSubmitting(false);
-  };
+        <div>
+          <input
+            {...register("email")}
+            placeholder="Email"
+            className="w-full border p-3 rounded-xl"
+          />
+          <p className="text-red-500 text-sm">
+            {errors.email?.message}
+          </p>
+        </div>
 
-  const onReset = () => {
-    setCurrentStep(0);
-    setCompletedSteps([]);
-    setPwValue("");
-    setSubmitted(false);
-    setSubmittedData(null);
-  };
+        <div>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+              placeholder="Password"
+              className="w-full border p-3 rounded-xl pr-12"
+              onChange={(e) =>
+                checkPasswordStrength(e.target.value)
+              }
+            />
 
-  const allDone = currentStep === 4 && completedSteps.length >= 4;
-
-  return (
-    <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-6">Supplier Registration</h2>
-
-      {submitted ? (
-        <SuccessScreen data={submittedData} onReset={onReset} navigate={navigate} />
-      ) : (
-        <>
-          <StepBar steps={STEPS} current={currentStep} completed={completedSteps} />
-          <form onSubmit={handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-5">
-            <div className={`transition-all duration-300 ${isLocked(0) ? "opacity-40 pointer-events-none" : ""}`}>
-              <div className="relative">
-                <input
-                  {...register("FullName")}
-                  placeholder="Full Name"
-                  disabled={isLocked(0)}
-                  className={`w-full border p-3 rounded-xl pr-10 transition
-                    ${completedSteps.includes(0) ? "border-green-400 bg-green-50" : ""}
-                    ${isLocked(0) ? "bg-gray-50 cursor-not-allowed" : ""}
-                  `}
-                />
-                {completedSteps.includes(0) && (
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 font-bold">✓</span>
-                )}
-              </div>
-              {errors.FullName && (
-                <p className="text-red-500 text-xs mt-1">{errors.FullName.message}</p>
-              )}
-              {currentStep === 0 && (
-                <button type="button" onClick={() => handleNext(["FullName"], 1)}
-                  className="mt-2 text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                  Next →
-                </button>
-              )}
-            </div>
-            <div className={`transition-all duration-300 ${isLocked(1) ? "opacity-40 pointer-events-none" : ""}`}>
-              <div className="relative">
-                <input
-                  {...register("email")}
-                  placeholder="Email"
-                  disabled={isLocked(1)}
-                  className={`w-full border p-3 rounded-xl pr-10 transition
-                    ${completedSteps.includes(1) ? "border-green-400 bg-green-50" : ""}
-                    ${isLocked(1) ? "bg-gray-50 cursor-not-allowed" : ""}
-                  `}
-                />
-                {completedSteps.includes(1) && (
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 font-bold">✓</span>
-                )}
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-              )}
-              {currentStep === 1 && (
-                <button type="button" onClick={() => handleNext(["email"], 2)}
-                  className="mt-2 text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                  Next →
-                </button>
-              )}
-            </div>
-            <div className={`transition-all duration-300 ${isLocked(2) ? "opacity-40 pointer-events-none" : ""}`}>
-              <PasswordInput
-                id="password"
-                name="password"
-                placeholder="Password"
-                register={register}
-                disabled={isLocked(2)}
-                onChange={(e) => setPwValue(e.target.value)}
-              />
-              {!isLocked(2) && <StrengthMeter password={pwValue} />}
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-              )}
-              {currentStep === 2 && (
-                <button type="button" onClick={() => handleNext(["password"], 3)}
-                  className="mt-2 text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                  Next →
-                </button>
-              )}
-            </div>
-            <div className={`transition-all duration-300 ${isLocked(3) ? "opacity-40 pointer-events-none" : ""}`}>
-              <PasswordInput
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                register={register}
-                disabled={isLocked(3)}
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
-              )}
-              {currentStep === 3 && (
-                <button type="button" onClick={() => handleNext(["confirmPassword"], 4)}
-                  className="mt-2 text-xs px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                  Next →
-                </button>
-              )}
-            </div>
-
-            {/* ── 5. Company Name (full width) ── */}
-            <div className={`md:col-span-2 transition-all duration-300 ${isLocked(4) ? "opacity-40 pointer-events-none" : ""}`}>
-              <div className="relative">
-                <input
-                  {...register("companyName")}
-                  placeholder="Company Name"
-                  disabled={isLocked(4)}
-                  className={`w-full border p-3 rounded-xl pr-10 transition
-                    ${completedSteps.includes(4) ? "border-green-400 bg-green-50" : ""}
-                    ${isLocked(4) ? "bg-gray-50 cursor-not-allowed" : ""}
-                  `}
-                />
-                {completedSteps.includes(4) && (
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 font-bold">✓</span>
-                )}
-              </div>
-              {errors.companyName && (
-                <p className="text-red-500 text-xs mt-1">{errors.companyName.message}</p>
-              )}
-            </div>
-
-            {/* ── Register Button ── */}
             <button
-              type="submit"
-              disabled={!allDone || isSubmitting}
-              className={`md:col-span-2 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2
-                ${allDone
-                  ? "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
-                  : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                }`}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
             >
-              {isSubmitting ? (
-                <>
-                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10"
-                      stroke="currentColor" strokeWidth="4"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                  </svg>
-                  Registering...
-                </>
-              ) : !allDone ? (
-                `Complete step ${currentStep + 1} to continue`
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          <p className="text-red-500 text-sm">
+            {errors.password?.message}
+          </p>
+
+          {passwordStrength === "Weak" && (
+            <p className="text-red-500 text-sm mt-1">
+              🔴 Weak Password
+            </p>
+          )}
+
+          {passwordStrength === "Average" && (
+            <p className="text-yellow-500 text-sm mt-1">
+              🟡 Average Password
+            </p>
+          )}
+
+          {passwordStrength === "Strong" && (
+            <p className="text-green-500 text-sm mt-1">
+              🟢 Strong Password
+            </p>
+          )}
+
+          <div className="w-full bg-gray-200 h-2 rounded mt-2">
+            <div
+              className={`h-2 rounded transition-all duration-300 ${passwordStrength === "Weak"
+                ? "w-1/3 bg-red-500"
+                : passwordStrength === "Average"
+                  ? "w-2/3 bg-yellow-500"
+                  : passwordStrength === "Strong"
+                    ? "w-full bg-green-500"
+                    : "w-0"
+                }`}
+            />
+          </div>
+        </div>
+
+        <div>
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword")}
+              placeholder="Confirm Password"
+              className="w-full border p-3 rounded-xl pr-12"
+            />
+
+            <button
+              type="button"
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
+            >
+              {showConfirmPassword ? (
+                <FaEyeSlash />
               ) : (
-                "Register Supplier ✓"
+                <FaEye />
               )}
             </button>
+          </div>
 
-          </form>
-        </>
-      )}
-    </div>
+          <p className="text-red-500 text-sm">
+            {errors.confirmPassword?.message}
+          </p>
+        </div>
+
+        <div className="md:col-span-2">
+          <input
+            {...register("companyName")}
+            placeholder="Company Name"
+            className="w-full border p-3 rounded-xl"
+          />
+
+          <p className="text-red-500 text-sm">
+            {errors.companyName?.message}
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          className="md:col-span-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700"
+        >
+          Register Supplier
+        </button>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="md:col-span-2 border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Sign in with Google
+        </button>
+      </form>
+    </div >
   );
 };
 export default SupplierRegister;

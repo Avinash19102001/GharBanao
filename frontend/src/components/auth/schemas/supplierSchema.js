@@ -2,28 +2,25 @@ import { z } from "zod";
 
 export const supplierSchema = z
   .object({
-    ownerName: z.string().min(3),
-
-    businessName: z.string().min(3),
-
-    email: z.email(),
-
-    mobileNumber: z
+    FullName: z
       .string()
-      .regex(/^[6-9]\d{9}$/),
+      .min(3, "Name must be at least 3 characters"),
 
-    gstNumber: z.string(),
+    email: z
+      .string()
+      .email("Enter a valid email"),
 
-    deliveryRadius: z.coerce.number(),
-
-    password: z.string().min(8),
+    password: z
+      .string()
+      .min(6, "Password must be at least 6 characters"),
 
     confirmPassword: z.string(),
+
+    companyName: z
+      .string()
+      .min(2, "Company Name is required"),
   })
-  .refine(
-    (data) => data.password === data.confirmPassword,
-    {
-      path: ["confirmPassword"],
-      message: "Passwords do not match",
-    }
-  );
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
