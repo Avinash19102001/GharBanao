@@ -1,13 +1,15 @@
-const AuthRoutes=[
+import { object } from "zod";
+
+const AuthRoutes = [
     {
-        path:"/",
+        path: "/",
         lazy: async () => {
             const { default: Login } = await import("../components/auth/Login");
             return { Component: Login };
         },
     },
     {
-        path:"/register",
+        path: "/register",
         lazy: async () => {
             const { default: Register } = await import("../components/auth/Register");
             return { Component: Register };
@@ -15,4 +17,4 @@ const AuthRoutes=[
     }
 ]
 
-export default  AuthRoutes
+export default AuthRoutes
