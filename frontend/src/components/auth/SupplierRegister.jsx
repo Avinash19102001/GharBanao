@@ -1,8 +1,22 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { supplierSchema } from "./schemas/supplierSchema";
+import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+
+
 
 const SupplierRegister = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+
+  const [passwordStrength, setPasswordStrength] = useState("");
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -11,10 +25,36 @@ const SupplierRegister = () => {
     resolver: zodResolver(supplierSchema),
   });
 
-  const onSubmit = async (data) => {
+  const checkPasswordStrength = (password) => {
+    if (password.length < 6) {
+      setPasswordStrength("Weak");
+    } else if (
+      password.length >= 6 &&
+      /[A-Za-z]/.test(password) &&
+      /\d/.test(password)
+    ) {
+      setPasswordStrength("Average");
+    }
+
+    if (
+      password.length >= 8 &&
+      /[a-z]/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /\d/.test(password) &&
+      /[!@#$%^&*]/.test(password)
+    ) {
+      setPasswordStrength("Strong");
+    }
+  };
+
+  const onSubmit = (data) => {
     console.log(data);
 
-    // await supplierService.register(data)
+    navigate("/complete-profile");
+  };
+
+  const handleGoogleSignIn = () => {
+    window.open("https://accounts.google.com/signin", "_blank");
   };
 
   return (
@@ -29,18 +69,13 @@ const SupplierRegister = () => {
       >
         <div>
           <input
-            {...register("ownerName")}
-            placeholder="Owner Name"
+            {...register("FullName")}
+            placeholder="Full Name"
             className="w-full border p-3 rounded-xl"
           />
-        </div>
-
-        <div>
-          <input
-            {...register("businessName")}
-            placeholder="Business Name"
-            className="w-full border p-3 rounded-xl"
-          />
+          <p className="text-red-500 text-sm">
+            {errors.FullName?.message}
+          </p>
         </div>
 
         <div>
@@ -49,113 +84,130 @@ const SupplierRegister = () => {
             placeholder="Email"
             className="w-full border p-3 rounded-xl"
           />
+          <p className="text-red-500 text-sm">
+            {errors.email?.message}
+          </p>
         </div>
 
         <div>
-          <input
-            {...register("mobileNumber")}
-            placeholder="Mobile Number"
-            className="w-full border p-3 rounded-xl"
-          />
-        </div>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+              placeholder="Password"
+              className="w-full border p-3 rounded-xl pr-12"
+              onChange={(e) =>
+                checkPasswordStrength(e.target.value)
+              }
+            />
 
-        <div>
-          <input
-            {...register("gstNumber")}
-            placeholder="GST Number"
-            className="w-full border p-3 rounded-xl"
-          />
-        </div>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
 
-        <div>
-          <input
-            {...register("deliveryRadius")}
-            placeholder="Delivery Radius (KM)"
-            className="w-full border p-3 rounded-xl"
-          />
-        </div>
+          <p className="text-red-500 text-sm">
+            {errors.password?.message}
+          </p>
 
-        <div className="md:col-span-2">
-          <label className="block mb-3 font-medium">
-            Material Categories
-          </label>
+          {passwordStrength === "Weak" && (
+            <p className="text-red-500 text-sm mt-1">
+              🔴 Weak Password
+            </p>
+          )}
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <label>
-              <input
-                type="checkbox"
-                value="cement"
-                {...register("materialCategories")}
-              />
-              <span className="ml-2">Cement</span>
-            </label>
+          {passwordStrength === "Average" && (
+            <p className="text-yellow-500 text-sm mt-1">
+              🟡 Average Password
+            </p>
+          )}
 
-            <label>
-              <input
-                type="checkbox"
-                value="steel"
-                {...register("materialCategories")}
-              />
-              <span className="ml-2">Steel</span>
-            </label>
+          {passwordStrength === "Strong" && (
+            <p className="text-green-500 text-sm mt-1">
+              🟢 Strong Password
+            </p>
+          )}
 
-            <label>
-              <input
-                type="checkbox"
-                value="tiles"
-                {...register("materialCategories")}
-              />
-              <span className="ml-2">Tiles</span>
-            </label>
-
-            <label>
-              <input
-                type="checkbox"
-                value="paints"
-                {...register("materialCategories")}
-              />
-              <span className="ml-2">Paints</span>
-            </label>
+          <div className="w-full bg-gray-200 h-2 rounded mt-2">
+            <div
+              className={`h-2 rounded transition-all duration-300 ${passwordStrength === "Weak"
+                ? "w-1/3 bg-red-500"
+                : passwordStrength === "Average"
+                  ? "w-2/3 bg-yellow-500"
+                  : passwordStrength === "Strong"
+                    ? "w-full bg-green-500"
+                    : "w-0"
+                }`}
+            />
           </div>
         </div>
 
         <div>
-          <input
-            type="password"
-            {...register("password")}
-            placeholder="Password"
-            className="w-full border p-3 rounded-xl"
-          />
-        </div>
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword")}
+              placeholder="Confirm Password"
+              className="w-full border p-3 rounded-xl pr-12"
+            />
 
-        <div>
-          <input
-            type="password"
-            {...register("confirmPassword")}
-            placeholder="Confirm Password"
-            className="w-full border p-3 rounded-xl"
-          />
+            <button
+              type="button"
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
+            >
+              {showConfirmPassword ? (
+                <FaEyeSlash />
+              ) : (
+                <FaEye />
+              )}
+            </button>
+          </div>
+
+          <p className="text-red-500 text-sm">
+            {errors.confirmPassword?.message}
+          </p>
         </div>
 
         <div className="md:col-span-2">
-          <label className="block mb-2 font-medium">
-            Business Certificate
-          </label>
-
           <input
-            type="file"
+            {...register("companyName")}
+            placeholder="Company Name"
             className="w-full border p-3 rounded-xl"
           />
+
+          <p className="text-red-500 text-sm">
+            {errors.companyName?.message}
+          </p>
         </div>
 
         <button
           type="submit"
-          className="md:col-span-2 bg-green-600 text-white py-3 rounded-xl"
+          className="md:col-span-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700"
         >
           Register Supplier
         </button>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="md:col-span-2 border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100"
+        >
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          Sign in with Google
+        </button>
       </form>
-    </div>
+    </div >
   );
 };
 
