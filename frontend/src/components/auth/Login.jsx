@@ -1,5 +1,5 @@
 import { useState } from "react";
-import gharbanavo from "../../assets/gharbanavo.jpeg"
+import gharbanavo from "../../assets/gharbanavo.jpeg";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,20 +12,17 @@ const Login = () => {
       }}
     >
       {/* Overlay */}
-  <div className="absolute inset-0 bg-[#f8f3eb]/50" />
+      <div className="absolute inset-0 bg-[#f8f3eb]/50" />
 
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 px-12 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-green-900">
-            GharBanao
-          </h1>
+          <h1 className="text-3xl font-bold text-green-900">GharBanao</h1>
 
           <p className="text-xs tracking-[4px] text-gray-700 mt-1">
             PLAN. BUILD. LIVE. FOREVER.
           </p>
         </div>
-
       </header>
 
       {/* Main Content */}
@@ -43,8 +40,7 @@ const Login = () => {
           <div className="w-12 h-1 bg-green-900 mt-4 mb-4" />
 
           <p className="text-sm text-gray-700 max-w-sm font-semibold">
-            The connected platform for homeowners,
-            contractors and suppliers.
+            The connected platform for homeowners, contractors and suppliers.
             Build smarter with one ecosystem.
           </p>
         </div>
@@ -61,9 +57,7 @@ const Login = () => {
 
           {/* Email */}
           <div className="mb-2">
-            <label className="block mb-2 font-medium">
-              Email Address
-            </label>
+            <label className="block mb-2 font-medium">Email Address</label>
 
             <input
               type="email"
@@ -74,9 +68,7 @@ const Login = () => {
 
           {/* Password */}
           <div className="mb-2">
-            <label className="block mb-2 font-medium">
-              Password
-            </label>
+            <label className="block mb-2 font-medium">Password</label>
 
             <div className="relative">
               <input
@@ -87,9 +79,7 @@ const Login = () => {
 
               <button
                 type="button"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2"
               >
                 👁️
@@ -118,9 +108,7 @@ const Login = () => {
           <div className="flex items-center gap-4 my-4">
             <div className="flex-1 h-px bg-gray-300" />
 
-            <span className="text-sm text-gray-600">
-              or continue with
-            </span>
+            <span className="text-sm text-gray-600">or continue with</span>
 
             <div className="flex-1 h-px bg-gray-300" />
           </div>
@@ -133,9 +121,7 @@ const Login = () => {
               className="w-5 h-5"
             />
 
-            <span className="font-medium">
-              Continue with Google
-            </span>
+            <span className="font-medium">Continue with Google</span>
           </button>
 
           {/* Security Note */}
