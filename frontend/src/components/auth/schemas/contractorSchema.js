@@ -2,32 +2,23 @@ import { z } from "zod";
 
 export const contractorSchema = z
   .object({
-    fullName: z.string().min(3),
+    fullName: z.string().min(3, "Full name must be at least 3 characters"),
 
-    email: z.email(),
+    email: z.string().email("Please enter a valid email address"),
 
-    mobileNumber: z
+    password: z
       .string()
-      .regex(/^[6-9]\d{9}$/),
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Must contain one uppercase letter")
+      .regex(/[a-z]/, "Must contain one lowercase letter")
+      .regex(/[0-9]/, "Must contain one number")
+      .regex(/[!@#$%^&*(),.?":{}|<>]/, "Must contain one special character"),
 
-    companyName: z.string().min(2),
+    confirmPassword: z.string().min(8, "Confirm password is required"),
 
-    experience: z.coerce.number().min(1),
-
-    contractorType: z.string(),
-
-    gstNumber: z.string().optional(),
-
-    licenseNumber: z.string().optional(),
-
-    password: z.string().min(8),
-
-    confirmPassword: z.string(),
+    preferredProjectType: z.string().min(1, "Please select a project type"),
   })
-  .refine(
-    (data) => data.password === data.confirmPassword,
-    {
-      path: ["confirmPassword"],
-      message: "Passwords do not match",
-    }
-  );
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
