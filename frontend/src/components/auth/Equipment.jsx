@@ -21,8 +21,11 @@ const EquipmentRegister = () => {
   const handleGoogleSignIn = () => {
     window.location.href = "https://accounts.google.com/signin";
   };
-  const inputCls =`w-full border border p-3 rounded-xl`;
-;
+  const inputCls =
+    `w-full border border-gray-400 px-4 p-3 rounded-xl
+     bg-white placeholder-gray-700 text-gray-800
+     focus:outline-none focus:border-gray-500
+     transition-all duration-150`;
   if (submittedData) {
     return (
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
@@ -78,7 +81,7 @@ const EquipmentRegister = () => {
           <input
             {...register("FullName")}
             placeholder="Full Name"
-            className="w-full border border p-3 rounded-xl"
+            className={inputCls}
           />
           <p className="text-red-500 text-sm mt-1 px-1">{errors.FullName?.message}</p>
         </div>
@@ -87,7 +90,7 @@ const EquipmentRegister = () => {
             type="email"
             {...register("email")}
             placeholder="Email"
-            className="w-full border border p-3 rounded-xl"
+            className={inputCls}
           />
           <p className="text-red-500 text-sm mt-1 px-1">{errors.email?.message}</p>
         </div>
@@ -130,13 +133,13 @@ const EquipmentRegister = () => {
         <div className="md:col-span-2">
           <select
             {...register("equipmentType")}
-            className={`${inputCls} text-gray-400`}
+            className={`${inputCls} text-gray-700`} 
             defaultValue=""
           >
-            <option value="" disabled>Select Equipment Type</option>
-            <option value="Bricks">Bricks</option>
-            <option value="Steel">Steel</option>
-            <option value="Cement">Cement</option>
+            <option value="" disabled className="text-gray-700">Select Equipment Type</option>
+            <option value="Bricks" className="text-gray-800">Bricks</option>
+            <option value="Steel" className="text-gray-800">Steel</option>
+            <option value="Cement" className="text-gray-800">Cement</option>
           </select>
           <p className="text-red-500 text-sm mt-1 px-1">{errors.equipmentType?.message}</p>
         </div>
@@ -149,7 +152,7 @@ const EquipmentRegister = () => {
               : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
             }`}
         >
-          {isSubmitting ? "Registering..." : "Register Equipment"}
+          {isSubmitting ? "Registering..." : "Sign Up"}
         </button>
         <div className="md:col-span-2 flex items-center gap-3">
           <div className="flex-1 h-px bg-gray-200"/>
@@ -168,6 +171,7 @@ const EquipmentRegister = () => {
           />
           Continue with Google
         </button>
+
       </form>
     </div>
   );
