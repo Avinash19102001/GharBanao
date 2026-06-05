@@ -13,12 +13,12 @@ const profileSchema = z.object({
     .min(1, "Last Name is required")
     .regex(/^[A-Za-z ]+$/, "Only letters are allowed"),
 
-  mobileNumber: z
-    .string()
-    .regex(
-      /^[6-9]\d{9}$/,
-      "Mobile Number must be 10 digits"
-    ),
+  // mobileNumber: z
+  //   .string()
+  //   .regex(
+  //     /^[6-9]\d{9}$/,
+  //     "Mobile Number must be 10 digits"
+  //   ),
 
   email: z
     .string()
