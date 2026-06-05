@@ -10,7 +10,7 @@ const EquipmentRegister = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(equipmentSchema),
     mode: "onChange",
@@ -21,14 +21,11 @@ const EquipmentRegister = () => {
   const handleGoogleSignIn = () => {
     window.location.href = "https://accounts.google.com/signin";
   };
-  const inputCls =
-    `w-full border-2 border-blue-400 p-3 rounded-xl
-     bg-blue-50 placeholder-blue-300 text-gray-800
-     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-600
-     transition-all duration-150`;
+  const inputCls =`w-full border border p-3 rounded-xl`;
+;
   if (submittedData) {
     return (
-      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
             <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -75,24 +72,24 @@ const EquipmentRegister = () => {
   }
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-8">Equipment Registration</h2>
+      <h2 className="text-3xl font-bold mb-8 text-gray-800">Equipment Registration</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-5">
         <div>
           <input
             {...register("FullName")}
             placeholder="Full Name"
-            className={inputCls}
+            className="w-full border border p-3 rounded-xl"
           />
-          <p className="text-red-500 text-sm mt-1">{errors.FullName?.message}</p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.FullName?.message}</p>
         </div>
         <div>
           <input
             type="email"
             {...register("email")}
             placeholder="Email"
-            className={inputCls}
+            className="w-full border border p-3 rounded-xl"
           />
-          <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.email?.message}</p>
         </div>
         <div>
           <div className="relative">
@@ -105,12 +102,12 @@ const EquipmentRegister = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.password?.message}</p>
         </div>
         <div>
           <div className="relative">
@@ -123,17 +120,17 @@ const EquipmentRegister = () => {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-600"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <p className="text-red-500 text-sm mt-1">{errors.confirmPassword?.message}</p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.confirmPassword?.message}</p>
         </div>
         <div className="md:col-span-2">
           <select
             {...register("equipmentType")}
-            className={inputCls}
+            className={`${inputCls} text-gray-400`}
             defaultValue=""
           >
             <option value="" disabled>Select Equipment Type</option>
@@ -141,13 +138,13 @@ const EquipmentRegister = () => {
             <option value="Steel">Steel</option>
             <option value="Cement">Cement</option>
           </select>
-          <p className="text-red-500 text-sm mt-1">{errors.equipmentType?.message}</p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.equipmentType?.message}</p>
         </div>
         <button
           type="submit"
-          disabled={!isValid || isSubmitting}
-          className={`md:col-span-2 py-3 rounded-xl text-white font-semibold transition-all duration-200
-            ${!isValid || isSubmitting
+          disabled={isSubmitting}
+          className={`md:col-span-2 py-3 rounded-lg text-white font-semibold text-base transition-all duration-200
+            ${isSubmitting
               ? "bg-blue-300 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
             }`}
@@ -155,14 +152,14 @@ const EquipmentRegister = () => {
           {isSubmitting ? "Registering..." : "Register Equipment"}
         </button>
         <div className="md:col-span-2 flex items-center gap-3">
-          <div className="flex-1 h-px bg-gray-300"/>
-          <span className="text-sm text-gray-500">OR</span>
-          <div className="flex-1 h-px bg-gray-300"/>
+          <div className="flex-1 h-px bg-gray-200"/>
+          <span className="text-sm text-gray-400">OR</span>
+          <div className="flex-1 h-px bg-gray-200"/>
         </div>
         <button
           type="button"
           onClick={handleGoogleSignIn}
-          className="md:col-span-2 border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100 transition"
+          className="md:col-span-2 border border-gray-300 py-3 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition text-gray-700 font-medium"
         >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -171,7 +168,6 @@ const EquipmentRegister = () => {
           />
           Continue with Google
         </button>
-
       </form>
     </div>
   );
