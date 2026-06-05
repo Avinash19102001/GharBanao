@@ -9,3 +9,5 @@ class HouseOwner(Base):
     email = Column(String(100), unique=True, nullable=False)
     mobile_number = Column(String(15), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    propertyType = Column(String, nullable=False)
+    projectType = Column(String, nullable=False)
