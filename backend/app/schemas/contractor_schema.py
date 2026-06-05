@@ -10,6 +10,8 @@ class ContractorRegister(BaseModel):
 
     password: str
 
+    
+
     confirm_password: str
 
     project_type: str
