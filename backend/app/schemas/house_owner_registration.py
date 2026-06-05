@@ -11,6 +11,8 @@ class HouseOwnerRegister(BaseModel):
     mobileNumber: str = Field(..., min_length=10, max_length=15)
     password: str = Field(..., min_length=6)
     confirmPassword: str = Field(..., min_length=6)
+    propertyType: str = Field(..., min_length=2)
+    projectType: str = Field(..., min_length=2)
 
 
 class HouseOwnerLogin(BaseModel):
