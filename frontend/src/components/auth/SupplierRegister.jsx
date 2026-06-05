@@ -5,16 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 
-
-
 const SupplierRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
-
+  const inputCls = "w-full border p-3 rounded-xl";
   const navigate = useNavigate();
 
   const {
@@ -26,16 +21,10 @@ const SupplierRegister = () => {
   });
 
   const checkPasswordStrength = (password) => {
-    if (password.length < 6) {
-      setPasswordStrength("Weak");
-    } else if (
-      password.length >= 6 &&
-      /[A-Za-z]/.test(password) &&
-      /\d/.test(password)
-    ) {
-      setPasswordStrength("Average");
+    if (!password) {
+      setPasswordStrength("");
+      return;
     }
-
     if (
       password.length >= 8 &&
       /[a-z]/.test(password) &&
@@ -44,12 +33,19 @@ const SupplierRegister = () => {
       /[!@#$%^&*]/.test(password)
     ) {
       setPasswordStrength("Strong");
+    } else if (
+      password.length >= 6 &&
+      /[A-Za-z]/.test(password) &&
+      /\d/.test(password)
+    ) {
+      setPasswordStrength("Average");
+    } else {
+      setPasswordStrength("Weak");
     }
   };
 
   const onSubmit = (data) => {
     console.log(data);
-
     navigate("/complete-profile");
   };
 
@@ -57,11 +53,17 @@ const SupplierRegister = () => {
     window.open("https://accounts.google.com/signin", "_blank");
   };
 
+  const strengthConfig = {
+    Weak: { label: "🔴 Weak", color: "text-red-500", bar: "w-1/3 bg-red-500" },
+    Average: { label: "🟡 Average", color: "text-yellow-500", bar: "w-2/3 bg-yellow-500" },
+    Strong: { label: "🟢 Strong", color: "text-green-500", bar: "w-full bg-green-500" },
+  };
+
+  const strength = strengthConfig[passwordStrength];
+
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-8">
-        Supplier Registration
-      </h2>
+    <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+      <h2 className="text-3xl font-bold mb-8">Supplier Registration</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -73,9 +75,7 @@ const SupplierRegister = () => {
             placeholder="Full Name"
             className="w-full border p-3 rounded-xl"
           />
-          <p className="text-red-500 text-sm">
-            {errors.FullName?.message}
-          </p>
+          <p className="text-red-500 text-sm">{errors.FullName?.message}</p>
         </div>
 
         <div>
@@ -84,9 +84,7 @@ const SupplierRegister = () => {
             placeholder="Email"
             className="w-full border p-3 rounded-xl"
           />
-          <p className="text-red-500 text-sm">
-            {errors.email?.message}
-          </p>
+          <p className="text-red-500 text-sm">{errors.email?.message}</p>
         </div>
 
         <div>
@@ -95,55 +93,32 @@ const SupplierRegister = () => {
               type={showPassword ? "text" : "password"}
               {...register("password")}
               placeholder="Password"
-              className="w-full border p-3 rounded-xl pr-12"
-              onChange={(e) =>
-                checkPasswordStrength(e.target.value)
-              }
+              className={`${inputCls} pr-12`}
+              onChange={(e) => checkPasswordStrength(e.target.value)}
             />
-
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.password?.message}</p>
 
-          <p className="text-red-500 text-sm">
-            {errors.password?.message}
-          </p>
-
-          {passwordStrength === "Weak" && (
-            <p className="text-red-500 text-sm mt-1">
-              🔴 Weak Password
+          {/* Strength Label */}
+          {strength && (
+            <p className={`text-sm mt-1 px-1 font-medium ${strength.color}`}>
+              {strength.label}
             </p>
           )}
 
-          {passwordStrength === "Average" && (
-            <p className="text-yellow-500 text-sm mt-1">
-              🟡 Average Password
-            </p>
+          {/* Strength Bar */}
+          {passwordStrength && (
+            <div className="w-full bg-gray-200 h-2 rounded mt-1">
+              <div className={`h-2 rounded transition-all duration-300 ${strength.bar}`} />
+            </div>
           )}
-
-          {passwordStrength === "Strong" && (
-            <p className="text-green-500 text-sm mt-1">
-              🟢 Strong Password
-            </p>
-          )}
-
-          <div className="w-full bg-gray-200 h-2 rounded mt-2">
-            <div
-              className={`h-2 rounded transition-all duration-300 ${passwordStrength === "Weak"
-                ? "w-1/3 bg-red-500"
-                : passwordStrength === "Average"
-                  ? "w-2/3 bg-yellow-500"
-                  : passwordStrength === "Strong"
-                    ? "w-full bg-green-500"
-                    : "w-0"
-                }`}
-            />
-          </div>
         </div>
 
         <div>
@@ -152,27 +127,17 @@ const SupplierRegister = () => {
               type={showConfirmPassword ? "text" : "password"}
               {...register("confirmPassword")}
               placeholder="Confirm Password"
-              className="w-full border p-3 rounded-xl pr-12"
+              className={`${inputCls} pr-12`}
             />
-
             <button
               type="button"
-              onClick={() =>
-                setShowConfirmPassword(!showConfirmPassword)
-              }
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
-              {showConfirmPassword ? (
-                <FaEyeSlash />
-              ) : (
-                <FaEye />
-              )}
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-
-          <p className="text-red-500 text-sm">
-            {errors.confirmPassword?.message}
-          </p>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.confirmPassword?.message}</p>
         </div>
 
         <div className="md:col-span-2">
@@ -181,15 +146,12 @@ const SupplierRegister = () => {
             placeholder="Company Name"
             className="w-full border p-3 rounded-xl"
           />
-
-          <p className="text-red-500 text-sm">
-            {errors.companyName?.message}
-          </p>
+          <p className="text-red-500 text-sm">{errors.companyName?.message}</p>
         </div>
 
         <button
           type="submit"
-          className="md:col-span-2 bg-green-600 text-white py-3 rounded-xl hover:bg-green-700"
+          className="md:col-span-2 bg-blue-600 text-white py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-blue-700 transition"
         >
           Register Supplier
         </button>
@@ -207,7 +169,7 @@ const SupplierRegister = () => {
           Sign in with Google
         </button>
       </form>
-    </div >
+    </div>
   );
 };
 
