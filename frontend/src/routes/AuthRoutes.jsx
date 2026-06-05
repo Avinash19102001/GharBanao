@@ -1,18 +1,24 @@
-const AuthRoutes=[
-    {
-        path:"/",
-        lazy: async () => {
-            const { default: Login } = await import("../components/auth/Login");
-            return { Component: Login };
-        },
-    },
-    {
-        path:"/register",
-        lazy: async () => {
-            const { default: Register } = await import("../components/auth/Register");
-            return { Component: Register };
-        },
-    }
-]
+import { lazy } from "react";
 
-export default  AuthRoutes
+const Login = lazy(() => import("../components/auth/Login"));
+const Register= lazy(()=>import("../components/auth/Register"))
+const ForgotPassword=lazy(()=>import("../components/auth/ForgotPassword"))
+
+const AuthRoutes = [
+  {
+    path: "/",
+    
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element:<Register />
+  },
+  {
+    path: "/forgotpassword",
+    element:<ForgotPassword />
+  },
+  
+];
+
+export default AuthRoutes;

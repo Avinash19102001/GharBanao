@@ -1,5 +1,7 @@
 import { useState } from "react";
-import gharbanavo from "../../assets/gharbanavo.jpeg"
+import gharbanao from "../../assets/gharbanavo.jpeg";
+import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,24 +10,24 @@ const Login = () => {
     <div
       className="min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url(${gharbanavo})`,
+        backgroundImage: `url(${gharbanao})`,
       }}
     >
       {/* Overlay */}
-  <div className="absolute inset-0 bg-[#f8f3eb]/50" />
+      <div className="absolute inset-0 bg-[#f8f3eb]/50" />
 
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 px-12 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-green-900">
-            GharBanao
-          </h1>
+          <div className="flex items-center gap-2">
+            <FaHome className="text-green-900 text-3xl" />
+            <h1 className="text-3xl font-bold text-green-900">GharBanao</h1>
+          </div>
 
           <p className="text-xs tracking-[4px] text-gray-700 mt-1">
             PLAN. BUILD. LIVE. FOREVER.
           </p>
         </div>
-
       </header>
 
       {/* Main Content */}
@@ -43,27 +45,16 @@ const Login = () => {
           <div className="w-12 h-1 bg-green-900 mt-4 mb-4" />
 
           <p className="text-sm text-gray-700 max-w-sm font-semibold">
-            The connected platform for homeowners,
-            contractors and suppliers.
+            The connected platform for homeowners, contractors and suppliers.
             Build smarter with one ecosystem.
           </p>
         </div>
 
         {/* Right Login Card */}
         <div className="w-full max-w-sm rounded-xl border border-white/30 bg-white/20 backdrop-blur-xl p-8 shadow-2xl">
-          {/* <h2 className="text-5xl font-bold text-gray-900 mb-2">
-            Welcome back 🍃
-          </h2>
-
-          <p className="text-gray-600 mb-8">
-            Sign in to continue building a better future.
-          </p> */}
-
           {/* Email */}
           <div className="mb-2">
-            <label className="block mb-2 font-medium">
-              Email Address
-            </label>
+            <label className="block mb-2 font-medium">Email Address</label>
 
             <input
               type="email"
@@ -74,9 +65,7 @@ const Login = () => {
 
           {/* Password */}
           <div className="mb-2">
-            <label className="block mb-2 font-medium">
-              Password
-            </label>
+            <label className="block mb-2 font-medium">Password</label>
 
             <div className="relative">
               <input
@@ -87,9 +76,7 @@ const Login = () => {
 
               <button
                 type="button"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2"
               >
                 👁️
@@ -104,9 +91,12 @@ const Login = () => {
               <span>Remember me</span>
             </label>
 
-            <button className="text-green-800 font-medium">
+            <Link
+              to="/forgotpassword"
+              className="text-green-800 font-medium hover:underline"
+            >
               Forgot password?
-            </button>
+            </Link>
           </div>
 
           {/* Login */}
@@ -118,9 +108,7 @@ const Login = () => {
           <div className="flex items-center gap-4 my-4">
             <div className="flex-1 h-px bg-gray-300" />
 
-            <span className="text-sm text-gray-600">
-              or continue with
-            </span>
+            <span className="text-sm text-gray-600">or continue with</span>
 
             <div className="flex-1 h-px bg-gray-300" />
           </div>
@@ -133,17 +121,21 @@ const Login = () => {
               className="w-5 h-5"
             />
 
-            <span className="font-medium">
-              Continue with Google
-            </span>
+            <span className="font-medium">Continue with Google</span>
           </button>
 
           {/* Security Note */}
-          {/* <div className="mt-6 bg-white/40 rounded-xl border border-white/30 p-4">
+          <div className="mt-6 text-center">
             <p className="text-sm text-gray-700">
-              🔒 Your data is protected with enterprise-grade security.
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-green-800 font-semibold hover:underline"
+              >
+                Register
+              </Link>
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
