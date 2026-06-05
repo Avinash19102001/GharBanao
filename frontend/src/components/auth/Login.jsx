@@ -1,5 +1,7 @@
 import { useState } from "react";
-import gharbanavo from "../../assets/gharbanavo.jpeg";
+import gharbanao from "../../assets/gharbanavo.jpeg";
+import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,7 +10,7 @@ const Login = () => {
     <div
       className="min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: `url(${gharbanavo})`,
+        backgroundImage: `url(${gharbanao})`,
       }}
     >
       {/* Overlay */}
@@ -17,7 +19,10 @@ const Login = () => {
       {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 px-12 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-green-900">GharBanao</h1>
+          <div className="flex items-center gap-2">
+            <FaHome className="text-green-900 text-3xl" />
+            <h1 className="text-3xl font-bold text-green-900">GharBanao</h1>
+          </div>
 
           <p className="text-xs tracking-[4px] text-gray-700 mt-1">
             PLAN. BUILD. LIVE. FOREVER.
@@ -47,14 +52,6 @@ const Login = () => {
 
         {/* Right Login Card */}
         <div className="w-full max-w-sm rounded-xl border border-white/30 bg-white/20 backdrop-blur-xl p-8 shadow-2xl">
-          {/* <h2 className="text-5xl font-bold text-gray-900 mb-2">
-            Welcome back 🍃
-          </h2>
-
-          <p className="text-gray-600 mb-8">
-            Sign in to continue building a better future.
-          </p> */}
-
           {/* Email */}
           <div className="mb-2">
             <label className="block mb-2 font-medium">Email Address</label>
@@ -94,9 +91,12 @@ const Login = () => {
               <span>Remember me</span>
             </label>
 
-            <button className="text-green-800 font-medium">
+            <Link
+              to="/forgotpassword"
+              className="text-green-800 font-medium hover:underline"
+            >
               Forgot password?
-            </button>
+            </Link>
           </div>
 
           {/* Login */}
@@ -125,14 +125,21 @@ const Login = () => {
           </button>
 
           {/* Security Note */}
-          {/* <div className="mt-6 bg-white/40 rounded-xl border border-white/30 p-4">
+          <div className="mt-6 text-center">
             <p className="text-sm text-gray-700">
-              🔒 Your data is protected with enterprise-grade security.
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-green-800 font-semibold hover:underline"
+              >
+                Register
+              </Link>
             </p>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 export default Login;
