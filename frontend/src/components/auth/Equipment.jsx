@@ -171,7 +171,6 @@ const EquipmentRegister = () => {
           />
           Continue with Google
         </button>
-
       </form>
     </div>
   );
