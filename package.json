@@ -1,0 +1,21 @@
+{
+  "name": "gharbanao",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r # React + Vite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avinash19102001/GharBanao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Avinash19102001/GharBanao/issues"
+  },
+  "homepage": "https://github.com/Avinash19102001/GharBanao#readme"
+}

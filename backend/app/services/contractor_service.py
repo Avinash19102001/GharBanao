@@ -1,4 +1,4 @@
-from app.repository.user_repository import UserRepository
+from backend.app.repository.contractor_repository import UserRepository
 
 
 class UserService:
