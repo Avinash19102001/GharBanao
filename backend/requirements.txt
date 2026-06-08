@@ -5,3 +5,6 @@ psycopg2-binary
 pydantic
 email-validator
  
+
+
+pip install python-dotenv

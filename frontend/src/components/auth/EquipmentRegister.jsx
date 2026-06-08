@@ -1,82 +1,52 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { supplierSchema } from "./schemas/supplierSchema";
-import { useNavigate } from "react-router-dom";
+import equipmentSchema from "./schemas/equipment";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
-
-
-const SupplierRegister = () => {
+const EquipmentRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState("");
-  const inputCls = "w-full border p-3 rounded-xl";
-  const navigate = useNavigate();
+  const [submittedData, setSubmittedData] = useState(null);
   const {
     register,
     handleSubmit,
-    trigger,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(supplierSchema),
+    resolver: zodResolver(equipmentSchema),
     mode: "onChange",
   });
-  const checkPasswordStrength = (password) => {
-    if (!password) {
-      setPasswordStrength("");
-      return;
-    }
-    if (
-      password.length >= 8 &&
-      /[a-z]/.test(password) &&
-      /[A-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[!@#$%^&*]/.test(password)
-    ) {
-      setPasswordStrength("Strong");
-    } else if (
-      password.length >= 6 &&
-      /[A-Za-z]/.test(password) &&
-      /\d/.test(password)
-    ) {
-      setPasswordStrength("Average");
-    } else {
-      setPasswordStrength("Weak");
-    }
-  };
   const onSubmit = (data) => {
-    console.log(data);
-    navigate("/complete-profile");
+    setSubmittedData(data);
   };
+
   const handleGoogleSignIn = () => {
-    window.open("https://accounts.google.com/signin", "_blank");
+    window.location.href = "https://accounts.google.com/signin";
   };
-  const strengthConfig = {
-    Weak: { label: "🔴 Weak", color: "text-red-500", bar: "w-1/3 bg-red-500" },
-    Average: { label: "🟡 Average", color: "text-yellow-500", bar: "w-2/3 bg-yellow-500" },
-    Strong: { label: "🟢 Strong", color: "text-green-500", bar: "w-full bg-green-500" },
-  };
-  const strength = strengthConfig[passwordStrength];
+  const inputCls = "w-full border p-3 rounded-xl";
+  if (submittedData) {
+    return (
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
+      </div>
+    );
+  }
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-8">Supplier Registration</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid md:grid-cols-2 gap-5"
-      >
+      <h2 className="text-3xl font-bold mb-8">Equipment Registration</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid md:grid-cols-2 gap-5">
         <div>
           <input
             {...register("FullName")}
             placeholder="Full Name"
-            className="w-full border p-3 rounded-xl"
+            className={inputCls}
           />
           <p className="text-red-500 text-sm">{errors.FullName?.message}</p>
         </div>
         <div>
           <input
+            type="email"
             {...register("email")}
             placeholder="Email"
-            className="w-full border p-3 rounded-xl"
+            className={inputCls}
           />
           <p className="text-red-500 text-sm">{errors.email?.message}</p>
         </div>
@@ -87,7 +57,6 @@ const SupplierRegister = () => {
               {...register("password")}
               placeholder="Password"
               className={`${inputCls} pr-12`}
-              onChange={(e) => checkPasswordStrength(e.target.value)}
             />
             <button
               type="button"
@@ -98,16 +67,6 @@ const SupplierRegister = () => {
             </button>
           </div>
           <p className="text-red-500 text-sm mt-1 px-1">{errors.password?.message}</p>
-          {strength && (
-            <p className={`text-sm mt-1 px-1 font-medium ${strength.color}`}>
-              {strength.label}
-            </p>
-          )}
-          {passwordStrength && (
-            <div className="w-full bg-gray-200 h-2 rounded mt-1">
-              <div className={`h-2 rounded transition-all duration-300 ${strength.bar}`} />
-            </div>
-          )}
         </div>
         <div>
           <div className="relative">
@@ -128,33 +87,48 @@ const SupplierRegister = () => {
           <p className="text-red-500 text-sm mt-1 px-1">{errors.confirmPassword?.message}</p>
         </div>
         <div className="md:col-span-2">
-          <input
-            {...register("companyName")}
-            placeholder="Company Name"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm">{errors.companyName?.message}</p>
+          <select
+            {...register("equipmentType")}
+            className={`${inputCls} text-gray-700`} 
+            defaultValue=""
+          >
+            <option value="" disabled>Select Equipment Type</option>
+            <option value="Bricks">Bricks</option>
+            <option value="Steel">Steel</option>
+            <option value="Cement">Cement</option>
+          </select>
+          <p className="text-red-500 text-sm mt-1 px-1">{errors.equipmentType?.message}</p>
         </div>
         <button
           type="submit"
-          className="md:col-span-2 bg-blue-600 text-white py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-blue-700 transition"
+          disabled={isSubmitting}
+          className={`md:col-span-2 py-3 rounded-xl text-white font-semibold text-base transition-all duration-200
+            ${isSubmitting
+              ? "bg-blue-300 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+            }`}
         >
-          Register Supplier
+          {isSubmitting ? "Registering..." : "Register"}
         </button>
+        <div className="md:col-span-2 flex items-center gap-3">
+          <div className="flex-1 h-px bg-gray-200"/>
+          <span className="text-sm text-gray-400">OR</span>
+          <div className="flex-1 h-px bg-gray-200"/>
+        </div>
         <button
           type="button"
           onClick={handleGoogleSignIn}
-          className="md:col-span-2 border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100"
+          className="md:col-span-2 border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition text-gray-700 font-medium"
         >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"
             className="w-5 h-5"
           />
-          Sign in with Google
+          Continue with Google
         </button>
       </form>
     </div>
   );
 };
-export default SupplierRegister;
+export default EquipmentRegister;
