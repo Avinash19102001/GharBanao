@@ -8,38 +8,9 @@ venv/
 .venv/
 env/
 
-<<<<<<< Updated upstream
-# Editor directories and files
-.vscode/*
+# VS Code
+.vscode/
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Python cache files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-venv/
-.env
-
-# VS Code
-.vscode/
-
-# Pytest
-.pytest_cache/
-
-# OS files
-.DS_Store
-=======
-# VS Code
-.vscode/
 
 # Environment Variables
 .env
@@ -56,6 +27,18 @@ build/
 dist/
 *.egg-info/
 
-# Uploads (optional)
+# Uploads
 uploads/
->>>>>>> Stashed changes
+
+# Editor files
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node modules
+node_modules/
+frontend/node_modules/
