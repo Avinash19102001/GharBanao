@@ -83,7 +83,7 @@ const ForgotPassword = () => {
         </div>
 
         <button className="w-full h-12 rounded-xl bg-[#15803d] text-white font-semibold text-lg hover:bg-[#166534] transition">
-          Reset Password
+          Reset Password 
         </button>
 
         <div className="text-center mt-6">
