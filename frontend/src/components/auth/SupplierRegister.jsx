@@ -35,7 +35,7 @@ const SupplierRegister = () => {
     ) {
       setPasswordStrength("Strong");
     } else if (
-      password.length >= 6 &&
+      password.length >= 8 &&
       /[A-Za-z]/.test(password) &&
       /\d/.test(password)
     ) {
