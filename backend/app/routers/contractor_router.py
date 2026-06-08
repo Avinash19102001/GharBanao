@@ -4,7 +4,7 @@ from fastapi import HTTPException
 
 from sqlalchemy.orm import Session
 
-from app.database import SessionLocal
+from app.utils.database import SessionLocal
 
 from app.models.contractor_model import Contractor
 
@@ -27,7 +27,7 @@ def get_db():
         db.close()
 
 
-@router.post("/contractor/register")
+@router.post("/api/contractor/register")
 def register_contractor(
     contractor: ContractorRegister,
     db: Session = Depends(get_db)

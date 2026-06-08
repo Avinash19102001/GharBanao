@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 `bg-gradient-to-br` from-green-100 via-gray-100 to-orange-100">
@@ -83,7 +82,7 @@ const ForgotPassword = () => {
         </div>
 
         <button className="w-full h-12 rounded-xl bg-[#15803d] text-white font-semibold text-lg hover:bg-[#166534] transition">
-          Reset Password
+          Reset Password 
         </button>
 
         <div className="text-center mt-6">
