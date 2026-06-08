@@ -7,7 +7,7 @@ from app.schemas.house_owner_registration import (
     HouseOwnerLogin
 )
 from app.models.house_owner_registration import HouseOwner
-
+from app.services.house_owner_reg import service
 router = APIRouter(
     prefix="/houseOwners",
     tags=["House Owners"]
