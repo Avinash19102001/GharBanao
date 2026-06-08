@@ -61,7 +61,6 @@ const ContractorCompleteProfile = () => {
           />
           <p className="text-red-500 text-sm">{errors.firstName?.message}</p>
         </div>
-
         {/* Last Name */}
         <div>
           <input
@@ -71,7 +70,6 @@ const ContractorCompleteProfile = () => {
           />
           <p className="text-red-500 text-sm">{errors.lastName?.message}</p>
         </div>
-
         {/* Phone Number */}
         <div>
           <input
@@ -81,7 +79,16 @@ const ContractorCompleteProfile = () => {
           />
           <p className="text-red-500 text-sm">{errors.phoneNumber?.message}</p>
         </div>
+        {/* GST Field */}
+        <div>
+          <input
+            {...register("gstNumber")}
+            placeholder="GST Number"
+            className="w-full border p-3 rounded-xl"
+          />
 
+          <p className="text-red-500 text-sm">{errors.gstNumber?.message}</p>
+        </div>
         {/* Company Name */}
         <div>
           <input
@@ -92,15 +99,44 @@ const ContractorCompleteProfile = () => {
           <p className="text-red-500 text-sm">{errors.companyName?.message}</p>
         </div>
 
-        {/* GST Field */}
+        {/* PAN */}
         <div>
           <input
-            {...register("gstNumber")}
-            placeholder="GST Number"
+            {...register("panNumber")}
+            placeholder="PAN Number"
             className="w-full border p-3 rounded-xl"
           />
+          <p className="text-red-500 text-sm">{errors.panNumber?.message}</p>
+        </div>
 
-          <p className="text-red-500 text-sm">{errors.gstNumber?.message}</p>
+        {/* Aadhaar Number */}
+        <div>
+          <input
+            {...register("aadhaarNumber")}
+            placeholder="Aadhaar Number"
+            className="w-full border p-3 rounded-xl"
+          />
+          <p className="text-red-500 text-sm">
+            {errors.aadhaarNumber?.message}
+          </p>
+        </div>
+
+        {/* Approximate Budget Range */}
+        <div>
+          <select
+            {...register("typicalProjectBudget")}
+            className="w-full border p-3 rounded-xl"
+          >
+            <option value="">Select Budget Range</option>
+            <option value="0-5L">₹0 - ₹5 Lakhs</option>
+            <option value="5-20L">₹5 - ₹20 Lakhs</option>
+            <option value="20-50L">₹20 - ₹50 Lakhs</option>
+            <option value="50L+">₹50 Lakhs+</option>
+          </select>
+
+          <p className="text-red-500 text-sm">
+            {errors.typicalProjectBudget?.message}
+          </p>
         </div>
 
         {/* Number of Projects */}
@@ -116,6 +152,20 @@ const ContractorCompleteProfile = () => {
           </p>
         </div>
 
+        {/* Years of Experience */}
+        <div>
+          <input
+            type="number"
+            {...register("yearsOfExperience")}
+            placeholder="Years of Experience"
+            className="w-full border p-3 rounded-xl"
+          />
+
+          <p className="text-red-500 text-sm">
+            {errors.yearsOfExperience?.message}
+          </p>
+        </div>
+
         {/* Location */}
         <div>
           <input
@@ -126,23 +176,59 @@ const ContractorCompleteProfile = () => {
           <p className="text-red-500 text-sm">{errors.location?.message}</p>
         </div>
 
-        {/* Previous Work Images */}
-        <div className="md:col-span-2">
-          <label className="block mb-2 font-medium">
-            Upload Previous Work (Maximum 4 Images)
-          </label>
+        {/* Available For New Projects */}
+        <div>
+          <select
+            {...register("availability")}
+            className="w-full border p-3 rounded-xl"
+          >
+            <option value="">Availability</option>
+            <option value="Available">Available Now</option>
+            <option value="Busy">Busy</option>
+            <option value="NextMonth">Available Next Month</option>
+          </select>
+          <p className="text-red-500 text-sm">{errors.availability?.message}</p>
+        </div>
 
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            {...register("workImages")}
-            onChange={(e) => {
-              register("workImages").onChange(e);
-              handleImageChange(e);
-            }}
+        {/* About Contractor */}
+        <div>
+          <textarea
+            {...register("about")}
+            rows="4"
+            placeholder="Tell homeowners about your experience..."
             className="w-full border p-3 rounded-xl"
           />
+          <p className="text-red-500 text-sm">{errors.about?.message}</p>
+        </div>
+
+        {/* Previous Work Images */}
+        <div className="md:col-span-2">
+          <label className="block mb-2 font-medium">Previous Work Images</label>
+
+          <label className="inline-flex items-center px-5 py-3 bg-blue-600 text-white rounded-xl cursor-pointer hover:bg-blue-700 transition">
+            Upload Images
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              {...register("workImages")}
+              onChange={(e) => {
+                register("workImages").onChange(e);
+                handleImageChange(e);
+              }}
+              className="hidden"
+            />
+          </label>
+
+          {workImages?.length > 0 && (
+            <p className="mt-2 text-sm text-green-600">
+              {workImages.length} image(s) selected
+            </p>
+          )}
+
+          <p className="text-red-500 text-sm mt-1">
+            {errors.workImages?.message}
+          </p>
 
           {imagePreviews.length > 0 && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
@@ -150,7 +236,7 @@ const ContractorCompleteProfile = () => {
                 <div key={index} className="relative">
                   <img
                     src={image.preview}
-                    alt={`Preview ${index + 1}`}
+                    alt="preview"
                     className="w-full h-32 object-cover rounded-xl border"
                   />
 
@@ -165,14 +251,6 @@ const ContractorCompleteProfile = () => {
               ))}
             </div>
           )}
-
-          <p className="text-red-500 text-sm">{errors.workImages?.message}</p>
-
-          {workImages && workImages.length > 0 && (
-            <p className="text-green-600 text-sm mt-2">
-              {workImages.length} image(s) selected
-            </p>
-          )}
         </div>
 
         {/* Certification Upload */}
@@ -181,28 +259,36 @@ const ContractorCompleteProfile = () => {
             Contractor Certification
           </label>
 
-          <input
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            {...register("certificate")}
-            className="w-full border p-3 rounded-xl"
-          />
+          <label className="inline-flex items-center px-5 py-3 bg-green-600 text-white rounded-xl cursor-pointer hover:bg-green-700 transition">
+            Upload Certificate
+            <input
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              {...register("certificate")}
+              className="hidden"
+            />
+          </label>
 
-          <p className="text-red-500 text-sm">{errors.certificate?.message}</p>
+          <p className="text-red-500 text-sm mt-1">
+            {errors.certificate?.message}
+          </p>
         </div>
 
         {/* License Upload */}
         <div>
           <label className="block mb-2 font-medium">Contractor License</label>
 
-          <input
-            type="file"
-            accept=".pdf,.jpg,.jpeg,.png"
-            {...register("license")}
-            className="w-full border p-3 rounded-xl"
-          />
+          <label className="inline-flex items-center px-5 py-3 bg-purple-600 text-white rounded-xl cursor-pointer hover:bg-purple-700 transition">
+            Upload License
+            <input
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              {...register("license")}
+              className="hidden"
+            />
+          </label>
 
-          <p className="text-red-500 text-sm">{errors.license?.message}</p>
+          <p className="text-red-500 text-sm mt-1">{errors.license?.message}</p>
         </div>
 
         {/* Submit */}

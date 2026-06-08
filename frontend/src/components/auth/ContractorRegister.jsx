@@ -5,6 +5,7 @@ import { contractorSchema } from "./schemas/contractorSchema";
 import { useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { getPasswordStrength } from "../../utils/passwordStrength";
+import { registerContractor} from "../../services/authServices";
 
 const colors = {
   Weak: {
@@ -96,11 +97,34 @@ const ContractorRegister = () => {
     }
   };
   console.log(errors);
-  const onSubmit = (data) => {
-    console.log(data);
+  // const onSubmit = (data) => {
+  //   console.log(data);
 
-    navigate("/verify-email");
-  };
+  //   navigate("/contractorprofile");
+  // };
+
+  const onSubmit = async (data) => {
+  try {
+    const payload = {
+      full_name: data.fullName,
+      email: data.email,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+      project_type: data.preferredProjectType,
+    };
+
+    const response = await registerContractor(payload);
+
+    console.log("Registration Success:", response.data);
+
+    navigate("/contractorprofile");
+  } catch (error) {
+    console.error(
+      "Registration Failed:",
+      error.response?.data || error.message
+    );
+  }
+};
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
