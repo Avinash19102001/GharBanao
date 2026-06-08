@@ -14,7 +14,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 axiosInstance.interceptors.response.use(
@@ -26,7 +26,6 @@ axiosInstance.interceptors.response.use(
       case 401:
         console.error("Unauthorized");
 
-        
         window.location.href = "/login";
         break;
 
@@ -49,7 +48,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;
