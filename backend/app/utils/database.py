@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 # DATABASE_URL = (
-#     "postgresql+psycopg2://postgres:vyshu%401234@localhost:5432/gharbanao"
+#     "postgresql+psycopg2://postgres:123@localhost:5432/gharbanao"
 # )
 
 load_dotenv()
