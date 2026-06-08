@@ -5,7 +5,7 @@ const ForgotPassword=lazy(()=>import("../components/auth/ForgotPassword"))
 const HouseOWnerRegister=lazy(()=>import("../components/auth/HouseOwnerRegister"))
 const HouseOwnerProfile=lazy(()=>import("../components/auth/HouseOwnerProfile"))
 const ContractorRegister=lazy(()=>import("../components/auth/ContractorRegister"))
-const ContractorCompleteProfile=lazy(()=>("../components/auth/ContractorCompleteProfile.jsx"))
+const ContractorCompleteProfile=lazy(()=>import("../components/auth/ContractorCompleteProfile"))
 const SupplierRegister =lazy(()=>import("../components/auth/SupplierRegister"))
 const EquipmentRegister=lazy(()=>import("../components/auth/EquipmentRegister"))
 const AuthRoutes = [
@@ -35,7 +35,7 @@ const AuthRoutes = [
   },
  {
     path:"/contractorprofile",
-    element:<ContractorCompleteProfile />
+    element:<ContractorCompleteProfile/>
  },
  {
     path:"/supplierregister",

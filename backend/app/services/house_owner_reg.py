@@ -1,12 +1,18 @@
 from app.repository.house_owner__reg import HouseOwner
-from app.models.house_owner_registration import HouseOwner
+from app.repository.house_owner__reg import HouseOwnerRepository
+# from app.models.house_owner_registration import HouseOwner
 
 
 class HouseOwnerService:
+    
+    def __init__(self, repository:HouseOwnerRepository ):
+        self.repository = repository
+
+
 
     def register_owner(self, db, owner_data):
 
-        existing_owner = repo.get_by_email(
+        existing_owner = self.repository.get_by_email(
             db,
             owner_data.email
         )
@@ -18,15 +24,15 @@ class HouseOwnerService:
             }
 
         owner = HouseOwner(
-            fullName=owner_data.fullName,
-            email=owner_data.email,
-            mobileNumber=owner_data.mobileNumber,
-            password=owner_data.password,
-            propertyType=owner_data.propertyType,
-            projectType=owner_data.projectType
+             full_name=owner_data.fullName,
+             email=owner_data.email,
+             mobile_number=owner_data.mobileNumber,
+             password=owner_data.password,
+             propertyType=owner_data.propertyType,
+              projectType=owner_data.projectType
         )
 
-        saved_owner = repo.create(
+        saved_owner = self.repository.create(
             db,
             owner
         )
@@ -39,7 +45,7 @@ class HouseOwnerService:
 
     def login_owner(self, db, login_data):
 
-        owner = repo.get_by_email(
+        owner = self.repository.get_by_email(
             db,
             login_data.email
         )
@@ -62,4 +68,5 @@ class HouseOwnerService:
         }
 
 
-service = HouseOwnerService()
+repository = HouseOwnerRepository()
+service = HouseOwnerService(repository)
