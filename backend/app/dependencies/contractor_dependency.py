@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from backend.app.database import get_db
+from backend.app.utils.database import get_db
 
 from backend.app.repository.contractor_repository import UserRepository
 
