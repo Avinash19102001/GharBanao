@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import equipmentSchema from "./schemas/equipment";
+import equipmentSchema from "./schemas/EquipmentRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 const EquipmentRegister = () => {
@@ -18,15 +18,13 @@ const EquipmentRegister = () => {
   const onSubmit = (data) => {
     setSubmittedData(data);
   };
-
   const handleGoogleSignIn = () => {
     window.location.href = "https://accounts.google.com/signin";
   };
   const inputCls = "w-full border p-3 rounded-xl";
   if (submittedData) {
     return (
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8">
-      </div>
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-8"></div>
     );
   }
   return (
@@ -60,10 +58,10 @@ const EquipmentRegister = () => {
             />
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
             </button>
           </div>
           <p className="text-red-500 text-sm mt-1 px-1">{errors.password?.message}</p>
@@ -78,26 +76,22 @@ const EquipmentRegister = () => {
             />
             <button
               type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
             </button>
           </div>
           <p className="text-red-500 text-sm mt-1 px-1">{errors.confirmPassword?.message}</p>
         </div>
         <div className="md:col-span-2">
-          <select
-            {...register("equipmentType")}
-            className={`${inputCls} text-gray-700`} 
-            defaultValue=""
-          >
-            <option value="" disabled>Select Equipment Type</option>
+          <select {...register("equipmentType")} className={inputCls}>
+            <option value="">Select Equipment Type</option>
             <option value="Bricks">Bricks</option>
             <option value="Steel">Steel</option>
             <option value="Cement">Cement</option>
           </select>
-          <p className="text-red-500 text-sm mt-1 px-1">{errors.equipmentType?.message}</p>
+          <p className="text-red-500 text-sm">{errors.equipmentType?.message}</p>
         </div>
         <button
           type="submit"
@@ -111,9 +105,9 @@ const EquipmentRegister = () => {
           {isSubmitting ? "Registering..." : "Register"}
         </button>
         <div className="md:col-span-2 flex items-center gap-3">
-          <div className="flex-1 h-px bg-gray-200"/>
+          <div className="flex-1 h-px bg-gray-200" />
           <span className="text-sm text-gray-400">OR</span>
-          <div className="flex-1 h-px bg-gray-200"/>
+          <div className="flex-1 h-px bg-gray-200" />
         </div>
         <button
           type="button"
