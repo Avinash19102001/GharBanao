@@ -5,8 +5,6 @@ import { supplierSchema } from "./schemas/supplierSchema";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState} from "react";
-
-
 const SupplierRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -36,7 +34,7 @@ const SupplierRegister = () => {
     ) {
       setPasswordStrength("Strong");
     } else if (
-      password.length >= 6 &&
+      password.length >= 8 &&
       /[A-Za-z]/.test(password) &&
       /\d/.test(password)
     ) {
