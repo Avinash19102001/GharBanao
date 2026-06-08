@@ -10,7 +10,7 @@ const ContractorRegister=lazy(()=>import("../components/auth/ContractorRegister"
 const ContractorCompleteProfile=lazy(()=>("../components/auth/ContractorCompleteProfile.jsx"))
 const SupplierRegister =lazy(()=>import("../components/auth/SupplierRegister"))
 const SupplierCompleteProfile=lazy(()=>import("../components/SupplierCompleteProfile"))
-const Equipment=lazy(()=>import("../components/auth/Equipment"))
+const Equipment=lazy(()=>import("../components/auth/EquipmentRegister"))
 
 const AuthRoutes = [
   {
