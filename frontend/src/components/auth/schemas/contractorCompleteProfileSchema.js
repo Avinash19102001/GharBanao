@@ -7,16 +7,38 @@ export const contractorCompleteProfileSchema = z.object({
 
   phoneNumber: z.string().regex(/^[6-9]\d{9}$/, "Enter valid phone number"),
 
-  companyName: z.string().min(2, "Company name is required"),
-
   gstNumber: z
     .string()
     .min(15, "GST Number must be 15 characters")
     .max(15, "GST Number must be 15 characters"),
 
+  companyName: z.string().min(2, "Company name is required"),
+
+  panNumber: z
+    .string()
+    .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Invalid PAN Number"),
+
+  aadhaarNumber: z
+    .string()
+    .regex(/^\d{12}$/, "Aadhaar must contain exactly 12 digits"),
+
+  typicalProjectBudget: z.string().min(1, "Please select project budget"),
+
   projectsCompleted: z.coerce.number().min(1, "Projects count is required"),
 
+  yearsOfExperience: z.coerce
+    .number()
+    .min(0, "Experience cannot be negative")
+    .max(60, "Invalid experience"),
+
   location: z.string().min(2, "Location is required"),
+
+  availability: z.string().min(1, "Please select availability"),
+
+  about: z
+    .string()
+    .min(50, "Please write at least 50 characters")
+    .max(1000, "Maximum 1000 characters allowed"),
 
   // Previous Work Images
   workImages: z

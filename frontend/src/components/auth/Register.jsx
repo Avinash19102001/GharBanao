@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import HouseOwnerRegister from "./HouseOwnerRegister";
 import ContractorRegister from "./ContractorRegister";
 import SupplierRegister from "./SupplierRegister";
-import Equipment from "./Equipment";
+import Equipment from "./EquipmentRegister";
 const Register = () => {
   const [selectedRole, setSelectedRole] = useState("houseowner");
   const roles = [
