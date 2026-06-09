@@ -42,3 +42,5 @@ uploads/
 # Node modules
 node_modules/
 frontend/node_modules/
+
+.env
