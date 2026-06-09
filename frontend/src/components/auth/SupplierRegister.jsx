@@ -4,6 +4,7 @@ import { supplierSchema } from "./schemas/supplierSchema";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { registerSupplier } from "../../services/authServices";
 
 
 const SupplierRegister = () => {
@@ -44,9 +45,27 @@ const SupplierRegister = () => {
       setPasswordStrength("Weak");
     }
   };
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/complete-profile");
+  const onSubmit = async (data) => {
+    try {
+      const payload = {
+        full_name: data.FullName,
+        email: data.email,
+        password: data.password,
+        confirm_password: data.confirmPassword,
+        company_name: data.companyName,
+      };
+
+      const response = await registerSupplier(payload);
+
+      console.log("Success:", response.data);
+
+      navigate("/complete-profile");
+    } catch (error) {
+      console.error(
+        "Registration failed:",
+        error.response?.data || error.message
+      );
+    }
   };
   const handleGoogleSignIn = () => {
     window.open("https://accounts.google.com/signin", "_blank");
