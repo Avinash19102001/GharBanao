@@ -19,5 +19,10 @@ def register_equipment(
     service.register(equipment)
 
     return {
-        "message": "Equipment Provider Registered Successfully"
+        "message": "Equipment Provider Registered Successfully",
+         "data": {
+            "full_name": equipment.full_name,
+            "email": equipment.email,
+            "equipment_type": equipment.equipment_type
+        }
     }

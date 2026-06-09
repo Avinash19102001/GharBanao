@@ -1,14 +1,17 @@
 from app.utils.database import Base, engine
 from fastapi import FastAPI
+from app.utils.database import Base,engine
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.models.house_owner_registration import HouseOwner
+from app.models.contractor_model import Contractor
+from app.models.supplier_registration import Supplier
 from app.routers.contractor_router import router
 from app.routers.house_owner_register import router as house_owner_router
 from app.routers.supplier_registration import router as supplier_router
+from app.routers.auth import router as login
 from app.routers.equipment_router import router as equipment_router
 
 Base.metadata.create_all(bind=engine)
-
 app = FastAPI()
 
 # origins = [
@@ -41,3 +44,6 @@ app.include_router(router)
 app.include_router(house_owner_router)
 app.include_router(supplier_router)
 app.include_router(equipment_router)
+app.include_router(login)
+
+Base.metadata.create_all(bind=engine)

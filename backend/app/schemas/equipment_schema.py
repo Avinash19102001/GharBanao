@@ -14,8 +14,8 @@ class EquipmentRegister(BaseModel):
     equipment_type: str
 
 
-class EquipmentLogin(BaseModel):
+# class EquipmentLogin(BaseModel):
 
-    email: EmailStr
+#     email: EmailStr
 
-    password: str
+#     password: str
