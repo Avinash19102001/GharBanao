@@ -8,6 +8,8 @@ from app.models.house_owner_registration import HouseOwner
 from app.models.contractor_model import Contractor
 from app.models.supplier_registration import Supplier
 from app.models.equipment_model import EquipmentProvider
+from app.models.auth_model import Login
+from app.repository.login_repository import LoginRepository
 
 from app.utils.jwt import create_access_token
 
@@ -29,6 +31,12 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "house_owner",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "house_owner"
+    )
         return {
             "access_token": token,
             "token_type": "bearer",
@@ -47,6 +55,12 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "contractor",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "supplier"
+    )
         return {
             "access_token": token,
             "token_type": "bearer",
@@ -65,6 +79,13 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "supplier",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "equipment_provider"
+    )
+
         return {
             "access_token": token,
             "token_type": "bearer",
@@ -95,3 +116,4 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         status_code=401,
         detail="Invalid credentials"
     )
+  

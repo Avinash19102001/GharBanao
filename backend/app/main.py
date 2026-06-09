@@ -11,6 +11,7 @@ from app.routers.contractor_router import router
 from app.routers.house_owner_register import router as house_owner_router
 from app.routers.supplier_registration import router as supplier_router
 from app.routers.auth import router as login
+from app.models.auth_model import Login
 from app.routers.equipment_router import router as equipment_router
 
 Base.metadata.create_all(bind=engine)
