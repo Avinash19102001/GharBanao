@@ -1,11 +1,11 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from backend.app.utils.database import get_db
+from app.utils.database import get_db
 
-from backend.app.repository.contractor_repository import UserRepository
+from app.repository.contractor_repository import UserRepository
 
-from backend.app.services.contractor_service import UserService
+from app.services.contractor_service import UserService
 
 
 def get_user_repository(

@@ -13,6 +13,7 @@ from app.schemas.contractor_schema import (
     ContractorLogin
 )
 
+
 router = APIRouter()
 
 
@@ -99,6 +100,13 @@ def register_contractor(
 #             detail="Invalid Password"
 #         )
 
+<<<<<<< Updated upstream
 #     return {
 #         "message": "Login Successful"
 #     }
+=======
+    return {
+        "message": "Login Successful"
+    }
+
+>>>>>>> Stashed changes
