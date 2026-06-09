@@ -2,13 +2,10 @@ from sqlalchemy import Column, Integer, String
 from app.utils.database import Base
 
 
-<<<<<<< Updated upstream
-=======
 from app.utils.database import Base
 
 
 Base = declarative_base()
->>>>>>> Stashed changes
 
 class Supplier(Base):
     __tablename__ = "suppliers"
