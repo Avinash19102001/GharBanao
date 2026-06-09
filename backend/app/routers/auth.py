@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,Response
 from sqlalchemy.orm import Session
 
 from app.utils.database import get_db
@@ -17,7 +17,8 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post("/login")
-def login(data: LoginSchema, db: Session = Depends(get_db)):
+def login(data: LoginSchema, 
+           response: Response,db: Session = Depends(get_db)):
 
     # ---------------- HOUSE OWNER ----------------
     user = db.query(HouseOwner).filter(
@@ -37,9 +38,16 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         user.password,
         "house_owner"
     )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
+    
         return {
-            "access_token": token,
-            "token_type": "bearer",
+            "message": "Login successful",
             "role": "house_owner"
         }
 
@@ -61,9 +69,15 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         user.password,
         "supplier"
     )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
         return {
-            "access_token": token,
-            "token_type": "bearer",
+             "message": "Login successful",
             "role": "contractor"
         }
 
@@ -85,10 +99,16 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         user.password,
         "equipment_provider"
     )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
 
         return {
-            "access_token": token,
-            "token_type": "bearer",
+             "message": "Login successful",
             "role": "supplier"
         }
 
@@ -105,9 +125,15 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "supplier",
             "email": user.email
         })
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
         return {
-            "access_token": token,
-            "token_type": "bearer",
+            "message": "Login successful",
             "role": "EquipmentProvider"
         }
 
