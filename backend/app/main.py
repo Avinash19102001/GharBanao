@@ -1,6 +1,11 @@
+<<<<<<< Updated upstream
 from app.utils.database import Base, engine
 from fastapi import FastAPI
 from app.utils.database import Base,engine
+=======
+from fastapi import FastAPI 
+
+>>>>>>> Stashed changes
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.house_owner_registration import HouseOwner
 from app.models.contractor_model import Contractor
@@ -11,7 +16,21 @@ from app.routers.supplier_registration import router as supplier_router
 from app.routers.auth import router as login
 from app.routers.equipment_router import router as equipment_router
 
+<<<<<<< Updated upstream
 Base.metadata.create_all(bind=engine)
+=======
+from app.routers.forgot_password_routers import router as forgot_router
+
+from app.models.house_owner_registration import HouseOwner
+from app.models.contractor_model import Contractor
+from app.models.supplier_registration import Supplier
+
+
+from app.utils.database import Base, engine
+
+Base.metadata.create_all(bind=engine)
+
+>>>>>>> Stashed changes
 app = FastAPI()
 
 # origins = [
@@ -43,7 +62,11 @@ def home():
 app.include_router(router)
 app.include_router(house_owner_router)
 app.include_router(supplier_router)
+<<<<<<< Updated upstream
 app.include_router(equipment_router)
 app.include_router(login)
+=======
+app.include_router(forgot_router)
+>>>>>>> Stashed changes
 
 Base.metadata.create_all(bind=engine)

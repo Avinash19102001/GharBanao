@@ -1,4 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel 
+
+
+
 class SupplierCreate(BaseModel):
     full_name: str
     email: str
