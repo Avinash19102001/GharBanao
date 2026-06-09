@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,Response
 from sqlalchemy.orm import Session
 
 from app.utils.database import get_db
@@ -8,6 +8,8 @@ from app.models.house_owner_registration import HouseOwner
 from app.models.contractor_model import Contractor
 from app.models.supplier_registration import Supplier
 from app.models.equipment_model import EquipmentProvider
+from app.models.auth_model import Login
+from app.repository.login_repository import LoginRepository
 
 from app.utils.jwt import create_access_token
 
@@ -15,7 +17,8 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post("/login")
-def login(data: LoginSchema, db: Session = Depends(get_db)):
+def login(data: LoginSchema, 
+           response: Response,db: Session = Depends(get_db)):
 
     # ---------------- HOUSE OWNER ----------------
     user = db.query(HouseOwner).filter(
@@ -29,9 +32,22 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "house_owner",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "house_owner"
+    )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
+    
         return {
-            "access_token": token,
-            "token_type": "bearer",
+            "message": "Login successful",
             "role": "house_owner"
         }
 
@@ -47,9 +63,21 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "contractor",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "supplier"
+    )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
         return {
-            "access_token": token,
-            "token_type": "bearer",
+             "message": "Login successful",
             "role": "contractor"
         }
 
@@ -65,9 +93,22 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "supplier",
             "email": user.email
         })
+        LoginRepository.save_login(
+        db,
+        user.email,
+        user.password,
+        "equipment_provider"
+    )
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
+
         return {
-            "access_token": token,
-            "token_type": "bearer",
+             "message": "Login successful",
             "role": "supplier"
         }
 
@@ -84,9 +125,15 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
             "role": "supplier",
             "email": user.email
         })
+        response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure=False
+    )
         return {
-            "access_token": token,
-            "token_type": "bearer",
+            "message": "Login successful",
             "role": "EquipmentProvider"
         }
 
@@ -95,3 +142,4 @@ def login(data: LoginSchema, db: Session = Depends(get_db)):
         status_code=401,
         detail="Invalid credentials"
     )
+  

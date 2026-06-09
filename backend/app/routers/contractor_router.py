@@ -13,6 +13,7 @@ from app.schemas.contractor_schema import (
     ContractorLogin
 )
 
+
 router = APIRouter()
 
 
@@ -102,3 +103,7 @@ def register_contractor(
 #     return {
 #         "message": "Login Successful"
 #     }
+    return {
+        "message": "Login Successful"
+    }
+

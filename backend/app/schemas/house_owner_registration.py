@@ -1,8 +1,8 @@
 from pydantic import BaseModel, EmailStr, Field, model_validator
 from datetime import date
 from typing import Optional
-# from app.utils.database import Base,engine
-# Base.metadata.create_all(bind=engine)
+from app.utils.database import Base,engine
+Base.metadata.create_all(bind=engine)
 
 class HouseOwnerRegister(BaseModel):
     # Personal Details
