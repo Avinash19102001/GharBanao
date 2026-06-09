@@ -2,11 +2,6 @@ from sqlalchemy import Column, Integer, String
 from app.utils.database import Base
 
 
-from app.utils.database import Base
-
-
-Base = declarative_base()
-
 class Supplier(Base):
     __tablename__ = "suppliers"
 
