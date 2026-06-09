@@ -25,12 +25,12 @@ def register_house_owner(
     )
 
 
-@router.post("/login")
-def login_house_owner(
-    credentials: HouseOwnerLogin,
-    db: Session = Depends(get_db)
-):
-    return service.login_owner(
-        db,
-        credentials
-    )
+# @router.post("/login")
+# def login_house_owner(
+#     credentials: HouseOwnerLogin,
+#     db: Session = Depends(get_db)
+# ):
+#     return service.login_owner(
+#         db,
+#         credentials
+#     )

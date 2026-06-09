@@ -60,30 +60,30 @@ def register_supplier(
 # =========================
 # LOGIN SUPPLIER
 # =========================
-@router.post("/login")
-def login_supplier(
-    data: SupplierLogin,
-    db: Session = Depends(get_db)
-):
+# @router.post("/login")
+# def login_supplier(
+#     data: SupplierLogin,
+#     db: Session = Depends(get_db)
+# ):
 
-    supplier = db.query(Supplier).filter(
-        Supplier.email == data.email
-    ).first()
+#     supplier = db.query(Supplier).filter(
+#         Supplier.email == data.email
+#     ).first()
 
-    if not supplier:
-        raise HTTPException(
-            status_code=404,
-            detail="Supplier not found"
-        )
+#     if not supplier:
+#         raise HTTPException(
+#             status_code=404,
+#             detail="Supplier not found"
+#         )
 
-    if supplier.password != data.password:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid password"
-        )
+#     if supplier.password != data.password:
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Invalid password"
+#         )
 
-    return {
-        "message": "Login Successful",
-        "supplier_name": supplier.full_name,
-        "company_name": supplier.company_name
-    }
+#     return {
+#         "message": "Login Successful",
+#         "supplier_name": supplier.full_name,
+#         "company_name": supplier.company_name
+#     }
