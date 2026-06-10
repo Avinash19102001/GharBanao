@@ -2,9 +2,62 @@ import { useState } from "react";
 import gharbanao from "../../assets/gharbanavo.jpeg";
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { login } from "../../services/authServices";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      console.log("Sending:", formData);
+      const response = await login(formData);
+
+      console.log("Response:", response.data);
+
+      const { access_token, role } = response.data;
+
+      console.log("Role Received:", role);
+      console.log("Token Received:", access_token);
+
+      // store token in cookie
+      Cookies.set("token", access_token, {
+        expires: 7,
+        secure: false,
+        sameSite: "strict",
+      });
+
+      // store role
+      Cookies.set("role", role, {
+        expires: 7,
+        secure: false,
+        sameSite: "strict",
+      });
+
+      console.log("Token Cookie:", Cookies.get("token"));
+      console.log("Role Cookie:", Cookies.get("role"));
+      console.log("All Cookies:", Cookies.get());
+      if (role === "house_owner") {
+        navigate("/house-owner");
+      } else if (role === "contractor") {
+        navigate("/contractor");
+      } else if (role === "supplier") {
+        navigate("/supplier");
+      } else if (role === "equipment") {
+        navigate("/equipment");
+      }
+    } catch (error) {
+      console.error("Login Failed:", error);
+      console.log(error.response?.data);
+      console.log(error.response?.status);
+    }
+  };
 
   return (
     <div
@@ -59,6 +112,10 @@ const Login = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               className="w-full h-11 rounded-xl border border-gray-200 bg-white/80 px-4 outline-none"
             />
           </div>
@@ -71,6 +128,10 @@ const Login = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 className="w-full h-11 rounded-xl border border-gray-200 bg-white/80 px-4 pr-14 outline-none"
               />
 
@@ -100,7 +161,10 @@ const Login = () => {
           </div>
 
           {/* Login */}
-          <button className="w-full h-11 rounded-xl bg-[#184D3B] text-white font-semibold text-lg hover:bg-[#123a2c] transition">
+          <button
+            onClick={handleLogin}
+            className="w-full h-11 rounded-xl bg-[#184D3B] text-white font-semibold text-lg hover:bg-[#123a2c] transition"
+          >
             Sign In →
           </button>
 
