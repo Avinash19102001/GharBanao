@@ -16,7 +16,6 @@ const SupplierRegister = () => {
   const {
     register,
     handleSubmit,
-    trigger,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(supplierSchema),
@@ -59,12 +58,10 @@ const SupplierRegister = () => {
 
       console.log("Success:", response.data);
 
-      navigate("/complete-profile");
+      navigate("/supplier-completeprofile");
     } catch (error) {
-      console.error(
-        "Registration failed:",
-        error.response?.data || error.message
-      );
+      console.log("STATUS:", error.response?.status);
+      console.log("RESPONSE:", error.response?.data);
     }
   };
   const handleGoogleSignIn = () => {
