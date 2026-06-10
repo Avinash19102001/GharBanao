@@ -15,6 +15,13 @@ from app.routers.House_owner_profile import router as profile
 
 app = FastAPI() 
 
+from app.routers.contractor_profile.contractor_profile_router import router as contractor_profile_router
+
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
 # origins = [
 #     "http://localhost:5173",  # React/Vue/Angular local dev
 #     "http://192.168.0.245:5173",  # Same network frontend
@@ -48,5 +55,7 @@ app.include_router(equipment_router)
 app.include_router(login)
 app.include_router(forgot_router)
 app.include_router( profile)
+app.include_router(contractor_profile_router)
 
 Base.metadata.create_all(bind=engine)
+

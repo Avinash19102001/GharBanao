@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.contractor_model import User
+from app.models.contractor_model import Contractor
 
 
 class UserRepository:
@@ -9,20 +9,20 @@ class UserRepository:
 
     def create_user(self, user_data):
 
-        user = User(
+        user = Contractor(
             name=user_data.name,
             email=user_data.email,
             mobile=user_data.mobile
         )
 
-        self.db.add(user)
+        self.db.add(Contractor)
 
         self.db.commit()
 
-        self.db.refresh(user)
+        self.db.refresh(Contractor)
 
         return user
 
     def get_all_users(self):
 
-        return self.db.query(User).all()
+        return self.db.query(Contractor).all()
