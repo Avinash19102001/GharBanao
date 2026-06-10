@@ -19,7 +19,8 @@ const Login = () => {
       console.log("Sending:", formData);
       const response = await login(formData);
 
-      console.log("Response:", response.data);
+    console.log("Full Response:", response);
+    console.log("Response Data:", response.data);
 
       const { access_token, role } = response.data;
 
