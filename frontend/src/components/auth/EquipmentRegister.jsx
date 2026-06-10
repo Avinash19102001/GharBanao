@@ -3,10 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import equipmentSchema from "./schemas/EquipmentRegister";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { registerEquipment } from "../../services/authServices"; 
+import { useNavigate } from "react-router-dom";
+
+
 const EquipmentRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -15,9 +20,31 @@ const EquipmentRegister = () => {
     resolver: zodResolver(equipmentSchema),
     mode: "onChange",
   });
-  const onSubmit = (data) => {
-    setSubmittedData(data);
-  };
+ const onSubmit = async (data) => {
+  try {
+    const payload = {
+      full_name: data.FullName,
+      email: data.email,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+      equipment_type: data.equipmentType,
+    };
+
+    const response = await registerEquipment(payload);
+
+    console.log(response.data);
+
+    setSubmittedData(response.data);
+
+    navigate("/equipmentprofile"); 
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.log(error.response.data);
+    }
+  }
+};
   const handleGoogleSignIn = () => {
     window.location.href = "https://accounts.google.com/signin";
   };

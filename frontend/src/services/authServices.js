@@ -19,3 +19,7 @@ export const supplierCompleteProfile = (data) =>
       },
     }
   );
+  axiosInstance.post("/register", data);
+
+export const login=(data)=>
+  axiosInstance.post("/auth/login",data)

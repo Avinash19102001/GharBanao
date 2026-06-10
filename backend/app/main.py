@@ -1,8 +1,5 @@
 from app.utils.database import Base, engine
-from fastapi import FastAPI
-from app.utils.database import Base,engine
 from fastapi import FastAPI 
-
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.house_owner_registration import HouseOwner
 from app.models.contractor_model import Contractor
@@ -13,16 +10,13 @@ from app.routers.supplier_registration import router as supplier_router
 from app.routers.auth import router as login
 from app.models.auth_model import Login
 from app.routers.equipment_router import router as equipment_router
-
-Base.metadata.create_all(bind=engine)
 from app.routers.forgot_password_routers import router as forgot_router
+from app.routers.House_owner_profile import router as profile
 
-from app.models.house_owner_registration import HouseOwner
-from app.models.contractor_model import Contractor
-from app.models.supplier_registration import Supplier
+app = FastAPI() 
 
+from app.routers.contractor_profile.contractor_profile_router import router as contractor_profile_router
 
-from app.utils.database import Base, engine
 
 Base.metadata.create_all(bind=engine)
 
@@ -60,5 +54,8 @@ app.include_router(supplier_router)
 app.include_router(equipment_router)
 app.include_router(login)
 app.include_router(forgot_router)
+app.include_router( profile)
+app.include_router(contractor_profile_router)
 
 Base.metadata.create_all(bind=engine)
+
