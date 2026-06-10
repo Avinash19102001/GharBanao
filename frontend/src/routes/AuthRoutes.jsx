@@ -8,6 +8,7 @@ const ContractorRegister=lazy(()=>import("../components/auth/ContractorRegister"
 const ContractorCompleteProfile=lazy(()=>import("../components/auth/ContractorCompleteProfile"))
 const SupplierRegister =lazy(()=>import("../components/auth/SupplierRegister"))
 const EquipmentRegister=lazy(()=>import("../components/auth/EquipmentRegister"))
+const Equipmentprofile=lazy(()=>import("../components/auth/Equipmentprofile"))
 const AuthRoutes = [
   {
     path: "/", 
@@ -43,8 +44,12 @@ const AuthRoutes = [
  },
 
   {
-    path:"/equipment",
+    path:"/equipmentregister",
     element:<EquipmentRegister/>
+  },
+  {
+    path:"/equipmentprofile",
+    element:<Equipmentprofile/>
   }
 ];
 
