@@ -8,3 +8,6 @@ export const registerHouseOwner = (data) =>
 
 export const registerSupplier = (data) =>
   axiosInstance.post("/register", data);
+
+export const login=(data)=>
+  axiosInstance.post("/auth/login",data)

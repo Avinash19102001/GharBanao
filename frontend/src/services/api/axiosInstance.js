@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(
       case 401:
         console.error("Unauthorized");
 
-        window.location.href = "/login";
+        window.location.href = "/";
         break;
 
       case 403:
