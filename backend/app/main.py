@@ -13,15 +13,10 @@ from app.routers.equipment_router import router as equipment_router
 from app.routers.forgot_password_routers import router as forgot_router
 from app.routers.House_owner_profile import router as profile
 
-<<<<<<< Updated upstream
 app = FastAPI() 
-=======
-from app.models.house_owner_registration import HouseOwner
-from app.models.contractor_model import Contractor
-from app.models.supplier_registration import Supplier
+
 from app.models.supplier_profile import SupplierProfile
 from app.routers import supplier_profile
->>>>>>> Stashed changes
 
 from app.routers.contractor_profile.contractor_profile_router import router as contractor_profile_router
 
@@ -75,12 +70,9 @@ app.include_router(supplier_router)
 app.include_router(equipment_router)
 app.include_router(login)
 app.include_router(forgot_router)
-<<<<<<< Updated upstream
 app.include_router( profile)
 app.include_router(contractor_profile_router)
-=======
 app.include_router(supplier_profile.router)
->>>>>>> Stashed changes
 
 Base.metadata.create_all(bind=engine)
 
