@@ -105,6 +105,14 @@ const AuthRoutes = [
   },
 
   {
+    path: "/equipmentregister",
+    element: <EquipmentRegister />
+  },
+  {
+    path: "/equipmentprofile",
+    element: <Equipmentprofile />
+  },
+  {
     path: "/equipment",
     element: <EquipmentRegister />,
   },
