@@ -18,7 +18,6 @@ export const supplierCompleteProfile = (data) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  axiosInstance.post("/register", data);
 };
 
 export const registerEquipment = (data) =>
