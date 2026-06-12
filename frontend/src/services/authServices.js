@@ -6,4 +6,14 @@ export const registerContractor = (data) =>
 export const registerHouseOwner = (data) =>
   axiosInstance.post("/houseOwners/register", data);
 
- 
+// export const createProfile = (data) => {
+//   return axiosInstance.post("/house_owner/profile", data, {
+//     headers: {
+//       "Content-Type": "multipart/form-data",
+//     },
+//   });
+// };
+
+export const createProfile = (data) => {
+  return axiosInstance.post("/house_owner/profile", data);
+};
