@@ -64,7 +64,7 @@ const HouseOwnerRegister = () => {
       if (response.data.success) {
         alert(response.data.message);
 
-        navigate("/verify-email");
+        navigate("/houseownerprofile");
       }
     } catch (error) {
       console.error("Registration Error:", error);
