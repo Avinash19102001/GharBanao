@@ -10,3 +10,9 @@ class HouseOwner(Base):
     password = Column(String(255), nullable=False)
     propertyType = Column(String, nullable=False)
     projectType = Column(String, nullable=False)
+
+
+    full_name = Column("fullName", String)
+mobile_number = Column("mobileNumber", String)
+property_type = Column("propertyType", String)
+project_type = Column("projectType", String)
