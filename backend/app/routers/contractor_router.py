@@ -13,6 +13,7 @@ from app.schemas.contractor_schema import (
     ContractorLogin
 )
 
+
 router = APIRouter()
 
 
@@ -77,28 +78,32 @@ def register_contractor(
     }
 
 
-@router.post("/contractor/login")
-def login_contractor(
-    contractor: ContractorLogin,
-    db: Session = Depends(get_db)
-):
+# @router.post("/contractor/login")
+# def login_contractor(
+#     contractor: ContractorLogin,
+#     db: Session = Depends(get_db)
+# ):
 
-    user = db.query(Contractor).filter(
-        Contractor.email == contractor.email
-    ).first()
+#     user = db.query(Contractor).filter(
+#         Contractor.email == contractor.email
+#     ).first()
 
-    if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="User not found"
-        )
+#     if not user:
+#         raise HTTPException(
+#             status_code=404,
+#             detail="User not found"
+#         )
 
-    if user.password != contractor.password:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid Password"
-        )
+#     if user.password != contractor.password:
+#         raise HTTPException(
+#             status_code=401,
+#             detail="Invalid Password"
+#         )
 
+#     return {
+#         "message": "Login Successful"
+#     }
     return {
         "message": "Login Successful"
     }
+

@@ -21,6 +21,12 @@ const SupplierRegister = lazy(
 const EquipmentRegister = lazy(
   () => import("../components/auth/EquipmentRegister"),
 );
+const SupplierCompleteProfile = lazy(
+  () => import("../components/auth/SupplierCompleteProfile"),
+);
+const Equipmentprofile = lazy(
+  () => import("../components/auth/Equipmentprofile"),
+);
 const AuthRoutes = [
   {
     path: "/",
@@ -62,10 +68,46 @@ const AuthRoutes = [
     path: "/supplierregister",
     element: <SupplierRegister />,
   },
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/houseownerregister",
+    element: <HouseOWnerRegister />,
+  },
+  {
+    path: "/houseownerprofile",
+    element: <HouseOwnerProfile />,
+  },
+  {
+    path: "/contractorregister",
+    element: <ContractorRegister />,
+  },
+  {
+    path: "/contractorprofile",
+    element: <ContractorCompleteProfile />,
+  },
+  {
+    path: "/supplierregister",
+    element: <SupplierRegister />,
+  },
+  {
+    path: "/supplier-completeprofile",
+    element: <SupplierCompleteProfile />,
+  },
 
   {
     path: "/equipment",
     element: <EquipmentRegister />,
+  },
+  {
+    path: "/equipmentregister",
+    element: <EquipmentRegister />,
+  },
+  {
+    path: "/equipmentprofile",
+    element: <Equipmentprofile />,
   },
 ];
 

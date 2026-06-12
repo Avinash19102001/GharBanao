@@ -83,7 +83,7 @@ const HouseOwnerRegister = () => {
 
     setTimeout(() => {
       setShowPassword(false);
-    }, 5000); // 5 seconds
+    }, 5000); 
   };
 
   const handleConfirmPasswordToggle = () => {

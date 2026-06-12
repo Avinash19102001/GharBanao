@@ -26,7 +26,6 @@ class HouseOwnerService:
         owner = HouseOwner(
              full_name=owner_data.fullName,
              email=owner_data.email,
-             mobile_number=owner_data.mobileNumber,
              password=owner_data.password,
              propertyType=owner_data.propertyType,
               projectType=owner_data.projectType
