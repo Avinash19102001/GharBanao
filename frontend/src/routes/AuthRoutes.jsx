@@ -7,6 +7,7 @@ const HouseOwnerProfile = lazy(() => import("../components/auth/HouseOwnerProfil
 const ContractorRegister = lazy(() => import("../components/auth/ContractorRegister"))
 const ContractorCompleteProfile = lazy(() => import("../components/auth/ContractorCompleteProfile"))
 const SupplierRegister = lazy(() => import("../components/auth/SupplierRegister"))
+const SupplierCompleteProfile = lazy(() => import("../components/auth/SupplierCompleteProfile"))
 const EquipmentRegister = lazy(() => import("../components/auth/EquipmentRegister"))
 const Equipmentprofile = lazy(() => import("../components/auth/Equipmentprofile"))
 const AuthRoutes = [
