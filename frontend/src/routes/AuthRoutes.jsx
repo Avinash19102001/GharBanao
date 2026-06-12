@@ -6,17 +6,10 @@ const HouseOWnerRegister = lazy(() => import("../components/auth/HouseOwnerRegis
 const HouseOwnerProfile = lazy(() => import("../components/auth/HouseOwnerProfile"))
 const ContractorRegister = lazy(() => import("../components/auth/ContractorRegister"))
 const ContractorCompleteProfile = lazy(() => import("../components/auth/ContractorCompleteProfile"))
+const ContractorDashboard = lazy(() => import("../components/auth/ContractorDashboard"))
 const SupplierRegister = lazy(() => import("../components/auth/SupplierRegister"))
 const SupplierCompleteProfile = lazy(() => import("../components/auth/SupplierCompleteProfile"))
 const EquipmentRegister = lazy(() => import("../components/auth/EquipmentRegister"))
-const Register= lazy(()=>import("../components/auth/Register"))
-const ForgotPassword=lazy(()=>import("../components/auth/ForgotPassword"))
-const HouseOWnerRegister=lazy(()=>import("../components/auth/HouseOwnerRegister"))
-const HouseOwnerProfile=lazy(()=>import("../components/auth/HouseOwnerProfile"))
-const ContractorRegister=lazy(()=>import("../components/auth/ContractorRegister"))
-const ContractorCompleteProfile=lazy(()=>import("../components/auth/ContractorCompleteProfile"))
-const SupplierRegister =lazy(()=>import("../components/auth/SupplierRegister"))
-const EquipmentRegister=lazy(()=>import("../components/auth/EquipmentRegister"))
 const Equipmentprofile=lazy(()=>import("../components/auth/Equipmentprofile"))
 const AuthRoutes = [
   {
@@ -48,6 +41,10 @@ const AuthRoutes = [
     element: <ContractorCompleteProfile />
   },
   {
+    path: "/contractordashboard",
+    element: <ContractorDashboard />
+  },
+  {
     path: "/supplierregister",
     element: <SupplierRegister />
   },
@@ -59,6 +56,8 @@ const AuthRoutes = [
   {
     path: "/equipment",
     element: <EquipmentRegister />
+  },
+  {
     path:"/equipmentregister",
     element:<EquipmentRegister/>
   },
