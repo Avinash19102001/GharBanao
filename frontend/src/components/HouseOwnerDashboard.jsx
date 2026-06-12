@@ -1,14 +1,3 @@
-// const HouseOwnerDashboard = () => {
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//         <h1 className="text-4xl font-bold text-gray-800">
-//             Welcome to the House Owner Dashboard
-//         </h1>
-//     </div>
-//   );
-// }
-// export default HouseOwnerDashboard;
-
 import {
   Bell,
   Home,
@@ -17,14 +6,17 @@ import {
   Clock,
   HeartHandshake,
   MapPin,
-  Calendar,
   Play,
   ArrowRight,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HouseOwnerDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
+
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-[#F7F8F4]">
       {/* Header */}
