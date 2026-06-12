@@ -9,6 +9,8 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Suspense>
       <RouterProvider router={routes} />
+   
     </Suspense>
+    
   </StrictMode>,
 );
