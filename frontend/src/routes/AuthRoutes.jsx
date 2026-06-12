@@ -1,15 +1,35 @@
 import { lazy } from "react";
+import HouseOwnerDashboard from "../components/HouseOwnerDashboard";
 const Login = lazy(() => import("../components/auth/Login"));
-const Register = lazy(() => import("../components/auth/Register"))
-const ForgotPassword = lazy(() => import("../components/auth/ForgotPassword"))
-const HouseOWnerRegister = lazy(() => import("../components/auth/HouseOwnerRegister"))
-const HouseOwnerProfile = lazy(() => import("../components/auth/HouseOwnerProfile"))
-const ContractorRegister = lazy(() => import("../components/auth/ContractorRegister"))
-const ContractorCompleteProfile = lazy(() => import("../components/auth/ContractorCompleteProfile"))
-const SupplierRegister = lazy(() => import("../components/auth/SupplierRegister"))
-const SupplierCompleteProfile = lazy(() => import("../components/auth/SupplierCompleteProfile"))
-const EquipmentRegister = lazy(() => import("../components/auth/EquipmentRegister"))
-const Equipmentprofile = lazy(() => import("../components/auth/Equipmentprofile"))
+const Register = lazy(() => import("../components/auth/Register"));
+const ForgotPassword = lazy(() => import("../components/auth/ForgotPassword"));
+const HouseOWnerRegister = lazy(
+  () => import("../components/auth/HouseOwnerRegister"),
+);
+const HouseOwnerProfile = lazy(
+  () => import("../components/auth/HouseOwnerProfile"),
+);
+const ContractorRegister = lazy(
+  () => import("../components/auth/ContractorRegister"),
+);
+const ContractorCompleteProfile = lazy(
+  () => import("../components/auth/ContractorCompleteProfile"),
+);
+const ContractorDashboard = lazy(
+  () => import("../components/auth/ContractorDashboard"),
+);
+const SupplierRegister = lazy(
+  () => import("../components/auth/SupplierRegister"),
+);
+const SupplierCompleteProfile = lazy(
+  () => import("../components/auth/SupplierCompleteProfile"),
+);
+const EquipmentRegister = lazy(
+  () => import("../components/auth/EquipmentRegister"),
+);
+const Equipmentprofile = lazy(
+  () => import("../components/auth/Equipmentprofile"),
+);
 const AuthRoutes = [
   {
     path: "/",
@@ -17,35 +37,71 @@ const AuthRoutes = [
   },
   {
     path: "/register",
-    element: <Register />
+    element: <Register />,
   },
   {
     path: "/forgotpassword",
-    element: <ForgotPassword />
+    element: <ForgotPassword />,
   },
   {
     path: "/houseownerregister",
-    element: <HouseOWnerRegister />
+    element: <HouseOWnerRegister />,
   },
   {
     path: "/houseownerprofile",
-    element: <HouseOwnerProfile />
+    element: <HouseOwnerProfile />,
+  },
+  {
+    path: "/houseownerprofile",
+    element: <HouseOwnerProfile />,
+  },
+  {
+    path: "/houseownerdashboard",
+    element: <HouseOwnerDashboard />,
   },
   {
     path: "/contractorregister",
-    element: <ContractorRegister />
+    element: <ContractorRegister />,
   },
   {
     path: "/contractorprofile",
-    element: <ContractorCompleteProfile />
+    element: <ContractorCompleteProfile />,
+  },
+  {
+    path: "/contractordashboard",
+    element: <ContractorDashboard />,
   },
   {
     path: "/supplierregister",
-    element: <SupplierRegister />
+    element: <SupplierRegister />,
+  },
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/houseownerregister",
+    element: <HouseOWnerRegister />,
+  },
+  {
+    path: "/houseownerprofile",
+    element: <HouseOwnerProfile />,
+  },
+  {
+    path: "/contractorregister",
+    element: <ContractorRegister />,
+  },
+  {
+    path: "/contractorprofile",
+    element: <ContractorCompleteProfile />,
+  },
+  {
+    path: "/supplierregister",
+    element: <SupplierRegister />,
   },
   {
     path: "/supplier-completeprofile",
-    element: <SupplierCompleteProfile />
+    element: <SupplierCompleteProfile />,
   },
 
   {
@@ -55,7 +111,23 @@ const AuthRoutes = [
   {
     path: "/equipmentprofile",
     element: <Equipmentprofile />
-  }
+  },
+  {
+    path: "/equipment",
+    element: <EquipmentRegister />,
+  },
+  {
+    path: "/equipmentregister",
+    element: <EquipmentRegister />,
+  },
+  {
+    path: "/equipmentregister",
+    element: <EquipmentRegister />,
+  },
+  {
+    path: "/equipmentprofile",
+    element: <Equipmentprofile />,
+  },
 ];
 
 export default AuthRoutes;
