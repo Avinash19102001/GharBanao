@@ -4,13 +4,7 @@ sqlalchemy
 python-dotenv
 psycopg2-binary
 pydantic
-<<<<<<< Updated upstream
 email-validator
-=======
-email-validator
- 
-
-
-pip install python-dotenv
-from app.utils.hashing import verify_password
->>>>>>> Stashed changes
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart

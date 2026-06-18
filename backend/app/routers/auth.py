@@ -32,12 +32,14 @@ def login(data: LoginSchema,
             "role": "house_owner",
             "email": user.email
         })
-        LoginRepository.save_login(
-        db,
-        user.email,
-        user.password,
-        "house_owner"
-    )
+
+        #LoginRepository.save_login(
+        #db,
+        #user.email,
+        #user.password,
+        #"house_owner"
+    
+    
         response.set_cookie(
         key="access_token",
         value=token,
@@ -63,12 +65,12 @@ def login(data: LoginSchema,
             "role": "contractor",
             "email": user.email
         })
-        LoginRepository.save_login(
-        db,
-        user.email,
-        user.password,
-        "supplier"
-    )
+        #LoginRepository.save_login(
+        #db,
+        #user.email,
+        #user.password,
+        #"supplier"
+
         response.set_cookie(
         key="access_token",
         value=token,
@@ -93,12 +95,12 @@ def login(data: LoginSchema,
             "role": "supplier",
             "email": user.email
         })
-        LoginRepository.save_login(
-        db,
-        user.email,
-        user.password,
-        "equipment_provider"
-    )
+        #LoginRepository.save_login(
+        #db,
+        #user.email,
+        #user.password,
+        #"equipment_provider"
+    
         response.set_cookie(
         key="access_token",
         value=token,

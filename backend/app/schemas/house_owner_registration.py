@@ -8,7 +8,6 @@ class HouseOwnerRegister(BaseModel):
     # Personal Details
     fullName: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    mobileNumber: str = Field(..., min_length=10, max_length=15)
     password: str = Field(..., min_length=6)
     confirmPassword: str = Field(..., min_length=6)
     propertyType: str = Field(..., min_length=2)

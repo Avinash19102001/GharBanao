@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import HouseOwnerDashboard from "../components/HouseOwnerDashboard";
 const Login = lazy(() => import("../components/auth/Login"));
 const Register = lazy(() => import("../components/auth/Register"));
 const ForgotPassword = lazy(() => import("../components/auth/ForgotPassword"));
@@ -12,6 +11,9 @@ const HouseOwnerProfile = lazy(
   () => import("../components/auth/HouseOwnerProfile")
 );
 
+const HouseOwnerDashboard = lazy(
+  () => import("../components/auth/HouseOwnerDashboard"),
+);
 const ContractorRegister = lazy(
   () => import("../components/auth/ContractorRegister")
 );
