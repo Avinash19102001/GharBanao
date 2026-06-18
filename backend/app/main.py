@@ -13,7 +13,7 @@ from app.routers.equipment_router import router as equipment_router
 from app.routers.forgot_password_routers import router as forgot_router
 from app.routers.House_owner_profile import router as profile
 
-app = FastAPI() r
+app = FastAPI() 
 
 
 from app.models.supplier_profile import SupplierProfile
