@@ -16,7 +16,7 @@ const ContractorCompleteProfile = lazy(
   () => import("../components/auth/ContractorCompleteProfile"),
 );
 const ContractorDashboard = lazy(
-  () => import("../components/auth/ContractorDashboard"),
+  () => import("../components/auth/ContractorDashboard/ContractorDashboard"),
 );
 const SupplierRegister = lazy(
   () => import("../components/auth/SupplierRegister"),
@@ -29,6 +29,21 @@ const EquipmentRegister = lazy(
 );
 const Equipmentprofile = lazy(
   () => import("../components/auth/Equipmentprofile"),
+);
+const ContractorRequests = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorRequests"),
+);
+const ContractorClients = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorClients"),
+);
+const ContractorProjects = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorProjects"),
+);
+const ContractorSiteMonitoring = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorSiteMonitoring"),
+);
+const ContractorMessages = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorMessages"),
 );
 const AuthRoutes = [
   {
@@ -70,6 +85,26 @@ const AuthRoutes = [
   {
     path: "/contractordashboard",
     element: <ContractorDashboard />,
+  },
+  {
+    path: "/contractorrequests",
+    element: <ContractorRequests />,
+  },
+  {
+    path: "/contractorclients",
+    element: <ContractorClients />,
+  },
+  {
+    path: "/contractorprojects",
+    element: <ContractorProjects />,
+  },
+  {
+    path: "/contractorsitemonitoring",
+    element: <ContractorSiteMonitoring />,
+  },
+  {
+    path: "/contractormessages",
+    element: <ContractorMessages />,
   },
   {
     path: "/supplierregister",
