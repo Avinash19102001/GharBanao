@@ -10,7 +10,6 @@ from fastapi import (
 import os
 import uuid
 from datetime import datetime
-
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -99,10 +98,7 @@ def save_upload_file(file: UploadFile, folder: str):
 
     filename = f"{uuid.uuid4()}{ext}"
 
-    upload_dir = os.path.join(
-        "uploads",
-        folder
-    )
+    upload_dir = folder
 
     os.makedirs(
         upload_dir,
@@ -118,109 +114,108 @@ def save_upload_file(file: UploadFile, folder: str):
 
 
 @router.post("/profile")
-def create_profile(
-    contractor: ContractorProfileCreate,
+async def create_profile(
+    first_name: str = Form(...),
+    last_name: str = Form(...),
+    phone_number: str = Form(...),
+    gst_number: str = Form(...),
+    pan_number: str = Form(...),
+    aadhaar_number: str = Form(...),
+    company_registered_name: str = Form(...),
+    budget_range: str = Form(...),
+    projects_completed: int = Form(...),
+    years_of_experience: int = Form(...),
+    location: str = Form(...),
+    availability: str = Form(...),
+    about: str = Form(...),
+    certification_file: UploadFile | None = File(None),
+    license_file: UploadFile | None = File(None),
+    previous_work_image: UploadFile | None = File(None),
     db: Session = Depends(get_db),
     current_contractor: Contractor = Depends(get_current_contractor)
 ):
-    return create_contractor_profile(
+    contractor = ContractorProfileCreate(
+        first_name=first_name,
+        last_name=last_name,
+        phone_number=phone_number,
+        gst_number=gst_number,
+        pan_number=pan_number,
+        aadhaar_number=aadhaar_number,
+        company_registered_name=company_registered_name,
+        budget_range=budget_range,
+        projects_completed=projects_completed,
+        years_of_experience=years_of_experience,
+        location=location,
+        availability=availability,
+        about=about
+    )
+
+    profile = create_contractor_profile(
         db,
         current_contractor.id,
         contractor
     )
 
-
-@router.post("/upload-certificate")
-async def upload_certificate(
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db),
-    current_contractor: Contractor = Depends(get_current_contractor)
-):
-    file_path = save_upload_file(
-        file,
-        "contractor_certificate"
-    )
-
-    with open(file_path, "wb") as buffer:
-        buffer.write(
-            await file.read()
+    if certification_file:
+        file_path = save_upload_file(
+            certification_file,
+            "contractor_certificate"
         )
 
-    profile = save_profile_file(
-        db,
-        current_contractor.id,
-        "certification_file",
-        file_path
-    )
+        with open(file_path, "wb") as buffer:
+            buffer.write(
+                await certification_file.read()
+            )
 
-    return {
-        "message": "Certificate uploaded",
-        "path": file_path,
-        "profile_id": profile.id
-    }
-
-
-@router.post("/upload-license")
-async def upload_license(
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db),
-    current_contractor: Contractor = Depends(get_current_contractor)
-):
-    file_path = save_upload_file(
-        file,
-        "contractor_license"
-    )
-
-    with open(file_path, "wb") as buffer:
-        buffer.write(
-            await file.read()
+        profile = save_profile_file(
+            db,
+            current_contractor.id,
+            "certification_file",
+            file_path
         )
 
-    profile = save_profile_file(
-        db,
-        current_contractor.id,
-        "license_file",
-        file_path
-    )
-
-    return {
-        "message": "License uploaded",
-        "path": file_path,
-        "profile_id": profile.id
-    }
-
-
-@router.post("/upload-work-images")
-async def upload_work_update(
-    file: UploadFile = File(...),
-    week_number: int | None = Form(None),
-    db: Session = Depends(get_db),
-    current_contractor: Contractor = Depends(get_current_contractor)
-):
-    file_path = save_upload_file(
-        file,
-        "contractor_weekly_work_update"
-    )
-
-    with open(file_path, "wb") as buffer:
-        buffer.write(
-            await file.read()
+    if license_file:
+        file_path = save_upload_file(
+            license_file,
+            "contractor_license"
         )
 
-    work_update_data = {
-        "week_number": week_number,
-        "image_path": file_path,
-        "uploaded_at": datetime.utcnow().isoformat()
-    }
+        with open(file_path, "wb") as buffer:
+            buffer.write(
+                await license_file.read()
+            )
 
-    profile = save_work_update(
-        db,
-        current_contractor.id,
-        work_update_data
-    )
+        profile = save_profile_file(
+            db,
+            current_contractor.id,
+            "license_file",
+            file_path
+        )
+
+    if previous_work_image:
+        file_path = save_upload_file(
+            previous_work_image,
+            "contractor_previous_work_images"
+        )
+
+        with open(file_path, "wb") as buffer:
+            buffer.write(
+                await previous_work_image.read()
+            )
+
+        previous_work_image_data = {
+            "image_path": file_path,
+            "uploaded_at": datetime.utcnow().isoformat()
+        }
+
+        profile = save_work_update(
+            db,
+            current_contractor.id,
+            previous_work_image_data
+        )
 
     return {
-        "message": "Weekly work update uploaded",
-        "work_update": work_update_data,
-        "profile_id": profile.id
+        "message": "Contractor Profile Created Successfully",
+        "id": profile.id,
+        "contractor_id": profile.contractor_id
     }

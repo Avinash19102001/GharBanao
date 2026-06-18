@@ -15,6 +15,10 @@ from app.routers.House_owner_profile import router as profile
 
 app = FastAPI() 
 
+
+from app.models.supplier_profile import SupplierProfile
+from app.routers import supplier_profile
+
 from app.routers.contractor_profile.contractor_profile_router import router as contractor_profile_router
 
 
@@ -34,13 +38,26 @@ origins = [
     "http://192.168.0.245:5173",
 ]
 
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://192.168.0.35:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 
 @app.get("/")
 def home():
@@ -56,6 +73,7 @@ app.include_router(login)
 app.include_router(forgot_router)
 app.include_router( profile)
 app.include_router(contractor_profile_router)
+app.include_router(supplier_profile.router)
 
 Base.metadata.create_all(bind=engine)
 
