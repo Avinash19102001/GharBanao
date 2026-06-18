@@ -37,7 +37,32 @@ export const SupplierProfile = z.object({
         .number()
         .min(0, "Experience cannot be negative"),
 
-    productImages: z.any(),
+    productImages: z
+        .any()
+        .refine(
+            (files) => files?.length >= 1,
+            "Please upload at least one product image"
+        )
+        .refine(
+            (files) => files?.length <= 5,
+            "Maximum 5 product images allowed"
+        )
+        .refine(
+            (files) =>
+                Array.from(files).every(
+                    (file) =>
+                        file.type.startsWith("image/")
+                ),
+            "Only image files are allowed"
+        )
+        .refine(
+            (files) =>
+                Array.from(files).every(
+                    (file) =>
+                        file.size <= 5 * 1024 * 1024
+                ),
+            "Each image should be less than 5MB"
+        ),
 
     gstCertificate: z.any(),
 
