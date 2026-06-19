@@ -19,8 +19,8 @@ const Login = () => {
       console.log("Sending:", formData);
       const response = await login(formData);
 
-    console.log("Full Response:", response);
-    console.log("Response Data:", response.data);
+      console.log("Full Response:", response);
+      console.log("Response Data:", response.data);
 
       const { access_token, role } = response.data;
 
@@ -45,7 +45,7 @@ const Login = () => {
       console.log("Role Cookie:", Cookies.get("role"));
       console.log("All Cookies:", Cookies.get());
       if (role === "house_owner") {
-        navigate("/house-owner");
+        navigate("/houseownerdashboard");
       } else if (role === "contractor") {
         navigate("/contractor");
       } else if (role === "supplier") {

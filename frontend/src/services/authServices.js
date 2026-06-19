@@ -9,6 +9,8 @@ export const registerHouseOwner = (data) =>
 export const createProfile = (data) => {
   return axiosInstance.post("/house_owner/profile", data);
 };
+
+
 export const registerSupplier = (data) =>
   axiosInstance.post("/supplier/register", data);
 

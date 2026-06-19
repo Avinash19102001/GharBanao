@@ -16,13 +16,13 @@ const houseOwnerSchema = z
         /^[^\s@]+@[^\s@]+\.(com|org|edu|net|in|co\.in|edu\.in)$/,
         "Enter a valid email address",
       ),
-    mobileNumber: z
-      .string()
-      .trim()
-      .regex(
-        /^[6-9]\d{9}$/,
-        "Phone number must be 10 digits starting with 6-9",
-      ),
+    // mobileNumber: z
+    //   .string()
+    //   .trim()
+    //   .regex(
+    //     /^[6-9]\d{9}$/,
+    //     "Phone number must be 10 digits starting with 6-9",
+    //   ),
 
     password: z
       .string()
