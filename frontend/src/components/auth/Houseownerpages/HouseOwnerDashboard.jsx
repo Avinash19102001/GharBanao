@@ -80,6 +80,12 @@ export default function HouseOwnerDashboard() {
   const requests =
     constructionMode === "contractor" ? contractorRequests : supplierRequests;
 
+  const handleConstructionModeChange = (mode) => {
+    setConstructionMode(mode);
+
+    setActiveTab(mode === "contractor" ? "contractor" : "supplier");
+  };
+
   // Helper helper to dynamically generate user initials (e.g., "Sharma Family" -> "SF")
   const getInitials = (name) => {
     return name
@@ -138,22 +144,22 @@ export default function HouseOwnerDashboard() {
                 </button>
 
                 <button
-                  onClick={() => setConstructionMode("contractor")}
+                  onClick={() => handleConstructionModeChange("contractor")}
                   className={`px-5 py-2 rounded-full transition-all ${
                     constructionMode === "contractor"
-                      ? "bg-green-700 text-white"
-                      : "bg-white border text-gray-700"
+                      ? "bg-green-700 text-white shadow-md"
+                      : "bg-white border text-gray-700 hover:bg-gray-50"
                   }`}
                 >
                   Hire Contractor
                 </button>
 
                 <button
-                  onClick={() => setConstructionMode("self")}
+                  onClick={() => handleConstructionModeChange("self")}
                   className={`px-5 py-2 rounded-full transition-all ${
                     constructionMode === "self"
-                      ? "bg-green-700 text-white"
-                      : "bg-white border text-gray-700"
+                      ? "bg-green-700 text-white shadow-md"
+                      : "bg-white border text-gray-700 hover:bg-gray-50"
                   }`}
                 >
                   Self Construction
