@@ -25,17 +25,18 @@ const SupplierCompleteProfile = () => {
     resolver: zodResolver(SupplierProfile),
   });
 
-  const productImages = watch("productImages");
-
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
 
-    const previews = files.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
+    const selectedFiles = Array.from(e.target.files);
 
-    setImagePreviews(previews);
+
+    setImagePreviews((prev) => [
+
+      ...prev,
+      ...selectedFiles
+
+    ]);
+
   };
 
   const removeImage = (indexToRemove) => {
@@ -366,34 +367,65 @@ const SupplierCompleteProfile = () => {
               ))}
             </div>
           )}
-
-          <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-            <div className="text-center">
-              <div className="text-5xl mb-2">📷</div>
-
-              <p className="font-medium text-gray-700">
-                Click to upload product images
-              </p>
-
-              <p className="text-sm text-gray-500 mt-1">
-                Maximum 4 images (JPG, PNG)
-              </p>
-            </div>
-
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              {...register("productImages")}
-              onChange={(e) => {
-                register("productImages").onChange(e);
-                handleImageChange(e);
-              }}
-              className="hidden"
-            />
-          </label>
         </div>
 
+        <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+
+          <div className="text-center">
+
+            <div className="text-5xl mb-2">
+              📷
+            </div>
+
+            <p className="font-medium text-gray-700">
+              Click to upload product images
+            </p>
+
+            <p className="text-sm text-gray-500 mt-1">
+              Maximum 5 images (JPG, PNG)
+            </p>
+
+          </div>
+
+
+          <input
+
+            type="file"
+
+            multiple
+
+            accept="image/png, image/jpeg, image/jpg"
+
+            {...register("productImages", {
+
+              onChange: (e) => {
+
+                handleImageChange(e);
+
+              }
+
+            })}
+
+            className="hidden"
+
+          />
+
+        </label>
+
+
+        {/* Validation Error */}
+
+        {
+          errors.productImages && (
+
+            <p className="text-red-500 text-sm mt-2">
+
+              {errors.productImages.message}
+
+            </p>
+
+          )
+        }
         {/* Certificates */}
         {/* GST Certificate */}
         <div>

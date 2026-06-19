@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contractorCompleteProfileSchema } from "./schemas/contractorCompleteProfileSchema";
@@ -36,12 +37,44 @@ const ContractorCompleteProfile = () => {
     );
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    console.log("Submit Clicked");
+    console.count("Submit count");
+    
+    console.log("Form Data:", data);
 
-    // API Call Here
+    try {
+      const payload = {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        phone_number: data.phoneNumber,
+        gst_number: data.gstNumber,
+        pan_number: data.panNumber,
+        aadhaar_number: data.aadhaarNumber,
+        company_registered_name: data.companyName,
+        budget_range: data.typicalProjectBudget,
+        projects_completed: Number(data.projectsCompleted),
+        years_of_experience: Number(data.yearsOfExperience),
+        location: data.location,
+        availability: data.availability,
+        about: data.about,
+      };
 
-    navigate("/contractor/dashboard");
+      const response = await axios.post(
+        "http://192.168.0.188:8000/contractor-profile/profile",
+        payload,
+      );
+
+      console.log("Success:", response.data);
+
+      alert("Profile Created Successfully");
+
+      navigate("/contractordashboard");
+    } catch (error) {
+      console.error("API Error:", error.response?.data || error.message);
+
+      alert(JSON.stringify(error.response?.data || "Something went wrong"));
+    }
   };
 
   return (
