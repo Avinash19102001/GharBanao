@@ -62,11 +62,8 @@ import {
   Clock,
   HeartHandshake,
   MapPin,
-  Play,
-  ArrowRight,
 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import HouseOwnerProjects from "./HouseOwnerProjects";
 import HouseEstimate from "./HouseEstimate";
 import FindContractors from "./FindContractor";
@@ -80,7 +77,6 @@ export default function HouseOwnerDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [constructionMode, setConstructionMode] = useState("contractor");
 
-  const navigate = useNavigate();
   const requests =
     constructionMode === "contractor" ? contractorRequests : supplierRequests;
 
