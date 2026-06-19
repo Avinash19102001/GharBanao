@@ -26,4 +26,4 @@ class Profile(Base):
     property_type = Column(String(100), nullable=False)
     project_type = Column(String(100), nullable=False)
 
-    media_file = Column(String(255), nullable=True)
+    media_files = Column(String(255), nullable=True)

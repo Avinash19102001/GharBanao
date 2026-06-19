@@ -24,7 +24,7 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
         dob=profile.dob,
         property_type=profile.property_type,
         project_type=profile.project_type,
-        media_file=profile.media_file
+        media_files=profile.media_files
     )
 
     db.add(new_profile)
@@ -32,3 +32,16 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     db.refresh(new_profile)
 
     return new_profile
+@router.get("/profile/{id}")
+def get_profile(id: int, db: Session = Depends(get_db)):
+    profile = db.query(Profile).filter(Profile.id == id).first()
+
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+
+    return {
+        "id": profile.id,
+        "email": profile.email,
+        "property_type": profile.property_type,
+        "project_type": profile.project_type
+    }

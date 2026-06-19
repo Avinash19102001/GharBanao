@@ -23,4 +23,4 @@ class ProfileCreate(BaseModel):
     property_type: str
     project_type: str
 
-    media_file: Optional[str] = None
+    media_files: Optional[str] = None
