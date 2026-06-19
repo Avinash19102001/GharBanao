@@ -51,7 +51,7 @@ const HouseOwnerRegister = () => {
       const payload = {
         fullName: data.fullName.trim(),
         email: data.email.trim(),
-        mobileNumber: data.mobileNumber.trim(),
+        // mobileNumber: data.mobileNumber.trim(),
         password: data.password,
         confirmPassword: data.confirmPassword,
         propertyType: data.propertyType,
@@ -131,7 +131,7 @@ const HouseOwnerRegister = () => {
         </div>
 
         {/* Phone Number */}
-        <div>
+        {/* <div>
           <input
             {...register("mobileNumber")}
             placeholder="Phone Number"
@@ -141,7 +141,7 @@ const HouseOwnerRegister = () => {
             className="w-full border p-3 rounded-xl"
           />
           <p className="text-red-500 text-sm">{errors.phone?.message}</p>
-        </div>
+        </div> */}
 
         {/* Password */}
         <div>

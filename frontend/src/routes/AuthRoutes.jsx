@@ -9,7 +9,7 @@ const HouseOwnerProfile = lazy(
   () => import("../components/auth/HouseOwnerProfile"),
 );
 const HouseOwnerDashboard = lazy(
-  () => import("../components/auth/HouseOwnerDashboard"),
+  () => import("../components/Houseownerpages/HouseOwnerDashboard"),
 );
 const ContractorRegister = lazy(
   () => import("../components/auth/ContractorRegister"),
@@ -31,6 +31,13 @@ const EquipmentRegister = lazy(
 );
 const Equipmentprofile = lazy(
   () => import("../components/auth/Equipmentprofile"),
+);
+const HouseEstimate = lazy(() => import("../components/Houseownerpages/HouseEstimate"));
+const FindContractors = lazy(
+  () => import("../components/Houseownerpages/FindContractor"),
+);
+const FindSuppliers = lazy(
+  () => import("../components/Houseownerpages/FindSuppliers"),
 );
 const AuthRoutes = [
   {
@@ -108,11 +115,11 @@ const AuthRoutes = [
 
   {
     path: "/equipmentregister",
-    element: <EquipmentRegister />
+    element: <EquipmentRegister />,
   },
   {
     path: "/equipmentprofile",
-    element: <Equipmentprofile />
+    element: <Equipmentprofile />,
   },
   {
     path: "/equipment",
@@ -129,6 +136,22 @@ const AuthRoutes = [
   {
     path: "/equipmentprofile",
     element: <Equipmentprofile />,
+  },
+  {
+    path: "/hirecontractor",
+    element: <h1>Hire Contractor</h1>,
+  },
+  {
+    path: "/houseestimate",
+    element: <HouseEstimate />,
+  },
+  {
+    path: "/findcontractor",
+    element: <FindContractors />,
+  },
+  {
+    path: "/findsuppliers",
+    element: <FindSuppliers />,
   },
 ];
 
