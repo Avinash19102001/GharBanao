@@ -12,7 +12,7 @@ from app.models.auth_model import Login
 from app.routers.equipment_router import router as equipment_router
 from app.routers.forgot_password_routers import router as forgot_router
 from app.routers.House_owner_profile import router as profile
-
+from app.routers.users import router as user_router
 app = FastAPI() 
 
 
@@ -74,6 +74,8 @@ app.include_router(forgot_router)
 app.include_router( profile)
 app.include_router(contractor_profile_router)
 app.include_router(supplier_profile.router)
+app.include_router(user_router)
+
 
 Base.metadata.create_all(bind=engine)
 
