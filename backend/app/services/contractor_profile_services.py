@@ -1,43 +1,24 @@
 from app.repository.contractor_profile_repository import (
     create_profile,
-    update_profile_file,
-    add_work_update
+    get_profile_by_user_id
 )
 
 
 def create_contractor_profile(
     db,
-    contractor_id,
     profile_data
 ):
     return create_profile(
         db,
-        contractor_id,
         profile_data
     )
 
 
-def save_profile_file(
+def get_contractor_profile(
     db,
-    contractor_id,
-    field_name,
-    field_value
+    user_id
 ):
-    return update_profile_file(
+    return get_profile_by_user_id(
         db,
-        contractor_id,
-        field_name,
-        field_value
-    )
-
-
-def save_work_update(
-    db,
-    contractor_id,
-    work_update_data
-):
-    return add_work_update(
-        db,
-        contractor_id,
-        work_update_data
+        user_id
     )
