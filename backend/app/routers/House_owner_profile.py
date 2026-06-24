@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.utils.database import get_db
 from app.schemas.House_owner_profile import ProfileCreate
@@ -12,26 +13,26 @@ router = APIRouter(prefix="/house_owner", tags=["Profile"])
 def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 
     new_profile = Profile(
-        first_name=profile.first_name,
-        last_name=profile.last_name,
-        mobile=profile.mobile,
-        email=profile.email,
-        address=profile.address,
-        pincode=profile.pincode,
-        state=profile.state,
-        city=profile.city,
-        gender=profile.gender,
-        dob=profile.dob,
-        property_type=profile.property_type,
-        project_type=profile.project_type,
-        media_files=profile.media_files
-    )
+    user_id=profile.user_id,
+    building_type=profile.building_type,
+    construction_type=profile.construction_type,
+    budget=profile.budget,
+    land_area=profile.land_area,
+    floors=profile.floors,
+    project_title=profile.project_title,
+    project_description=profile.project_description
+)
 
     db.add(new_profile)
     db.commit()
     db.refresh(new_profile)
 
-    return new_profile
+    return {
+    "id": new_profile.id,
+    "user_id": new_profile.user_id,
+    "building_type": new_profile.building_type,
+    "construction_type": new_profile.construction_type,
+}
 @router.get("/profile/{id}")
 def get_profile(id: int, db: Session = Depends(get_db)):
     profile = db.query(Profile).filter(Profile.id == id).first()
@@ -40,7 +41,7 @@ def get_profile(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Profile not found")
 
     return {
-        "id": profile.id,
+        "id": new_profile.id,
         "email": profile.email,
         "property_type": profile.property_type,
         "project_type": profile.project_type
