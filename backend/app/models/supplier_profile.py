@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from app.utils.database import Base
 
 
@@ -7,24 +7,15 @@ class SupplierProfile(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        unique=True,
+        nullable=False
+    )
 
-    phone_number = Column(String, nullable=False)
+    store_name = Column(String(160), nullable=False)
 
-    company_registered_name = Column(String, nullable=False)
-    gst_number = Column(String, nullable=False)
+    categories = Column(String, nullable=False)
 
-    category = Column(String, nullable=False)
-
-    business_address = Column(String, nullable=False)
-    city = Column(String, nullable=False)
-    state = Column(String, nullable=False)
-    pincode = Column(String, nullable=False)
-
-    years_of_experience = Column(String, nullable=False)
-
-    # file paths
-    product_images = Column(String, nullable=True)
-    gst_certificate = Column(String, nullable=True)
-    company_registration_certificate = Column(String, nullable=True)
+    about = Column(String, nullable=False)
