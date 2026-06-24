@@ -19,11 +19,11 @@ from app.models.contractor_model import Contractor
 from app.utils.database import get_db
 from app.utils.jwt import SECRET_KEY, ALGORITHM
 
-from app.schemas.contractor_profile.contractor_profile_schema import (
+from app.schemas.contractor_profile_schema import (
     ContractorProfileCreate
 )
 
-from app.services.contrator_profile.contractor_profile_services import (
+from app.services.contractor_profile_services import (
     create_contractor_profile,
     save_profile_file,
     save_work_update

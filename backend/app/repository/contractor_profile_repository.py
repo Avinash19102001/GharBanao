@@ -1,7 +1,7 @@
 from sqlalchemy import text
 import json
 
-from app.models.contractor_profile.contractor_profile_model import ContractorProfile
+from app.models.contractor_profile_model import ContractorProfile
 
 
 def ensure_profile_columns(db):
