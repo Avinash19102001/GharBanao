@@ -1,29 +1,27 @@
-from sqlalchemy import Column, Integer, String, Text, Date
+from sqlalchemy import Column, Integer, String, Text, Float, Numeric, ForeignKey
 from app.utils.database import Base
 
-
 class Profile(Base):
-    __tablename__ = "house_owners_profiles"
+    __tablename__ = "owner_profiles"
 
     id = Column(Integer, primary_key=True, index=True)
 
-    first_name = Column(String(100), nullable=False)
-    last_name = Column(String(100), nullable=False)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        unique=True
+    )
 
-    mobile = Column(String(15), nullable=False)
-    email = Column(String(255), unique=True, nullable=False)
+    building_type = Column(String(60))
 
-    address = Column(Text, nullable=False)
+    construction_type = Column(String(60))
 
-    pincode = Column(String(10), nullable=False)
-    state = Column(String(100), nullable=False)
-    city = Column(String(100), nullable=False)
+    budget = Column(Numeric(12, 2))
 
-    gender = Column(String(20), nullable=False)
+    land_area = Column(Float)
 
-    dob = Column(Date, nullable=False)
+    floors = Column(Integer)
 
-    property_type = Column(String(100), nullable=False)
-    project_type = Column(String(100), nullable=False)
+    project_title = Column(String(180))
 
-    media_files = Column(String(255), nullable=True)
+    project_description = Column(Text)
