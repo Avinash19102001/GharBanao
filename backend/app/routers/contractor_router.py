@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.utils.database import SessionLocal
 
-from app.models.contractor_model import Contractor
+from app.models.contractor import Contractor
 
 from app.schemas.contractor_schema import (
     ContractorRegister,

@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 
 from app.utils.database import get_db
 from app.schemas.login_schema import LoginSchema
-
-from app.models.house_owner_registration import HouseOwner
 from app.models.contractor_model import Contractor
+from app.models.house_owner_registration import HouseOwner
+from app.models.users import User
 from app.models.supplier_registration import Supplier
 from app.models.equipment_model import EquipmentProvider
 from app.models.auth_model import Login

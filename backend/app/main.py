@@ -2,7 +2,7 @@ from app.utils.database import Base, engine
 from fastapi import FastAPI 
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.house_owner_registration import HouseOwner
-from app.models.contractor_model import Contractor
+#from app.models.contractor import Contractor
 from app.models.supplier_registration import Supplier
 #from app.routers.contractor_router import router
 #from app.routers.house_owner_register import router as house_owner_router

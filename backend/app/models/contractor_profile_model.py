@@ -14,9 +14,9 @@ class ContractorProfile(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    contractor_id = Column(
+    user_id = Column(
         Integer,
-        ForeignKey("contractors.id"),
+        ForeignKey("user.id"),
         nullable=False
     )
 
