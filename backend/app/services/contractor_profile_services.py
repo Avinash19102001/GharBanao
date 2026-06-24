@@ -1,4 +1,4 @@
-from app.repository.contractor_profile.contractor_profile_repository import (
+from app.repository.contractor_profile_repository import (
     create_profile,
     update_profile_file,
     add_work_update
