@@ -17,6 +17,9 @@ class UserResponse(BaseModel):
     email: str
     phone: str
     role: str
+    address: str | None = None
+    pincode: str | None = None
+    
 
     class Config:
         from_attributes = True

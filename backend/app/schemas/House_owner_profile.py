@@ -15,3 +15,5 @@ class ProfileCreate(BaseModel):
     project_title: str
 
     project_description: Optional[str] = None
+    profile_image_url: str | None = None
+    start_timeline: str | None = None

@@ -43,5 +43,6 @@ def login(data: LoginSchema, response: Response, db: Session = Depends(get_db)):
 
     return {
         "message": "Login successful",
-        "role": user.role
+        "role": user.role,
+        "access_token": token
     }

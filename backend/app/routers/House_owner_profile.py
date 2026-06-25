@@ -20,7 +20,9 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     land_area=profile.land_area,
     floors=profile.floors,
     project_title=profile.project_title,
-    project_description=profile.project_description
+    project_description=profile.project_description,
+    profile_image_url=profile.profile_image_url,
+    start_timeline=profile.start_timeline
 )
 
     db.add(new_profile)
@@ -32,6 +34,13 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     "user_id": new_profile.user_id,
     "building_type": new_profile.building_type,
     "construction_type": new_profile.construction_type,
+    "budget": new_profile.budget,
+    "land_area": new_profile.land_area,
+    "floors": new_profile.floors,
+    "project_title": new_profile.project_title,
+    "project_description": new_profile.project_description,
+    "profile_image_url": new_profile.profile_image_url,
+    "start_timeline": new_profile.start_timeline
 }
 @router.get("/profile/{id}")
 def get_profile(id: int, db: Session = Depends(get_db)):
