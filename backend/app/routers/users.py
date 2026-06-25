@@ -15,3 +15,16 @@ def create_user(
     db: Session = Depends(get_db)
 ):
     return UserService.create_user(db, user)
+
+@router.get(
+    "/users/{user_id}",
+    response_model=UserResponse
+)
+def get_user(
+    user_id: int,
+    db: Session = Depends(get_db)
+):
+    return UserService.get_user(
+        db,
+        user_id
+    )

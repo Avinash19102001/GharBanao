@@ -25,3 +25,5 @@ class Profile(Base):
     project_title = Column(String(180))
 
     project_description = Column(Text)
+    profile_image_url = Column(String(500))
+    start_timeline = Column(String(100))
