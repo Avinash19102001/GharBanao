@@ -3,25 +3,43 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.utils.database import Base, engine
 
+# ==========================
 # Models
+# ==========================
 from app.models.house_owner_registration import HouseOwner
-#from app.models.contractor import Contractor
 from app.models.supplier_registration import Supplier
 from app.models.auth_model import Login
-from app.models.supplier_profile import SupplierProfile
 
+# Supplier Models
+from app.models.supplier_profile import SupplierProfile
+from app.models.supplier_category import SupplierCategory
+from app.models.supplier_document import SupplierDocument
+
+# ==========================
 # Routers
+# ==========================
 from app.routers.auth import router as login
 from app.routers.forgot_password_routers import router as forgot_router
 from app.routers.House_owner_profile import router as profile
-from app.routers.contractor_profile_router import router as contractor_profile_router
+from app.routers.contractor_profile_router import (
+    router as contractor_profile_router
+)
 from app.routers import supplier_profile
 from app.routers.users import router as user_router
 
-app = FastAPI()
+app = FastAPI(
+    title="GharBanao API",
+    version="1.0.0"
+)
 
+# ==========================
+# Create Tables
+# ==========================
 Base.metadata.create_all(bind=engine)
 
+# ==========================
+# CORS
+# ==========================
 origins = [
     "http://localhost:5173",
     "http://192.168.0.245:3000",
@@ -37,14 +55,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# ==========================
+# Home
+# ==========================
 @app.get("/")
 def home():
     return {
-        "message": "GharBanao Contractor API Running Successfully"
+        "message": "GharBanao API Running Successfully"
     }
 
-
+# ==========================
+# Routers
+# ==========================
 app.include_router(login)
 app.include_router(forgot_router)
 app.include_router(profile)
