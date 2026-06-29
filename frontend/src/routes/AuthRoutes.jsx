@@ -1,25 +1,26 @@
 import { lazy } from "react";
+import DashboardCard from "../components/auth/ContractorDashboard/DashboardCard";
 const Login = lazy(() => import("../components/auth/Login"));
 const Register = lazy(() => import("../components/auth/Register"));
 const ForgotPassword = lazy(() => import("../components/auth/ForgotPassword"));
 
 const HouseOWnerRegister = lazy(
-  () => import("../components/auth/HouseOwnerRegister")
+  () => import("../components/auth/HouseOwnerRegister"),
 );
 
 const HouseOwnerProfile = lazy(
-  () => import("../components/auth/HouseOwnerProfile")
+  () => import("../components/auth/HouseOwnerProfile"),
 );
 
 const HouseOwnerDashboard = lazy(
   () => import("../components/auth/HouseOwnerDashboard"),
 );
 const ContractorRegister = lazy(
-  () => import("../components/auth/ContractorRegister")
+  () => import("../components/auth/ContractorRegister"),
 );
 
 const ContractorCompleteProfile = lazy(
-  () => import("../components/auth/ContractorCompleteProfile")
+  () => import("../components/auth/ContractorCompleteProfile"),
 );
 
 const ContractorDashboard = lazy(
@@ -27,83 +28,80 @@ const ContractorDashboard = lazy(
 );
 
 const SupplierRegister = lazy(
-  () => import("../components/auth/SupplierRegister")
+  () => import("../components/auth/SupplierRegister"),
 );
 
 const SupplierCompleteProfile = lazy(
-  () => import("../components/auth/SupplierCompleteProfile")
+  () => import("../components/auth/SupplierCompleteProfile"),
 );
 
 // Supplier Dashboard Components
 const SupplierDashboard = lazy(
-  () => import("../components/auth/SupplierDashboard/SupplierDashboard")
+  () => import("../components/auth/SupplierDashboard/SupplierDashboard"),
 );
 
 const Requests = lazy(
-  () => import("../components/auth/SupplierDashboard/Requests")
+  () => import("../components/auth/SupplierDashboard/Requests"),
 );
 
 const FindClients = lazy(
-  () => import("../components/auth/SupplierDashboard/FindClients")
+  () => import("../components/auth/SupplierDashboard/FindClients"),
 );
 
 const Orders = lazy(
-  () => import("../components/auth/SupplierDashboard/Orders")
+  () => import("../components/auth/SupplierDashboard/Orders"),
 );
 
 const AddProducts = lazy(
-  () => import("../components/auth/SupplierDashboard/AddProducts")
+  () => import("../components/auth/SupplierDashboard/AddProducts"),
 );
 
 const DailyStockUpdates = lazy(
-  () => import("../components/auth/SupplierDashboard/DailyStockUpdates")
+  () => import("../components/auth/SupplierDashboard/DailyStockUpdates"),
 );
 
 const Analytics = lazy(
-  () => import("../components/auth/SupplierDashboard/Analytics")
+  () => import("../components/auth/SupplierDashboard/Analytics"),
 );
 
 const Messages = lazy(
-  () => import("../components/auth/SupplierDashboard/Messages")
+  () => import("../components/auth/SupplierDashboard/Messages"),
 );
 
 const Settings = lazy(
-  () => import("../components/auth/SupplierDashboard/Settings")
+  () => import("../components/auth/SupplierDashboard/Settings"),
 );
 
 const HeroSection = lazy(
-  () => import("../components/auth/SupplierDashboard/HeroSection")
+  () => import("../components/auth/SupplierDashboard/HeroSection"),
 );
 
 const TopProducts = lazy(
-  () => import("../components/auth/SupplierDashboard/TopProducts")
+  () => import("../components/auth/SupplierDashboard/TopProducts"),
 );
 
 const Notifications = lazy(
-  () => import("../components/auth/SupplierDashboard/Notifications")
+  () => import("../components/auth/SupplierDashboard/Notifications"),
 );
 
 const Profile = lazy(
-  () => import("../components/auth/SupplierDashboard/Profile")
+  () => import("../components/auth/SupplierDashboard/Profile"),
 );
 
 const DashboardCards = lazy(
-  () => import("../components/auth/SupplierDashboard/DashboardCards")
+  () => import("../components/auth/SupplierDashboard/DashboardCards"),
 );
-
-
 
 const Header = lazy(
-  () => import("../components/auth/SupplierDashboard/Header")
+  () => import("../components/auth/SupplierDashboard/Header"),
 );
 
-
 const EquipmentRegister = lazy(
-  () => import("../components/auth/EquipmentRegister")
+  () => import("../components/auth/EquipmentRegister"),
 );
 
 const Equipmentprofile = lazy(
-  () => import("../components/auth/Equipmentprofile")
+  () => import("../components/auth/Equipmentprofile"),
 );
 const ContractorRequests = lazy(
   () => import("../components/auth/ContractorDashboard/ContractorRequests"),
@@ -112,13 +110,20 @@ const ContractorClients = lazy(
   () => import("../components/auth/ContractorDashboard/ContractorClients"),
 );
 const ContractorProjects = lazy(
-  () => import("../components/auth/ContractorDashboard/ContractorProjects"),
+  () =>
+    import("../components/auth/ContractorDashboard/ContractorProjects/ContractorProjects"),
 );
-const ContractorSiteMonitoring = lazy(
-  () => import("../components/auth/ContractorDashboard/ContractorSiteMonitoring"),
+const ContractorBusiness = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorBusiness"),
 );
+
 const ContractorMessages = lazy(
   () => import("../components/auth/ContractorDashboard/ContractorMessages"),
+);
+const ProjectDetails = lazy(() =>
+    import(
+        "../components/auth/ContractorDashboard/ContractorProjects/ProjectDetails"
+    )
 );
 
 const AuthRoutes = [
@@ -168,6 +173,11 @@ const AuthRoutes = [
   },
 
   {
+    path: "/DashboardCard",
+    element: <DashboardCard />,
+  },
+
+  {
     path: "/contractorrequests",
     element: <ContractorRequests />,
   },
@@ -180,8 +190,8 @@ const AuthRoutes = [
     element: <ContractorProjects />,
   },
   {
-    path: "/contractorsitemonitoring",
-    element: <ContractorSiteMonitoring />,
+    path: "/contractorBusiness",
+    element: <ContractorBusiness />,
   },
   {
     path: "/contractormessages",
@@ -219,12 +229,12 @@ const AuthRoutes = [
 
   {
     path: "/supplier/dashboard/add-product",
-    element: <AddProducts />
+    element: <AddProducts />,
   },
 
   {
     path: "/supplier/dashboard/stock-update",
-    element: <DailyStockUpdates />
+    element: <DailyStockUpdates />,
   },
 
   {
@@ -281,7 +291,10 @@ const AuthRoutes = [
     path: "/equipmentprofile",
     element: <Equipmentprofile />,
   },
-
+  {
+    path: "/project/:id",
+    element: <ProjectDetails />,
+},
 ];
 
 export default AuthRoutes;
