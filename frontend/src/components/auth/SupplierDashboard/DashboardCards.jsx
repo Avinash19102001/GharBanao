@@ -1,120 +1,84 @@
-import { products } from "./SupplierData";
-
-
-
-const Card = ({ title, value, desc, type }) => {
-
-
-    return (
-
-        <div className="bg-white rounded-3xl shadow p-6">
-
-
-            <h3 className="text-gray-500">
-
-                {title}
-
-            </h3>
-
-
-            <h1
-
-                className={`text-4xl font-bold mt-3
-
-${type === "danger" ? "text-red-500" : ""}
-
-`}
-
-            >
-
-                {value}
-
-            </h1>
-
-
-            <p className="mt-2 text-green-600">
-
-                {desc}
-
-            </p>
-
-
-        </div>
-
-    )
-
-}
-
-
-
 const DashboardCards = () => {
 
 
-    const totalProducts = products.length;
+    const cards = [
+
+        {
+            title: "Requests",
+            value: "0"
+        },
+
+        {
+            title: "Clients Nearby",
+            value: "3"
+        },
+
+        {
+            title: "Products Inventory",
+            value: "3"
+        },
+
+        {
+            title: "Categories Active",
+            value: "2"
+        },
+
+        {
+            title: "Messages",
+            value: "MVP"
+        }
 
 
-    const lowStock = products.filter(
-
-        item => item.stock < 20
-
-    ).length;
-
-
+    ]
 
 
     return (
 
-        <div className="grid md:grid-cols-4 gap-6 mt-8">
+        <div className="
+grid
+grid-cols-2
+lg:grid-cols-5
+gap-5
+">
 
 
-            <Card
+            {
+                cards.map(card => (
 
-                title="Total Products"
-
-                value={totalProducts}
-
-                desc="Active Listings"
-
-            />
-
-
-
-            <Card
-
-                title="Orders"
-
-                value="45"
-
-                desc="In Progress"
-
-            />
+                    <div
+                        key={card.title}
+                        className="
+bg-white
+rounded-2xl
+shadow
+p-5
+"
+                    >
 
 
+                        <p className="text-gray-400">
 
-            <Card
+                            {card.title}
 
-                title="Today's Sales"
-
-                value="₹1.2L"
-
-                desc="+12.5%"
-
-            />
+                        </p>
 
 
+                        <h1 className="
+text-3xl
+font-bold
+mt-3
+">
 
-            <Card
+                            {card.value}
 
-                title="Low Stock"
+                        </h1>
 
-                value={lowStock}
 
-                desc="Need Attention"
+                    </div>
 
-                type="danger"
+                ))
 
-            />
-
+            }
 
 
         </div>

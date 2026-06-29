@@ -43,16 +43,12 @@ const Requests = lazy(
   () => import("../components/auth/SupplierDashboard/Requests"),
 );
 
-const FindClients = lazy(
-  () => import("../components/auth/SupplierDashboard/FindClients"),
-);
-
 const Orders = lazy(
   () => import("../components/auth/SupplierDashboard/Orders"),
 );
 
 const AddProducts = lazy(
-  () => import("../components/auth/SupplierDashboard/AddProducts"),
+  () => import("../components/auth/SupplierDashboard/Products")
 );
 
 const DailyStockUpdates = lazy(
@@ -204,7 +200,7 @@ const AuthRoutes = [
   },
 
   {
-    path: "/supplier-completeprofile",
+    path: "/supplier/profile",
     element: <SupplierCompleteProfile />,
   },
 
@@ -218,10 +214,6 @@ const AuthRoutes = [
     element: <Equipmentprofile />,
   },
 
-  {
-    path: "/supplier/dashboard/find-clients",
-    element: <FindClients />,
-  },
 
   {
     path: "/supplier/dashboard/orders",
@@ -276,11 +268,6 @@ const AuthRoutes = [
   {
     path: "/supplierdashboard/TopProducts",
     element: <TopProducts />,
-  },
-
-  {
-    path: "/supplierdashboard/Header",
-    element: <Header />,
   },
 
   {

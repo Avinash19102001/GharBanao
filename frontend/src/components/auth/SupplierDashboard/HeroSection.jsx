@@ -1,39 +1,89 @@
 const HeroSection = () => {
+
+
     return (
-        <div className="bg-white rounded-3xl shadow p-8 flex justify-between items-center">
+
+        <div className="
+bg-[#064e3b]
+rounded-3xl
+p-8
+text-white
+flex
+justify-between
+items-center
+">
+
 
             <div>
 
-                <h1 className="text-4xl font-bold">
-                    Hey, there Build Supplies! 👋
+
+                <h1 className="
+text-4xl
+font-bold
+">
+
+                    Welcome back, Supplier!
+
                 </h1>
 
-                <p className="text-gray-500 mt-3">
-                    Manage your products and connect with contractors and house owners.
+
+                <p className="
+mt-3
+text-green-100
+">
+
+                    Automate product listings, manage buyers and grow your business.
+
                 </p>
 
-                <div className="mt-6 flex gap-4">
 
-                    <button className="bg-green-700 text-white px-6 py-3 rounded-xl">
-                        Add Product
-                    </button>
+                <button className="
+mt-6
+bg-white
+text-green-800
+px-6
+py-3
+rounded-xl
+font-semibold
+">
 
-                    <button className="border border-green-700 px-6 py-3 rounded-xl">
-                        Update Stock
-                    </button>
+                    Manage My Catalog
 
-                </div>
+                </button>
+
 
             </div>
 
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/679/679720.png"
-                alt=""
-                className="w-64"
-            />
+
+
+            <div className="
+bg-green-900
+rounded-2xl
+p-5
+">
+
+
+                <h2 className="text-xl font-bold">
+
+                    UdayStores
+
+                </h2>
+
+
+                <p>
+                    Official Supplier
+                </p>
+
+
+            </div>
+
 
         </div>
-    );
-};
+
+    )
+
+
+}
+
 
 export default HeroSection;

@@ -1,493 +1,1249 @@
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { SupplierProfile } from "./schemas/SupplierProfile";
 import { supplierCompleteProfile } from "../../services/authServices";
+import { useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaPhone,
+  FaBuilding,
+  FaIdCard,
+  FaMapMarkerAlt,
+  FaMap,
+  FaFilePdf,
+  FaEnvelope
+} from "react-icons/fa";
 
 const SupplierCompleteProfile = () => {
+
   const navigate = useNavigate();
-
-  const [imagePreviews, setImagePreviews] = useState([]);
-
-  const [location, setLocation] = useState({
-    city: "",
-    state: "",
-  });
 
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(SupplierProfile),
-  });
+    watch,
+    formState: { errors }
+  }
+    =
+    useForm({
+      resolver: zodResolver(SupplierProfile)
+    });
 
-  const handleImageChange = (e) => {
+  const watchedData = watch();
+  const [storeImage, setStoreImage] = useState(null);
+  const [storePreview, setStorePreview] = useState(null);
+  const [logo, setLogo] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const categoryList = [
+    "Cement",
+    "Steel",
+    "Sand",
+    "Bricks",
+    "Tiles",
+    "Paint",
+    "Electrical",
+    "Plumbing"
+  ];
 
-    const selectedFiles = Array.from(e.target.files);
+  const handleImage = (file, type) => {
 
+    if (!file) return;
 
-    setImagePreviews((prev) => [
+    if (!file.type.startsWith("image/")) {
+      alert("Upload image only");
+      return;
+    }
 
-      ...prev,
-      ...selectedFiles
+    const url = URL.createObjectURL(file);
 
-    ]);
+    if (type === "store") {
+      setStoreImage(file);
+      setStorePreview(url);
+    }
+
+    if (type === "logo") {
+      setLogo(file);
+      setLogoPreview(url);
+    }
 
   };
 
-  const removeImage = (indexToRemove) => {
-    setImagePreviews((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
+  const handleCategory = (item) => {
+
+
+    if (categories.includes(item)) {
+
+      setCategories(
+        categories.filter(
+          x => x !== item
+        )
+      )
+
+    }
+
+    else {
+
+      setCategories([
+        ...categories,
+        item
+      ])
+
+    }
+
   };
 
-  const fetchLocationFromPincode = async (pincode) => {
-    if (pincode.length !== 6) return;
+  const fetchLocation = async (pin) => {
 
-    try {
-      const response = await fetch(
-        `https://api.postalpincode.in/pincode/${pincode}`
+    if (pin.length !== 6) return;
+
+    const res =
+      await fetch(
+        `https://api.postalpincode.in/pincode/${pin}`
       );
 
-      const data = await response.json();
+    const data =
+      await res.json();
 
-      if (
-        data[0].Status === "Success" &&
-        data[0].PostOffice.length > 0
-      ) {
-        const city = data[0].PostOffice[0].District;
-        const state = data[0].PostOffice[0].State;
+    if (data[0].Status === "Success") {
 
-        setLocation({
-          city,
-          state,
-        });
+      const office = data[0].PostOffice[0];
 
-        setValue("city", city);
-        setValue("state", state);
-      }
-    } catch (error) {
-      console.error("Pincode lookup failed", error);
-    }
-  };
-
-  const onSubmit = async (data) => {
-    try {
-      const formData = new FormData();
-
-      formData.append("first_name", data.firstName);
-      formData.append("last_name", data.lastName);
-      formData.append("phone_number", data.phoneNumber);
-      formData.append("company_registered_name", data.companyName);
-      formData.append("gst_number", data.gstNumber);
-      formData.append("category", data.supplierCategory);
-      formData.append("business_address", data.businessAddress);
-      formData.append("city", data.city);
-      formData.append("state", data.state);
-      formData.append("pincode", data.pincode);
-      formData.append("years_of_experience", data.experience);
-
-      // Product Images
-      if (data.productImages) {
-        Array.from(data.productImages).forEach((file) => {
-          formData.append("product_images", file);
-        });
-      }
-
-      // GST Certificate
-      if (data.gstCertificate?.[0]) {
-        formData.append(
-          "gst_certificate",
-          data.gstCertificate[0]
-        );
-      }
-
-      // Company Registration Certificate
-      if (data.registrationCertificate?.[0]) {
-        formData.append(
-          "company_registration_certificate",
-          data.registrationCertificate[0]
-        );
-      }
-
-      const response = await supplierCompleteProfile(formData);
-
-      console.log("Profile Created:", response.data);
-
-      navigate("/supplier/dashboard");
-    } catch (error) {
-      console.error(
-        "Profile Creation Failed:",
-        error.response?.data || error.message
+      setValue(
+        "city",
+        office.District
       );
+
+      setValue(
+        "state",
+        office.State
+      );
+
     }
+
   };
+
+  const calculateProgress = () => {
+    let progress = 0;
+
+    if (
+      watchedData.name &&
+      watchedData.email &&
+      watchedData.phone_number &&
+      watchedData.pincode &&
+      watchedData.address
+    ) {
+
+      progress = 25;
+
+    }
+
+    if (
+      watchedData.store_name &&
+      watchedData.gstin &&
+      watchedData.pan &&
+      watchedData.business_type
+    ) {
+
+      progress = 50;
+
+    }
+
+    if (
+      storeImage &&
+      logo
+    ) {
+
+      progress = 75;
+
+    }
+    if (
+      storeImage &&
+      logo &&
+      categories.length > 0 &&
+      watchedData.name &&
+      watchedData.email &&
+      watchedData.phone_number &&
+      watchedData.pincode &&
+      watchedData.address &&
+      watchedData.store_name &&
+      watchedData.gstin &&
+      watchedData.pan &&
+      watchedData.business_type
+
+    ) {
+
+      progress = 100;
+
+    }
+
+    return progress;
+
+  };
+
+  const progress = calculateProgress();
+
+  const submit = async (data) => {
+
+    try {
+
+      const form = new FormData();
+
+
+      form.append(
+        "user_id",
+        0
+      );
+
+
+      form.append(
+        "name",
+        data.name
+      );
+
+
+      form.append(
+        "email",
+        data.email
+      );
+
+
+      form.append(
+        "phone",
+        data.phone
+      );
+
+
+      form.append(
+        "address",
+        data.address
+      );
+
+
+      form.append(
+        "pincode",
+        data.pincode
+      );
+
+
+      form.append(
+        "store_name",
+        data.store_name
+      );
+
+
+      form.append(
+        "store_logo_url",
+        logoPreview || ""
+      );
+
+
+      form.append(
+        "gstin",
+        data.gstin
+      );
+
+
+      form.append(
+        "pan",
+        data.pan
+      );
+
+
+      form.append(
+        "website",
+        data.website || ""
+      );
+
+
+      form.append(
+        "business_type",
+        data.business_type
+      );
+
+
+      form.append(
+        "registration_year",
+        data.registration_year || 0
+      );
+
+
+      form.append(
+        "about",
+        data.about || ""
+      );
+
+
+      form.append(
+        "delivery_location1",
+        data.delivery_location1 || ""
+      );
+
+
+      form.append(
+        "delivery_location2",
+        data.delivery_location2 || ""
+      );
+
+
+      form.append(
+        "delivery_location3",
+        data.delivery_location3 || ""
+      );
+
+      // categories below
+
+      categories.forEach(item => {
+
+        form.append(
+          "categories",
+          item
+        )
+
+      });
+
+      const res =
+        await supplierCompleteProfile(form);
+
+
+      console.log(res.data);
+
+
+      navigate(
+        "/supplier/dashboard"
+      );
+
+
+    }
+    catch (error) {
+
+      console.log(
+        error.response?.data
+      )
+
+    }
+
+  }
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-xl p-8 mt-10">
-      <h2 className="text-3xl font-bold mb-8">
-        Complete Supplier Profile
-      </h2>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-1 md:grid-cols-2 gap-5"
-      >
-        {/* First Name */}
-        <div>
-          <input
-            {...register("firstName")}
-            placeholder="First Name"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.firstName?.message}
-          </p>
+    <div className="
+min-h-screen
+bg-[#f7f5ef]
+py-6
+md:py-10
+">
+
+      <div className="
+max-w-5xl
+mx-auto
+px-3
+sm:px-5
+">
+
+        <div className="
+bg-[#064e3b]
+text-white
+rounded-2xl
+p-5
+md:p-8
+mb-6
+flex
+flex-col
+md:flex-row
+gap-5
+justify-between
+">
+
+
+          <div>
+
+            <p className="text-sm">
+              SUPPLIER SETUP
+            </p>
+
+
+            <h1 className="
+text-2xl
+md:text-3xl
+font-bold
+">
+
+              Complete your profile
+
+            </h1>
+
+
+            <p>
+              Add details needed to activate your dashboard
+            </p>
+
+
+          </div>
+
+          <div className="
+border
+rounded-xl
+p-3
+w-full
+md:w-32
+text-center
+">
+
+            <h1 className="
+text-3xl
+font-bold
+">
+
+              {progress}%
+
+            </h1>
+
+
+            <p className="text-xs">
+              Profile Complete
+            </p>
+
+
+
+            <div className="
+h-2
+bg-gray-300
+rounded-full
+mt-3
+overflow-hidden
+">
+
+
+              <div
+                className="
+bg-white
+h-full
+transition-all
+"
+                style={{
+                  width: `${progress}%`
+                }}
+              />
+
+
+            </div>
+
+
+            <p className="
+text-xs
+mt-3
+">
+
+              Step 1 of 1
+
+            </p>
+
+          </div>
         </div>
+        <form
+          onSubmit={handleSubmit(submit)}
+          className="
+space-y-6
+md:space-y-8
+">
+          {/* BASIC PROFILE */}
 
-        {/* Last Name */}
-        <div>
-          <input
-            {...register("lastName")}
-            placeholder="Last Name"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.lastName?.message}
-          </p>
-        </div>
+          <div className="
+bg-white
+rounded-3xl
+p-5
+md:p-8
+shadow-md
+">
 
-        {/* Phone */}
-        <div>
-          <input
-            {...register("phoneNumber")}
-            placeholder="Phone Number"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.phoneNumber?.message}
-          </p>
-        </div>
-
-        {/* Company */}
-        <div>
-          <input
-            {...register("companyName")}
-            placeholder="Company Registered Name"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.companyName?.message}
-          </p>
-        </div>
-
-        {/* GST */}
-        <div>
-          <input
-            {...register("gstNumber")}
-            placeholder="GST Number"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.gstNumber?.message}
-          </p>
-        </div>
-
-        {/* Category */}
-        <div>
-          <select
-            {...register("supplierCategory")}
-            className="w-full border p-3 rounded-xl"
-          >
-            <option value="">Select Category</option>
-            <option value="Cement">Cement</option>
-            <option value="Steel">Steel</option>
-            <option value="Bricks">Bricks</option>
-            <option value="Electrical">Electrical</option>
-            <option value="Plumbing">Plumbing</option>
-            <option value="Paints">Paints</option>
-            <option value="Tiles">Tiles</option>
-            <option value="Hardware">Hardware</option>
-          </select>
-          <p className="text-red-500 text-sm mt-1">
-            {errors.supplierCategory?.message}
-          </p>
-        </div>
-
-        {/* Address Full Width */}
-        <div className="md:col-span-2">
-          <textarea
-            {...register("businessAddress")}
-            placeholder="Business Address"
-            rows={2}
-            className="w-full border p-3 rounded-xl resize-none"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.businessAddress?.message}
-          </p>
-        </div>
-
-        {/* City */}
-        <div>
-          <input
-            {...register("city")}
-            value={location.city}
-            readOnly
-            placeholder="City"
-            className="w-full border p-3 rounded-xl bg-gray-100"
-          />
-
-          <p className="text-red-500 text-sm mt-1">
-            {errors.city?.message}
-          </p>
-        </div>
-
-        {/* State */}
-        <div>
-          <select
-            {...register("state")}
-            value={location.state}
-            onChange={(e) => {
-              setLocation((prev) => ({
-                ...prev,
-                state: e.target.value,
-              }));
-
-              setValue("state", e.target.value);
-            }}
-            className="w-full border p-3 rounded-xl bg-white"
-          >
-            <option value="">Select State</option>
-
-            <option value="Andhra Pradesh">Andhra Pradesh</option>
-            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-            <option value="Assam">Assam</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Chhattisgarh">Chhattisgarh</option>
-            <option value="Goa">Goa</option>
-            <option value="Gujarat">Gujarat</option>
-            <option value="Haryana">Haryana</option>
-            <option value="Himachal Pradesh">Himachal Pradesh</option>
-            <option value="Jharkhand">Jharkhand</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="Kerala">Kerala</option>
-            <option value="Madhya Pradesh">Madhya Pradesh</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Manipur">Manipur</option>
-            <option value="Meghalaya">Meghalaya</option>
-            <option value="Mizoram">Mizoram</option>
-            <option value="Nagaland">Nagaland</option>
-            <option value="Odisha">Odisha</option>
-            <option value="Punjab">Punjab</option>
-            <option value="Rajasthan">Rajasthan</option>
-            <option value="Sikkim">Sikkim</option>
-            <option value="Tamil Nadu">Tamil Nadu</option>
-            <option value="Telangana">Telangana</option>
-            <option value="Tripura">Tripura</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="Uttarakhand">Uttarakhand</option>
-            <option value="West Bengal">West Bengal</option>
-
-            <option value="Andaman and Nicobar Islands">
-              Andaman and Nicobar Islands
-            </option>
-            <option value="Chandigarh">Chandigarh</option>
-            <option value="Dadra and Nagar Haveli and Daman and Diu">
-              Dadra and Nagar Haveli and Daman and Diu
-            </option>
-            <option value="Delhi">Delhi</option>
-            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-            <option value="Ladakh">Ladakh</option>
-            <option value="Lakshadweep">Lakshadweep</option>
-            <option value="Puducherry">Puducherry</option>
-          </select>
+            <h2 className="text-xl font-bold">
+              Store / Profile Details
+            </h2>
 
 
-          <p className="text-red-500 text-sm mt-1">
-            {errors.state?.message}
-          </p>
-        </div>
-        {/* Pincode */}
-        <div>
-          <input
-            {...register("pincode")}
-            placeholder="Pincode"
-            className="w-full border p-3 rounded-xl"
-            onChange={(e) => {
-              register("pincode").onChange(e);
-              fetchLocationFromPincode(e.target.value);
-            }}
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.pincode?.message}
-          </p>
-        </div>
+            <div className="border-b my-5" />
 
-        {/* Experience */}
-        <div>
-          <input
-            type="number"
-            {...register("experience")}
-            placeholder="Years of Experience"
-            className="w-full border p-3 rounded-xl"
-          />
-          <p className="text-red-500 text-sm mt-1">
-            {errors.experience?.message}
-          </p>
-        </div>
+            <label className="
+border
+border-dashed
+rounded-2xl
+p-5
+flex
+flex-col
+sm:flex-row
+gap-5
+cursor-pointer
+">
 
-        {/* Experience */}
-        <div className="md:col-span-2">
-          <label className="block text-lg font-semibold mb-3">
-            Product Images
-          </label>
 
-          {imagePreviews.length > 0 && (
-            <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
-              {imagePreviews.map((image, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={image.preview}
-                    alt="preview"
-                    className="w-full h-32 object-cover rounded-xl border"
-                  />
+              <div className="
+w-20
+h-20
+rounded-xl
+bg-green-50
+overflow-hidden
+flex
+items-center
+justify-center
+">
 
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-2 right-2 bg-red-600 text-white w-6 h-6 rounded-full"
+
+                {
+                  storePreview ?
+
+                    <img
+                      src={storePreview}
+                      className="
+w-full
+h-full
+object-cover
+"
+                    />
+
+                    :
+
+                    <FaBuilding className="text-3xl text-green-700" />
+
+                }
+
+
+              </div>
+
+
+              <div>
+
+                <p className="font-semibold">
+                  Upload Store Image
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  Business image
+                </p>
+
+              </div>
+
+
+              <input
+
+                type="file"
+
+                hidden
+
+                onChange={
+                  e => handleImage(
+                    e.target.files[0],
+                    "store"
+                  )
+                }
+
+              />
+
+
+            </label>
+
+            <div className="
+grid
+grid-cols-1
+md:grid-cols-2
+gap-4
+mt-5
+">
+
+
+              <FormInput
+                icon={<FaUser />}
+                placeholder="Name"
+                register={register}
+                errors={errors}
+                name="name"
+              />
+
+              <FormInput
+                icon={<FaEnvelope />}
+                placeholder="Email"
+                register={register}
+                errors={errors}
+                name="email"
+              />
+
+              <FormInput
+                icon={<FaPhone />}
+                placeholder="Phone Number"
+                register={register}
+                errors={errors}
+                name="phone"
+              />
+
+              <FormInput
+
+                icon={<FaMapMarkerAlt />}
+
+                placeholder="Pincode"
+
+                register={register}
+
+                errors={errors}
+
+                name="pincode"
+
+                onChange={(e) => {
+
+                  register("pincode")
+                    .onChange(e)
+
+                  fetchLocation(
+                    e.target.value
+                  )
+
+                }}
+
+              />
+
+
+            </div>
+
+            <div className="relative mt-5">
+
+
+              <FaMapMarkerAlt
+                className="
+absolute
+left-4
+top-5
+text-green-700
+"
+              />
+
+              <textarea
+
+                {...register("address")}
+
+                placeholder="Address"
+
+                className="
+w-full
+min-h-[120px]
+pl-12
+p-4
+rounded-2xl
+border
+resize-none
+"
+
+              />
+
+              {
+                errors.address &&
+                <p className="text-red-500 text-sm">
+
+                  {errors.address.message}
+
+                </p>
+              }
+
+
+            </div>
+
+
+          </div>
+
+          {/* STORE PROFILE */}
+
+          <div className="
+bg-white
+rounded-3xl
+p-5
+md:p-8
+shadow-md
+">
+
+            <h2 className="text-xl font-bold">
+              Supplier Store Profile
+            </h2>
+
+
+            <div className="border-b my-5" />
+
+
+
+            <label className="
+border
+border-dashed
+rounded-2xl
+p-5
+flex
+flex-col
+sm:flex-row
+gap-5
+cursor-pointer
+">
+
+
+              <div className="
+w-20
+h-20
+rounded-xl
+bg-green-50
+overflow-hidden
+flex
+items-center
+justify-center
+">
+
+
+                {
+                  logoPreview ?
+
+                    <img
+                      src={logoPreview}
+                      className="
+w-full
+h-full
+object-cover
+"
+                    />
+
+                    :
+
+                    <FaBuilding className="text-3xl text-green-700" />
+
+                }
+
+
+              </div>
+
+
+
+              <div>
+
+                <p className="font-semibold">
+                  Upload Store Logo
+                </p>
+
+              </div>
+
+
+
+              <input
+
+                type="file"
+
+                hidden
+
+                onChange={
+                  e => handleImage(
+                    e.target.files[0],
+                    "logo"
+                  )
+                }
+
+              />
+
+
+            </label>
+
+
+
+
+
+            <div className="
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-3
+gap-4
+mt-5
+">
+
+
+
+              <FormInput
+
+                icon={<FaBuilding />}
+
+                placeholder="Store Name"
+
+                register={register}
+
+                errors={errors}
+
+                name="store_name"
+
+              />
+
+
+
+              <FormInput
+
+                icon={<FaIdCard />}
+
+                placeholder="GSTIN"
+
+                register={register}
+
+                errors={errors}
+
+                name="gstin"
+
+              />
+
+
+
+              <FormInput
+
+                icon={<FaIdCard />}
+
+                placeholder="PAN"
+
+                register={register}
+
+                errors={errors}
+
+                name="pan"
+
+              />
+
+
+
+              <FormInput
+
+                icon={<FaMap />}
+
+                placeholder="Website"
+
+                register={register}
+
+                errors={errors}
+
+                name="website"
+
+              />
+
+
+
+
+
+              <select
+                {...register("business_type")}
+                className="
+input
+border
+rounded-xl
+p-3
+"
+              >
+
+                <option value="">
+                  Business Type
+                </option>
+
+                <option>
+                  Manufacturer
+                </option>
+
+                <option>
+                  Supplier
+                </option>
+
+                <option>
+                  Distributor
+                </option>
+
+              </select>
+
+
+
+
+
+              <input
+
+                type="number"
+
+                {...register(
+                  "registration_year",
+                  {
+                    valueAsNumber: true
+                  }
+                )}
+
+                placeholder="Registration Year"
+
+              />
+
+
+
+            </div>
+
+
+
+            <textarea
+
+              {...register("about")}
+
+              placeholder="About Store"
+
+              className="
+input
+border
+rounded-xl
+p-3
+w-full
+mt-5
+"
+
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+
+
+              <FormInput
+                placeholder="Delivery Location 1"
+                register={register}
+                errors={errors}
+                name="delivery_location1"
+              />
+
+
+              <FormInput
+                placeholder="Delivery Location 2"
+                register={register}
+                errors={errors}
+                name="delivery_location2"
+              />
+
+
+              <FormInput
+                placeholder="Delivery Location 3"
+                register={register}
+                errors={errors}
+                name="delivery_location3"
+              />
+
+
+            </div>
+
+
+
+          </div>
+
+          {/* CATEGORY */}
+
+
+
+          <div className="
+bg-white
+rounded-3xl
+p-5
+md:p-8
+shadow-md
+">
+
+
+            <h2 className="text-xl font-bold">
+              Product Categories
+            </h2>
+
+
+            <div className="
+grid
+grid-cols-2
+sm:grid-cols-3
+lg:grid-cols-4
+gap-3
+mt-5
+">
+
+
+              {
+                categoryList.map(item => (
+
+
+                  <label
+                    key={item}
+                    className="
+border
+rounded-xl
+p-3
+cursor-pointer
+"
                   >
-                    ✕
-                  </button>
-                </div>
-              ))}
+
+
+                    <input
+
+                      type="checkbox"
+
+                      checked={
+                        categories.includes(item)
+                      }
+
+                      onChange={
+                        () => handleCategory(item)
+                      }
+
+                    />
+
+
+                    <span className="ml-2">
+                      {item}
+                    </span>
+
+
+
+                  </label>
+
+
+                ))
+              }
+
+
+
             </div>
-          )}
-        </div>
 
-        <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-
-          <div className="text-center">
-
-            <div className="text-5xl mb-2">
-              📷
-            </div>
-
-            <p className="font-medium text-gray-700">
-              Click to upload product images
-            </p>
-
-            <p className="text-sm text-gray-500 mt-1">
-              Maximum 5 images (JPG, PNG)
-            </p>
 
           </div>
 
 
-          <input
+          {/* DOCUMENTS */}
 
-            type="file"
 
-            multiple
 
-            accept="image/png, image/jpeg, image/jpg"
+          <div className="
+bg-white
+rounded-3xl
+p-5
+md:p-8
+shadow-md
+">
 
-            {...register("productImages", {
 
-              onChange: (e) => {
+            <h2 className="text-xl font-bold">
+              Documents
+            </h2>
 
-                handleImageChange(e);
+
+
+            <div
+              className="
+grid
+grid-cols-1
+md:grid-cols-2
+gap-4
+mt-5
+"
+            >
+
+
+              {
+
+                [
+                  "Shop License",
+                  "GST Certificate",
+                  "PAN Card",
+                  "Trade License",
+                  "Material Quality Certificate",
+                  "Insurance Certificate"
+
+                ].map((doc) => (
+
+
+                  <label
+
+                    key={doc}
+
+                    className="
+border
+border-dashed
+rounded-xl
+h-32
+p-4
+cursor-pointer
+flex
+items-center
+gap-4
+hover:bg-green-50
+hover:border-green-700
+transition
+"
+
+                  >
+
+
+                    <div
+
+                      className="
+w-12
+h-12
+rounded-lg
+bg-green-100
+flex
+items-center
+justify-center
+"
+
+                    >
+
+                      <FaFilePdf
+
+                        className="
+text-green-700
+text-xl
+"
+
+                      />
+
+                    </div>
+                    <div>
+
+
+                      <p className="
+font-semibold
+text-sm
+">
+
+                        {doc}
+                      </p>
+                      <p className="
+text-xs
+text-gray-500
+">
+
+                        Upload PDF/Image
+
+                      </p>
+                    </div>
+                    <input
+
+                      type="file"
+
+                      hidden
+
+                      accept="
+.pdf,.jpg,.jpeg,.png
+"
+                      onChange={(e) => {
+
+
+                        const file = e.target.files[0];
+
+
+                        if (file) {
+
+                          console.log(
+                            doc,
+                            file
+                          );
+
+                        }
+
+
+                      }}
+
+
+                    />
+
+
+                  </label>
+
+
+                ))
+
 
               }
 
-            })}
-
-            className="hidden"
-
-          />
-
-        </label>
-
-
-        {/* Validation Error */}
-
-        {
-          errors.productImages && (
-
-            <p className="text-red-500 text-sm mt-2">
-
-              {errors.productImages.message}
-
-            </p>
-
-          )
-        }
-        {/* Certificates */}
-        {/* GST Certificate */}
-        <div>
-          <label className="block text-base font-semibold mb-3">
-            GST Certificate
-          </label>
-
-          <label className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-green-500 hover:bg-green-50 transition">
-            <div className="text-center">
-              <div className="text-4xl mb-2">📄</div>
-              <p className="text-sm font-medium">
-                Upload GST Certificate
-              </p>
-              <p className="text-xs text-gray-500">
-                PDF, JPG, PNG
-              </p>
             </div>
 
-            <input
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              {...register("gstCertificate")}
-              className="hidden"
-            />
-          </label>
+
+          </div>
+
+          <button
+
+            type="submit"
+
+            className="
+w-full
+bg-[#064e3b]
+text-white
+py-4
+rounded-2xl
+font-semibold
+"
+
+          >
+
+
+            Complete Profile
+          </button>
+        </form>
+      </div>
+    </div>
+
+  )
+
+}
+const FormInput = ({
+  icon,
+  placeholder,
+  register,
+  errors,
+  name,
+  type = "text",
+  onChange
+}) => {
+
+  return (
+
+    <div>
+      <div className="relative">
+
+        <div className="
+absolute
+left-4
+top-4
+text-green-700
+">
+          {icon}
+
         </div>
+        <input
 
-        {/* Registration Certificate */}
-        <div>
-          <label className="block text-base font-semibold mb-3">
-            Company Registration Certificate
-          </label>
+          type={type}
 
-          <label className="flex flex-col items-center justify-center h-36 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-            <div className="text-center">
-              <div className="text-4xl mb-2">🏢</div>
-              <p className="text-sm font-medium">
-                Upload Registration Certificate
-              </p>
-              <p className="text-xs text-gray-500">
-                PDF, JPG, PNG
-              </p>
-            </div>
+          {...register(name)}
 
-            <input
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              {...register("registrationCertificate")}
-              className="hidden"
-            />
-          </label>
-        </div>
+          onChange={onChange}
 
-        {/* Submit */}
-        <button
-          type="submit"
-          className="md:col-span-2 bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700"
-        >
-          Submit Profile
-        </button>
-      </form >
-    </div >
-  );
-};
+          placeholder={placeholder}
+
+          className="
+w-full
+pl-12
+py-3
+md:py-4
+rounded-2xl
+border
+outline-none
+"
+        />
+      </div>
+      {
+
+        errors[name] &&
+
+        <p className="
+text-red-500
+text-sm
+mt-1
+">
+
+          {errors[name].message}
+
+        </p>
+      }
+    </div>
+  )
+}
 export default SupplierCompleteProfile;
