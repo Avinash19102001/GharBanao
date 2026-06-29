@@ -27,12 +27,12 @@ class SupplierProfileService:
         return {
 
             # User Details
-            "id": user.id,
-            "name": user.name,
-            "email": user.email,
-            "phone": user.phone,
-            "address": user.address,
-            "pincode": user.pincode,
+            # "id": user.id,
+            # "name": user.name,
+            # "email": user.email,
+            # "phone": user.phone,
+            # "address": user.address,
+            # "pincode": user.pincode,
             "profile_image_url": user.profile_image_url,
 
             # Supplier Details

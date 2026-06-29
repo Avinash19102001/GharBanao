@@ -13,7 +13,7 @@ from app.utils.database import Base
 class SupplierProfile(Base):
     __tablename__ = "supplier_profiles"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
 
     user_id = Column(
         Integer,
