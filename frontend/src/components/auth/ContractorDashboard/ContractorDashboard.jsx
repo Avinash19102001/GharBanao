@@ -1,287 +1,212 @@
-import { Bell, LogOut } from "lucide-react";
+import {
+  Bell,
+  Search,
+  LogOut,
+  ClipboardList,
+  FolderKanban,
+  Users,
+  MessageSquare,
+  Briefcase,
+} from "lucide-react";
 import { useState } from "react";
+
+import DashboardCards from "./DashboardCard";
 import ContractorRequests from "./ContractorRequests";
+import ContractorProjects from "./ContractorProjects/ContractorProjects";
 import ContractorClients from "./ContractorClients";
-import ContractorProjects from "./ContractorProjects";
-import ContractorSiteMonitoring from "./ContractorSiteMonitoring";
 import ContractorMessages from "./ContractorMessages";
+import ContractorBusiness from "./ContractorBusiness";
 
 const ContractorDashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
+
+  const dashboardStats = {
+    openRequests: 0,
+    activeSites: 0,
+    nearbyLeads: 3,
+    unreadChats: 0,
+
+    pendingQuotes: 0,
+    acceptedQuotes: 0,
+    totalSent: 0,
+
+    contractorName: "Bhargava",
+    company: "Contractor",
+  };
+
+  const recentActivities = [
+    {
+      id: 1,
+      text: "New lead found in Badnapalli, Karim Nagar, Telangana",
+    },
+    {
+      id: 2,
+      text: "Quotation submitted successfully",
+    },
+    {
+      id: 3,
+      text: "Site visit scheduled tomorrow",
+    },
+  ];
+
+  const navItems = [
+    {
+      id: "dashboard",
+      label: "Requests",
+      icon: ClipboardList,
+    },
+    {
+      id: "projects",
+      label: "Projects",
+      icon: FolderKanban,
+    },
+    {
+      id: "clients",
+      label: "Find Clients",
+      icon: Users,
+    },
+    {
+      id: "messages",
+      label: "Messages",
+      icon: MessageSquare,
+    },
+    {
+      id: "business",
+      label: "Business",
+      icon: Briefcase,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#f6f7f2]">
-      {/* HEADER */}
-      <header className="bg-white border-b px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="logo" className="h-10" />
-          <h1 className="font-bold text-2xl text-green-800">GharBanao</h1>
-        </div>
+    <div className="min-h-screen bg-[#F7F8F4]">
+      {/* ================= HEADER ================= */}
 
-        <div className="flex items-center gap-6">
-          <Bell className="w-6 h-6 cursor-pointer" />
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-[1500px] mx-auto px-8 py-4 flex items-center justify-between">
+          {/* Logo */}
 
-          <div className="relative group">
-            <div className="flex items-center gap-3 cursor-pointer">
-              <div className="h-10 w-10 rounded-full bg-green-700 text-white flex items-center justify-center">
-                RB
-              </div>
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="logo" className="h-14" />
 
-              <div>
-                <h4 className="font-semibold">Rohit Builders</h4>
-                <p className="text-xs text-gray-500">Contractor</p>
-              </div>
+            <div>
+              <h2 className="text-3xl font-bold text-green-800">OCTOPUS</h2>
+
+              <p className="text-xs text-gray-500 tracking-widest">
+                PLAN • BUILD • LIVE
+              </p>
             </div>
+          </div>
 
-            <div className="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded-xl p-2 w-40">
-              <button className="w-full text-left p-2 hover:bg-gray-100 rounded">
-                Profile
-              </button>
+          {/* Search */}
 
-              <button className="w-full text-left p-2 hover:bg-gray-100 rounded flex items-center gap-2">
-                <LogOut size={16} />
-                Logout
-              </button>
+          <div className="w-[45%] relative">
+            <Search
+              className="absolute left-4 top-3.5 text-gray-400"
+              size={18}
+            />
+
+            <input
+              placeholder="Search requests, projects or clients"
+              className="w-full border rounded-xl py-3 pl-11 pr-4 outline-none focus:ring-2 focus:ring-green-600"
+            />
+          </div>
+
+          {/* Right Side */}
+
+          <div className="flex items-center gap-6">
+            <button className="relative">
+              <Bell className="text-gray-700" />
+
+              <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+                2
+              </span>
+            </button>
+
+            {/* Profile */}
+
+            <div className="group relative">
+              <div className="flex items-center gap-3 cursor-pointer">
+                <div className="h-12 w-12 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center">
+                  BH
+                </div>
+
+                <div>
+                  <h3 className="font-semibold">
+                    {dashboardStats.contractorName}
+                  </h3>
+
+                  <p className="text-sm text-gray-500">
+                    {dashboardStats.company}
+                  </p>
+                </div>
+              </div>
+
+              {/* Dropdown */}
+
+              <div className="hidden group-hover:block absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-lg border z-20">
+                <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                  My Profile
+                </button>
+
+                <button className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center gap-2">
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </header>
-      {/* HERO */}
-      <section className="mx-6 mt-6 rounded-3xl overflow-hidden bg-white shadow">
-        <div className="p-8">
-          <h2 className="text-4xl font-bold text-green-900">
-            Welcome Back, Rohit Builders 👋
-          </h2>
 
-          <p className="text-gray-600 mt-2">
-            Manage your projects, clients and site updates.
-          </p>
+      {/* ================= NAVIGATION ================= */}
+
+      <div className="max-w-[1500px] mx-auto mt-6">
+        <div className="bg-white rounded-2xl shadow-sm border p-4">
+          <div className="flex items-center gap-8 overflow-x-auto">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-xl whitespace-nowrap transition-all duration-300
+                  ${
+                    activeTab === item.id
+                      ? "bg-green-800 text-white"
+                      : "hover:bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  <Icon size={19} />
+
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </section>
-      {/* NAVIGATION */}
-      <div className="flex gap-10 px-8 py-5">
-        <button
-          onClick={() => setActiveTab("dashboard")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "dashboard"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          Dashboard
-        </button>
-
-        <button
-          onClick={() => setActiveTab("requests")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "requests"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          Requests
-        </button>
-
-        <button
-          onClick={() => setActiveTab("clients")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "clients"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          Find Clients
-        </button>
-
-        <button
-          onClick={() => setActiveTab("projects")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "projects"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          My Projects
-        </button>
-
-        <button
-          onClick={() => setActiveTab("monitoring")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "monitoring"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          Site Monitoring
-        </button>
-
-        <button
-          onClick={() => setActiveTab("messages")}
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "messages"
-              ? "bg-green-600 text-white"
-              : "text-gray-600"
-          }`}
-        >
-          Messages
-        </button>
       </div>
-      {activeTab === "dashboard" && (
-        <div className="px-6 pb-10">
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 mt-6">
-            <Card title="Owner Requests" value="18" />
-            <Card title="Supplier Requests" value="12" />
-            <Card title="Active Projects" value="7" />
-            <Card title="Completed Projects" value="25" />
-            <Card title="Profile Views" value="156" />
-          </div>
 
-          {/* Second Row */}
-          <div className="grid lg:grid-cols-3 gap-6 mt-6">
-            {/* Recent Requests */}
-            <div className="bg-white rounded-3xl p-6 shadow">
-              <h3 className="text-xl font-bold mb-4">Recent Requests</h3>
+      {/* ================= PAGE CONTENT ================= */}
 
-              <div className="space-y-4">
-                <RequestCard
-                  name="Amit Verma"
-                  location="Hyderabad"
-                  budget="₹25 Lakhs"
-                />
+      <div className="max-w-[1500px] mx-auto mt-6 px-2">
+        {activeTab === "dashboard" && (
+          <DashboardCards
+            dashboardStats={dashboardStats}
+            recentActivities={recentActivities}
+          />
+        )}
 
-                <RequestCard
-                  name="Neha Singh"
-                  location="Banjara Hills"
-                  budget="₹40 Lakhs"
-                />
+        {activeTab === "projects" && <ContractorProjects />}
 
-                <RequestCard
-                  name="UltraTech Cement"
-                  location="Supplier"
-                  budget="500 Bags"
-                />
-              </div>
-            </div>
+        {activeTab === "clients" && <ContractorClients />}
 
-            {/* Active Projects */}
-            <div className="bg-white rounded-3xl p-6 shadow">
-              <h3 className="text-xl font-bold mb-4">Active Projects</h3>
+        {activeTab === "messages" && <ContractorMessages />}
 
-              <div className="space-y-5">
-                <ProjectProgress name="Luxury Villa" progress={82} />
-
-                <ProjectProgress name="Dream Home" progress={65} />
-
-                <ProjectProgress name="Independent House" progress={40} />
-              </div>
-            </div>
-
-            {/* Earnings */}
-            <div className="bg-white rounded-3xl p-6 shadow">
-              <h3 className="text-xl font-bold mb-4">This Month Earnings</h3>
-
-              <h2 className="text-4xl font-bold text-green-700">₹3,45,000</h2>
-
-              <p className="text-green-600 mt-2">+18% from last month</p>
-
-              <div className="mt-6 border-t pt-4">
-                <p className="text-gray-500">Pending Payments</p>
-
-                <h3 className="text-2xl font-bold text-orange-500">₹6.85L</h3>
-              </div>
-            </div>
-          </div>
-
-          {/* Third Row */}
-          <div className="grid lg:grid-cols-2 gap-6 mt-6">
-            {/* Site Updates */}
-            <div className="bg-white rounded-3xl p-6 shadow">
-              <h3 className="text-xl font-bold mb-4">Latest Site Updates</h3>
-
-              <div className="space-y-4">
-                <div className="border-l-4 border-green-600 pl-4">
-                  Luxury Villa - Slab Casting Completed
-                </div>
-
-                <div className="border-l-4 border-green-600 pl-4">
-                  Dream Home - Foundation Work Completed
-                </div>
-
-                <div className="border-l-4 border-green-600 pl-4">
-                  Independent House - Pillar Work Started
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Messages */}
-            <div className="bg-white rounded-3xl p-6 shadow">
-              <h3 className="text-xl font-bold mb-4">Recent Messages</h3>
-
-              <div className="space-y-4">
-                <MessageCard
-                  name="Amit Verma"
-                  message="Can you share today's update?"
-                />
-
-                <MessageCard
-                  name="UltraTech Cement"
-                  message="Material delivery scheduled."
-                />
-
-                <MessageCard
-                  name="Neha Singh"
-                  message="Need estimate revision."
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {activeTab === "requests" && <ContractorRequests />}
-      {activeTab === "clients" && <ContractorClients />}
-      {activeTab === "projects" && <ContractorProjects />}
-      {activeTab === "monitoring" && <ContractorSiteMonitoring />}
-      {activeTab === "messages" && <ContractorMessages />}
+        {activeTab === "business" && <ContractorBusiness />}
+      </div>
     </div>
   );
 };
-
-const Card = ({ title, value }) => (
-  <div className="bg-white rounded-3xl p-5 shadow">
-    <p className="text-gray-500">{title}</p>
-    <h3 className="text-3xl font-bold mt-2">{value}</h3>
-  </div>
-);
-
-const RequestCard = ({ name, location, budget }) => (
-  <div className="border rounded-xl p-4">
-    <h4 className="font-semibold">{name}</h4>
-    <p className="text-sm text-gray-500">{location}</p>
-    <p className="font-medium mt-2">{budget}</p>
-  </div>
-);
-
-const ProjectProgress = ({ name, progress }) => (
-  <div>
-    <div className="flex justify-between mb-2">
-      <span>{name}</span>
-      <span>{progress}%</span>
-    </div>
-
-    <div className="bg-gray-200 rounded-full h-3">
-      <div
-        className="bg-green-600 h-3 rounded-full"
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  </div>
-);
-
-const MessageCard = ({ name, message }) => (
-  <div className="border rounded-xl p-4">
-    <h4 className="font-semibold">{name}</h4>
-    <p className="text-sm text-gray-500">{message}</p>
-  </div>
-);
 
 export default ContractorDashboard;
