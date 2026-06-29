@@ -92,6 +92,7 @@ class SupplierProfileRepository:
         db.commit()
 
         db.refresh(supplier)
+        
 
         return supplier
 

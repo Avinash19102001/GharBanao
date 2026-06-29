@@ -38,11 +38,11 @@ class SupplierProfileCreate(BaseModel):
     user_id: int
 
     # User Table
-    name: str
-    email: EmailStr
-    phone: str
-    address: str
-    pincode: str
+    # name: str
+    # email: EmailStr
+    # phone: str
+    # address: str
+    # pincode: str
 
     # Supplier Table
     store_name: str
@@ -75,15 +75,15 @@ class SupplierProfileCreate(BaseModel):
 # -----------------------------
 class SupplierProfileUpdate(BaseModel):
 
-    name: Optional[str] = None
+    # name: Optional[str] = None
 
-    email: Optional[EmailStr] = None
+    # email: Optional[EmailStr] = None
 
-    phone: Optional[str] = None
+    # phone: Optional[str] = None
 
-    address: Optional[str] = None
+    # address: Optional[str] = None
 
-    pincode: Optional[str] = None
+    # pincode: Optional[str] = None
 
     store_name: Optional[str] = None
 
@@ -117,17 +117,17 @@ class SupplierProfileResponse(BaseModel):
 
     # User
 
-    id: int
+    # id: int
 
-    name: str
+    # name: str
 
-    email: EmailStr
+    # email: EmailStr
 
-    phone: str
+    # phone: str
 
-    address: str
+    # address: str
 
-    pincode: str
+    # pincode: str
 
     profile_image_url: Optional[str]
 
