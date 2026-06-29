@@ -79,3 +79,5 @@ app.include_router(user_router)
 
 Base.metadata.create_all(bind=engine)
 
+
+app.include_router(contractor_dashboard_router.router)
