@@ -13,7 +13,7 @@ const HouseOwnerProfile = lazy(
 );
 
 const HouseOwnerDashboard = lazy(
-  () => import("../components/auth/HouseOwnerDashboard"),
+  () => import("../components/auth/Houseownerpages/HouseOwnerDashboard"),
 );
 const ContractorRegister = lazy(
   () => import("../components/auth/ContractorRegister"),
@@ -54,6 +54,7 @@ const Orders = lazy(
 
 const AddProducts = lazy(
   () => import("../components/auth/SupplierDashboard/AddProducts"),
+  () => import("../components/auth/SupplierDashboard/Products")
 );
 
 const DailyStockUpdates = lazy(
@@ -124,6 +125,8 @@ const ProjectDetails = lazy(() =>
     import(
         "../components/auth/ContractorDashboard/ContractorProjects/ProjectDetails"
     )
+const RequestQuote = lazy(
+  () => import("../components/auth/Houseownerpages/RequestQuote"),
 );
 
 const AuthRoutes = [
@@ -203,24 +206,20 @@ const AuthRoutes = [
   },
 
   {
-    path: "/supplier-completeprofile",
+    path: "/supplier/profile",
     element: <SupplierCompleteProfile />,
   },
 
   {
-    path: "/supplier/dashboard",
-    element: <SupplierDashboard />,
+    path: "/equipmentregister",
+    element: <EquipmentRegister />,
   },
 
   {
-    path: "/supplier/dashboard/requests",
-    element: <Requests />,
+    path: "/equipmentprofile",
+    element: <Equipmentprofile />,
   },
 
-  {
-    path: "/supplier/dashboard/find-clients",
-    element: <FindClients />,
-  },
 
   {
     path: "/supplier/dashboard/orders",
@@ -278,11 +277,6 @@ const AuthRoutes = [
   },
 
   {
-    path: "/supplierdashboard/Header",
-    element: <Header />,
-  },
-
-  {
     path: "/equipmentregister",
     element: <EquipmentRegister />,
   },
@@ -295,6 +289,33 @@ const AuthRoutes = [
     path: "/project/:id",
     element: <ProjectDetails />,
 },
+    path: "/hirecontractor",
+    element: <h1>Hire Contractor</h1>,
+  },
+  {
+    path: "/houseestimate",
+    element: <HouseEstimate />,
+  },
+  {
+    path: "/findcontractor",
+    element: <FindContractors />,
+  },
+  {
+    path: "/findsuppliers",
+    element: <FindSuppliers />,
+  },
+  {
+    path: "/supplier/dashboard/requests",
+    element: <Requests />,
+  },
+  {
+    path: "/supplier/dashboard",
+    element: <SupplierDashboard />,
+  },
+  {
+    path: "requestquote",
+    element: <RequestQuote />,
+  },
 ];
 
 export default AuthRoutes;
