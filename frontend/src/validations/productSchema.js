@@ -1,34 +1,26 @@
-import * as yup from "yup";
+import { z } from "zod";
 
 
-export const productSchema = yup.object({
+export const productSchema = z.object({
 
-    productName: yup
-        .string()
-        .required("Product name required"),
-
-
-    company: yup
-        .string()
-        .required("Company required"),
+    name:
+        z.string()
+            .min(3, "Product name required"),
 
 
-    price: yup
-        .number()
-        .typeError("Enter price")
-        .positive()
-        .required("Price required"),
+    category:
+        z.string()
+            .min(1, "Category required"),
 
 
-    stock: yup
-        .number()
-        .typeError("Enter stock")
-        .min(0)
-        .required("Stock required"),
+    price:
+        z.number()
+            .min(1, "Enter valid price"),
 
 
-    unit: yup
-        .string()
-        .required("Select unit")
+    stock:
+        z.number()
+            .min(1, "Stock required")
 
-})
+
+});

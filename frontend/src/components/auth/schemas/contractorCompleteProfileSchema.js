@@ -1,58 +1,61 @@
 import { z } from "zod";
 
 export const contractorCompleteProfileSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
+  // STEP 1
+  fullName: z.string().min(3, "Full Name is required"),
 
-  lastName: z.string().min(2, "Last name is required"),
+  email: z.string().email("Enter a valid email address"),
 
   phoneNumber: z.string().regex(/^[6-9]\d{9}$/, "Enter valid phone number"),
 
-  gstNumber: z
-    .string()
-    .min(15, "GST Number must be 15 characters")
-    .max(15, "GST Number must be 15 characters"),
+  pincode: z.string().regex(/^[1-9][0-9]{5}$/, "Enter valid pincode"),
+
+  address: z.string().min(10, "Address must be at least 10 characters"),
+
+  profileImage: z.any().optional(),
+
+  // STEP 2
+  companyLogo: z.any().optional(),
 
   companyName: z.string().min(2, "Company name is required"),
-
-  panNumber: z
-    .string()
-    .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Invalid PAN Number"),
-
-  aadhaarNumber: z
-    .string()
-    .regex(/^\d{12}$/, "Aadhaar must contain exactly 12 digits"),
-
-  typicalProjectBudget: z.string().min(1, "Please select project budget"),
-
-  projectsCompleted: z.coerce.number().min(1, "Projects count is required"),
 
   yearsOfExperience: z.coerce
     .number()
     .min(0, "Experience cannot be negative")
     .max(60, "Invalid experience"),
 
-  location: z.string().min(2, "Location is required"),
+  licenseNumber: z.string().min(1, "License Number is required"),
 
-  availability: z.string().min(1, "Please select availability"),
+  gstNumber: z.string().length(15, "GST Number must be 15 characters"),
 
-  about: z
+  panNumber: z
     .string()
-    .min(50, "Please write at least 50 characters")
-    .max(1000, "Maximum 1000 characters allowed"),
+    .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Invalid PAN Number"),
 
-  // Previous Work Images
-  workImages: z
-    .any()
-    .refine((files) => files?.length > 0, "Upload at least 1 project image")
-    .refine((files) => files?.length <= 4, "Maximum 4 images allowed"),
+  website: z.string().optional(),
 
-  // Certificate Upload
-  certificate: z
-    .any()
-    .refine((file) => file?.length === 1, "Contractor certificate is required"),
+  businessType: z.string().min(1, "Business Type is required"),
 
-  // License Upload
-  license: z
-    .any()
-    .refine((file) => file?.length === 1, "Contractor license is required"),
+  registrationYear: z.string().min(4, "Registration Year is required"),
+
+  teamSize: z.string().min(1, "Team Size is required"),
+
+  about: z.string().min(50, "Please write at least 50 characters"),
+
+  // STEP 3
+  services: z.array(z.string()).min(1, "Select at least one service"),
+
+  equipment: z.array(z.string()).optional(),
+
+  serviceLocations: z
+    .array(z.string())
+    .min(1, "Add at least one service location")
+    .max(3, "Maximum 3 locations allowed"),
+
+  // STEP 4
+  commercialInsurance: z.boolean().optional(),
+  certificate: z.any().optional(),
+  license: z.any().optional(),
+  workImages: z.any().optional(),
+  aadhaarNumber: z.string().optional(),
 });

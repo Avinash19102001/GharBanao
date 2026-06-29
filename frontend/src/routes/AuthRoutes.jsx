@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import DashboardCard from "../components/auth/ContractorDashboard/DashboardCard";
 const Login = lazy(() => import("../components/auth/Login"));
 const Register = lazy(() => import("../components/auth/Register"));
 const ForgotPassword = lazy(() => import("../components/auth/ForgotPassword"));
@@ -53,6 +54,7 @@ const Orders = lazy(
 
 const AddProducts = lazy(
   () => import("../components/auth/SupplierDashboard/AddProducts"),
+  () => import("../components/auth/SupplierDashboard/Products")
 );
 
 const DailyStockUpdates = lazy(
@@ -109,25 +111,20 @@ const ContractorClients = lazy(
   () => import("../components/auth/ContractorDashboard/ContractorClients"),
 );
 const ContractorProjects = lazy(
-  () => import("../components/auth/ContractorDashboard/ContractorProjects"),
+  () =>
+    import("../components/auth/ContractorDashboard/ContractorProjects/ContractorProjects"),
 );
-const HouseEstimate = lazy(
-  () => import("../components/auth/Houseownerpages/HouseEstimate"),
-);
-const FindContractors = lazy(
-  () => import("../components/auth/Houseownerpages/FindContractor"),
-);
-const FindSuppliers = lazy(
-  () => import("../components/auth/Houseownerpages/FindSuppliers"),
+const ContractorBusiness = lazy(
+  () => import("../components/auth/ContractorDashboard/ContractorBusiness"),
 );
 
-const ContractorSiteMonitoring = lazy(
-  () =>
-    import("../components/auth/ContractorDashboard/ContractorSiteMonitoring"),
-);
 const ContractorMessages = lazy(
   () => import("../components/auth/ContractorDashboard/ContractorMessages"),
 );
+const ProjectDetails = lazy(() =>
+    import(
+        "../components/auth/ContractorDashboard/ContractorProjects/ProjectDetails"
+    )
 const RequestQuote = lazy(
   () => import("../components/auth/Houseownerpages/RequestQuote"),
 );
@@ -179,6 +176,11 @@ const AuthRoutes = [
   },
 
   {
+    path: "/DashboardCard",
+    element: <DashboardCard />,
+  },
+
+  {
     path: "/contractorrequests",
     element: <ContractorRequests />,
   },
@@ -191,8 +193,8 @@ const AuthRoutes = [
     element: <ContractorProjects />,
   },
   {
-    path: "/contractorsitemonitoring",
-    element: <ContractorSiteMonitoring />,
+    path: "/contractorBusiness",
+    element: <ContractorBusiness />,
   },
   {
     path: "/contractormessages",
@@ -204,7 +206,7 @@ const AuthRoutes = [
   },
 
   {
-    path: "/supplier-completeprofile",
+    path: "/supplier/profile",
     element: <SupplierCompleteProfile />,
   },
 
@@ -218,10 +220,6 @@ const AuthRoutes = [
     element: <Equipmentprofile />,
   },
 
-  {
-    path: "/supplier/dashboard/find-clients",
-    element: <FindClients />,
-  },
 
   {
     path: "/supplier/dashboard/orders",
@@ -279,11 +277,6 @@ const AuthRoutes = [
   },
 
   {
-    path: "/supplierdashboard/Header",
-    element: <Header />,
-  },
-
-  {
     path: "/equipmentregister",
     element: <EquipmentRegister />,
   },
@@ -293,6 +286,9 @@ const AuthRoutes = [
     element: <Equipmentprofile />,
   },
   {
+    path: "/project/:id",
+    element: <ProjectDetails />,
+},
     path: "/hirecontractor",
     element: <h1>Hire Contractor</h1>,
   },

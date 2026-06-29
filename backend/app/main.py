@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
 
 from app.utils.database import Base, engine
 
@@ -10,6 +12,13 @@ from app.models.house_owner_registration import HouseOwner
 from app.models.supplier_registration import Supplier
 from app.models.auth_model import Login
 from app.models.supplier_profile import SupplierProfile
+from app.models.contractor_profile_model import ContractorProfile
+from app.models.supplier_profile import SupplierProfile
+from app.models.auth_model import Login
+
+# Supplier Models
+from app.models.supplier_category import SupplierCategory
+from app.models.supplier_document import SupplierDocument
 
 # ==========================
 # Routers
@@ -34,6 +43,24 @@ app = FastAPI()
 # ==========================
 Base.metadata.create_all(bind=engine)
 
+from app.routers.contractor_profile_router import (
+    router as contractor_profile_router
+)
+from app.routers import supplier_profile
+from app.routers.users import router as user_router
+
+app = FastAPI(
+    title="GharBanao API",
+    version="1.0.0"
+)
+
+# Uploads Folder Access
+app.mount(
+    "/uploads",
+    StaticFiles(directory="uploads"),
+    name="uploads"
+)
+
 # ==========================
 # CORS
 # ==========================
@@ -55,10 +82,14 @@ app.add_middleware(
 # ==========================
 # Home
 # ==========================
+# Create Tables
+# ==========================
+Base.metadata.create_all(bind=engine)
+
 @app.get("/")
 def home():
     return {
-        "message": "GharBanao Contractor API Running Successfully"
+        "message": "GharBanao API Running Successfully"
     }
 
 # ==========================
@@ -71,3 +102,4 @@ app.include_router(contractor_profile_router)
 app.include_router(supplier_profile.router)
 app.include_router(user_router)
 app.include_router(contractor_dashboard_router.router)
+app.include_router(user_router)

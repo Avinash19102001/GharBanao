@@ -1,26 +1,19 @@
-from pydantic import BaseModel, EmailStr
-from datetime import date
+from pydantic import BaseModel
 from typing import Optional
 
-
 class ProfileCreate(BaseModel):
-    first_name: str
-    last_name: str
+    user_id: int
 
-    mobile: str
-    email: EmailStr
+    building_type: str
+    construction_type: str
 
-    address: str
+    budget: float
+    land_area: float
 
-    pincode: str
-    state: str
-    city: str
+    floors: int
 
-    gender: str
+    project_title: str
 
-    dob: date
-
-    property_type: str
-    project_type: str
-
-    media_files: Optional[str] = None
+    project_description: Optional[str] = None
+    profile_image_url: str | None = None
+    start_timeline: str | None = None

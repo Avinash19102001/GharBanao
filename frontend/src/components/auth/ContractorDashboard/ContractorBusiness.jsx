@@ -1,4 +1,4 @@
-const ContractorSiteMonitoring = () => {
+const ContractorBusiness = () => {
   const siteUpdates = [
     {
       id: 1,
@@ -146,4 +146,4 @@ const ContractorSiteMonitoring = () => {
   );
 };
 
-export default ContractorSiteMonitoring;
+export default ContractorBusiness;
