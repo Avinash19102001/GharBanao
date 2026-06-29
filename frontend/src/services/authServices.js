@@ -15,7 +15,7 @@ export const registerSupplier = (data) =>
 export const supplierCompleteProfile = (data) => {
 
   return axiosInstance.post(
-    "/supplier-profile/",
+    "/supplier/profile",
     data,
     {
       headers: {

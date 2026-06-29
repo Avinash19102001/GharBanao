@@ -1,285 +1,311 @@
 import { useState } from "react";
 
-import DashboardCards from "./DashboardCards";
-import DashboardHome from "./DashboardHome";
-
 import Requests from "./Requests";
-import FindClients from "./FindClients";
-import Orders from "./Orders";
-import AddProducts from "./AddProducts";
-import DailyStockUpdates from "./DailyStockUpdates";
-
-import Analytics from "./Analytics";
+import Clients from "./Clients";
+import Products from "./Products";
 import Messages from "./Messages";
-import Settings from "./Settings";
+import Analytics from "./Analytics";
 
-import Profile from "./Profile";
-import Notifications from "./Notifications";
+import {
+    FaBell,
+    FaBox,
+    FaUsers,
+    FaEnvelope,
+    FaChartBar,
+    FaComment
+} from "react-icons/fa";
 
 
 const SupplierDashboard = () => {
 
 
-    const [activeTab, setActiveTab] = useState("dashboard");
-
-    const [profile, setProfile] = useState(false);
-
-    const [notify, setNotify] = useState(false);
+    const [active, setActive] = useState("requests");
 
 
 
     const menu = [
 
         {
-            id: "dashboard",
-            label: "Dashboard"
-        },
-
-        {
             id: "requests",
-            label: "Requests"
+            name: "Requests",
+            icon: <FaEnvelope />
         },
 
         {
             id: "clients",
-            label: "Find Clients"
-        },
-
-        {
-            id: "orders",
-            label: "Orders"
+            name: "Clients",
+            icon: <FaUsers />
         },
 
         {
             id: "products",
-            label: "Add Product"
-        },
-
-        {
-            id: "stock",
-            label: "Stock Update"
-        },
-
-        {
-            id: "analytics",
-            label: "Analytics"
+            name: "Products",
+            icon: <FaBox />
         },
 
         {
             id: "messages",
-            label: "Messages"
+            name: "Messages",
+            icon: <FaComment />
         },
 
         {
-            id: "settings",
-            label: "Settings"
+            id: "statistics",
+            name: "Statistics",
+            icon: <FaChartBar />
         }
-
 
     ];
 
+    const pages = {
+
+        requests:
+            <Requests />,
 
 
+        clients:
+            <Clients />,
 
-    const content = {
+
+        products:
+            <Products />,
 
 
-        dashboard: <DashboardHome />,
+        messages:
+            <Messages />,
 
-        requests: <Requests />,
 
-        clients: <FindClients />,
-
-        orders: <Orders />,
-
-        products: <AddProducts />,
-
-        stock: <DailyStockUpdates />,
-
-        analytics: <Analytics />,
-
-        messages: <Messages />,
-
-        settings: <Settings />
-
+        statistics:
+            <Analytics />
 
     };
 
-
-
     return (
-        <div className="min-h-screen bg-[#f6f7fb] p-8">
+
+        <div className="
+min-h-screen
+bg-[#f7f5ef]
+px-4
+py-3
+">
+
 
             {/* HEADER */}
 
-
-            <div className="bg-white rounded-3xl shadow-md px-8 py-5 flex justify-between items-centerborderborder-gray-100"> <div>
-
-
-                <h1 className="text-3xl font-bold">
-
-                    GharBanao
-
-                </h1>
-
-
-                <p className="text-gray-500">
-
-                    Supplier Management Portal
-
-                </p>
-
-
-            </div>
-
-                <div className="flex items-center gap-5">
-
-                    {/* notification */}
-                    <div className="relative">
-                        <button
-
-                            onClick={() => setNotify(!notify)}
-
-                            className="relative bg-gray-100 w-12 h-12 rounded-full text-xl"
-
-                        >
-
-                            🔔
-
-
-                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-
-                                3
-
-                            </span>
-
-
-                        </button>
-
-                        {
-
-                            notify &&
-
-                            <div className="absolute right-0 mt-4 w-80 bg-white rounded-2xl shadow-xl p-4 z-50">
-
-                                <Notifications />
-                                
-
-                            </div>
-
-                        }
-
-
-                    </div>
-
-                    {/* profile */}
-
-                    <button
-
-                        onClick={() => setProfile(true)}
-
-                        className="
-flex 
-items-center 
-gap-3 
-bg-gray-50
-hover:bg-gray-100
+            <div className="
+bg-white
+rounded-2xl
+shadow-sm
 px-5
 py-3
-rounded-2xl
-transition
-" >
-
-                        <img
-
-                            src="https://i.pravatar.cc/100"
-
-                            className="w-10 h-10 rounded-full"
-
-                        />
+flex
+justify-between
+items-center
+">
 
 
-                        <div className="text-left">
+                <div>
 
+                    <h1 className="
+text-2xl
+font-bold
+text-green-900
+">
+                        GHARBANAO
+                    </h1>
 
-                            <p className="font-bold">
-
-                                Supplier
-
-                            </p>
-
-
-                            <p className="text-xs text-gray-500">
-
-                                View Profile
-
-                            </p>
-
-
-                        </div>
-
-
-                    </button>
-
+                    <p className="text-xs text-gray-400">
+                        PLAN. BUILD. LIVE. FOREVER.
+                    </p>
 
 
                 </div>
 
 
 
+                <input
+
+                    placeholder="Search requests, projects or clients"
+
+                    className="
+hidden
+md:block
+w-[40%]
+border
+rounded-xl
+px-5
+py-3
+outline-none
+"
+
+                />
+
+
+
+                <div className="
+flex
+items-center
+gap-5
+">
+
+
+                    <button className="
+w-10
+h-10
+rounded-full
+border
+">
+
+                        <FaBell />
+
+                    </button>
+
+
+
+                    <div>
+
+                        <p className="font-bold">
+                            Uday
+                        </p>
+
+                        <p className="text-sm text-gray-500">
+                            Supplier
+                        </p>
+
+                    </div>
+
+
+                    <button className="
+bg-green-700
+text-white
+px-5
+py-2
+rounded-xl
+">
+
+                        Logout
+
+                    </button>
+
+
+                </div>
+
+
             </div>
 
-            {/* CARDS */}
+            {/* HERO SECTION */}
+
+            <div className="
+mt-4
+bg-[#00563f]
+rounded-3xl
+px-8
+py-8
+text-white
+">
 
 
+                <h1 className="
+text-4xl
+font-bold
+">
 
-            {
+                    Welcome back, Uday!
 
-                activeTab === "dashboard"
+                </h1>
 
-                &&
 
-                <DashboardCards />
+                <p className="
+mt-3
+text-green-100
+max-w-3xl
+">
 
-            }
+                    Automate product listings, manage nearby buyer leads,
+                    respond to quote requests and manage your material catalog.
 
-            {/* NAVIGATION */}
+                </p>
 
-            <div className="mt-8 bg-white rounded-3xl shadow-md p-4">
 
-                <div className="grid grid-cols-9 gap-3">
+                <button className="
+mt-5
+bg-white
+text-green-900
+px-6
+py-3
+rounded-xl
+font-semibold
+">
+
+                    📦 Manage My Catalog
+
+                </button>
+
+
+            </div>
+
+            {/* NAVBAR */}
+
+
+            <div className="
+mt-4
+flex
+justify-center
+">
+                <div className="
+bg-white
+rounded-full
+px-3
+py-2
+shadow-sm
+flex
+gap-2
+">
 
 
                     {
                         menu.map(item => (
 
+
                             <button
 
                                 key={item.id}
 
-                                onClick={() => setActiveTab(item.id)}
+                                onClick={() => setActive(item.id)}
 
                                 className={`
-                    
-                    h-12 rounded-xl font-medium transition-all duration-300
+px-5
+py-2
+rounded-xl
+flex
+items-center
+gap-2
+font-medium
+whitespace-nowrap
+transition-all
+duration-200
 
-                    ${activeTab === item.id
+${active === item.id
 
                                         ?
 
-                                        "bg-blue-600 text-white shadow-lg"
+                                        "bg-[#00563f] text-white"
 
                                         :
 
-                                        "bg-gray-50 text-gray-600 hover:bg-blue-100 hover:text-blue-600"
+                                        "text-gray-700 hover:bg-gray-100"
 
                                     }
 
-                    `}
+`}
 
                             >
 
-                                {item.label}
+
+                                {item.icon}
+
+                                {item.name}
+
 
                             </button>
 
@@ -289,67 +315,30 @@ transition
 
 
                 </div>
-
-
             </div>
 
-            {/* PAGE */}
+            {/* CONTENT */}
 
 
 
-            <div className="mt-8">
-
-
-                {content[activeTab]}
-
-
-            </div>
-
-            {/* PROFILE MODAL */}
-
-            {
-
-                profile &&
-
-
-                <div className="
-fixed 
-inset-0 
-bg-black/30 
-backdrop-blur-sm
-flex 
-items-center 
-justify-center 
-z-50
+            <div className="
+mt-4
 ">
-                    <div className="w-[90%] max-w-5xl">
+                {
+                    pages[active]
+                }
+            </div>
 
 
-                        <button
-
-                            onClick={() => setProfile(false)}
-
-                            className="float-right bg-red-500 text-white px-4 py-2 rounded-xl"
-
-                        >
-
-                            Close
-
-                        </button>
 
 
-                        <Profile />
 
-
-                    </div>
-
-
-                </div>
-
-
-            }
         </div>
+
+
     )
 
 }
+
+
 export default SupplierDashboard;
