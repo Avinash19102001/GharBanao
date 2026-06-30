@@ -8,6 +8,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from app.utils.database import Base
+from sqlalchemy.orm import relationship
 
 
 class SupplierProfile(Base):
@@ -58,3 +59,7 @@ class SupplierProfile(Base):
         back_populates="supplier",
         cascade="all, delete-orphan"
     )
+    user = relationship(
+    "User",
+    back_populates="supplier_profile"
+)
