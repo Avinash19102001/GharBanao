@@ -10,6 +10,8 @@ from app.utils.database import Base, engine
 # ==========================
 from app.models.house_owner_registration import HouseOwner
 from app.models.supplier_registration import Supplier
+from app.models.auth_model import Login
+from app.models.supplier_profile import SupplierProfile
 from app.models.contractor_profile_model import ContractorProfile
 from app.models.supplier_profile import SupplierProfile
 from app.models.auth_model import Login
@@ -24,6 +26,23 @@ from app.models.supplier_document import SupplierDocument
 from app.routers.auth import router as login
 from app.routers.forgot_password_routers import router as forgot_router
 from app.routers.House_owner_profile import router as profile
+from app.routers.users import router as user_router
+from app.routers import supplier_profile
+from app.routers.contractor_profile_router import (
+    router as contractor_profile_router
+)
+from app.routers import contractor_dashboard_router
+
+# ==========================
+# Create App
+# ==========================
+app = FastAPI()
+
+# ==========================
+# Create Tables
+# ==========================
+Base.metadata.create_all(bind=engine)
+
 from app.routers.contractor_profile_router import (
     router as contractor_profile_router
 )
@@ -64,6 +83,8 @@ app.add_middleware(
 )
 
 # ==========================
+# Home
+# ==========================
 # Create Tables
 # ==========================
 Base.metadata.create_all(bind=engine)
@@ -74,11 +95,16 @@ def home():
         "message": "GharBanao API Running Successfully"
     }
 
+# ==========================
+# Routers
+# ==========================
 app.include_router(login)
 app.include_router(forgot_router)
 app.include_router(profile)
 app.include_router(contractor_profile_router)
 app.include_router(supplier_profile.router)
+app.include_router(user_router)
+app.include_router(contractor_dashboard_router.router)
 app.include_router(user_router)
 app.include_router(matching_supplier_router)
 app.include_router(matching_contractor_router)
