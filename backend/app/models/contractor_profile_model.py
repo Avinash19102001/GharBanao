@@ -8,6 +8,8 @@ from sqlalchemy import (
 )
 
 from app.utils.database import Base
+from sqlalchemy.orm import relationship
+
 
 
 class ContractorProfile(Base):
@@ -73,3 +75,8 @@ class ContractorProfile(Base):
     pan_card = Column(String(500))
     insurance_certificate = Column(String(500))
     iso_certificate = Column(String(500))
+
+    user = relationship(
+        "User",
+        back_populates="contractor_profile"
+    )

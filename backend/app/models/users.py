@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime
 from datetime import datetime
 from app.utils.database import Base
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -17,3 +18,13 @@ class User(Base):
     rating = Column(Float, default=0.0)
     profile_image_url = Column(String(500))
     created_at = Column(DateTime, default=datetime.utcnow)
+    supplier_profile = relationship(
+    "SupplierProfile",
+    back_populates="user",
+    uselist=False
+    ) 
+    contractor_profile = relationship(
+    "ContractorProfile",
+    back_populates="user",
+    uselist=False
+)

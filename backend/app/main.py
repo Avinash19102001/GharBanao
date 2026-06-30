@@ -48,6 +48,8 @@ from app.routers.contractor_profile_router import (
 )
 from app.routers import supplier_profile
 from app.routers.users import router as user_router
+from app.routers.matching_suppliers import router as matching_supplier_router
+from app.routers.matching_contractors import router as matching_contractor_router
 
 app = FastAPI(
     title="GharBanao API",
@@ -69,6 +71,7 @@ origins = [
     "http://192.168.0.245:3000",
     "http://192.168.0.245:5173",
     "http://192.168.0.35:5173",
+    "http://192.168.0.190:5173",
 ]
 
 app.add_middleware(
@@ -103,3 +106,5 @@ app.include_router(supplier_profile.router)
 app.include_router(user_router)
 app.include_router(contractor_dashboard_router.router)
 app.include_router(user_router)
+app.include_router(matching_supplier_router)
+app.include_router(matching_contractor_router)
