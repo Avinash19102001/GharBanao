@@ -1,36 +1,15 @@
 from fastapi import HTTPException
 
-from app.utils.jwt_handler import (
-    create_reset_token,
-    verify_reset_token
-)
+from app.models.users import User
+from app.utils.jwt_handler import create_reset_token, verify_reset_token
 
-from app.models.contractor_model import Contractor
-from app.models.house_owner_registration import HouseOwner
-from app.models.supplier_registration import Supplier
-
-#forgot password
 
 def forgot_password(data, db):
-
-    print("EMAIL RECEIVED:", data.email)
-
-    contractor = db.query(Contractor).filter(
-        Contractor.email == data.email
+    user = db.query(User).filter(
+        User.email == data.email
     ).first()
 
-    house_owner = db.query(HouseOwner).filter(
-        HouseOwner.email == data.email
-    ).first()
-
-    print("Checking Supplier Table...")
-    print("Email:", data.email)
-
-    supplier = db.query(Supplier).filter(
-        Supplier.email == data.email
-    ).first()
-
-    if not contractor and not house_owner and not supplier:
+    if not user:
         raise HTTPException(
             status_code=404,
             detail="Email not found"
@@ -43,10 +22,8 @@ def forgot_password(data, db):
         "token": token
     }
 
-#reset password
 
 def reset_password(data, db):
-
     email = verify_reset_token(data.token)
 
     if not email:
@@ -61,43 +38,19 @@ def reset_password(data, db):
             detail="Passwords do not match"
         )
 
-    contractor = db.query(Contractor).filter(
-        Contractor.email == email
+    user = db.query(User).filter(
+        User.email == email
     ).first()
 
-    if contractor:
-        contractor.password = data.new_password
-        db.commit()
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
 
-        return {
-            "message": "Contractor password updated successfully"
-        }
+    user.hashed_password = data.new_password
+    db.commit()
 
-    house_owner = db.query(HouseOwner).filter(
-        HouseOwner.email == email
-    ).first()
-
-    if house_owner:
-        house_owner.password = data.new_password
-        db.commit()
-
-        return {
-            "message": "House Owner password updated successfully"
-        }
-
-    supplier = db.query(Supplier).filter(
-        Supplier.email == email
-    ).first()
-
-    if supplier:
-        supplier.password = data.new_password
-        db.commit()
-
-        return {
-            "message": "Supplier password updated successfully"
-        }
-
-    raise HTTPException(
-        status_code=404,
-        detail="User not found"
-    )
+    return {
+        "message": "Password updated successfully"
+    }
